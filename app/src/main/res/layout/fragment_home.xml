@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.internalNavigation.HomeFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.internalNavigation.viewModel.HomeViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="@drawable/ic_home_title_bg"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/bottomOfSearchView"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/menuImageView"
+
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+
+                android:src="@drawable/ic_menu_custom"
+
+                android:layout_margin="8dp"
+                android:padding="8dp"
+
+                android:onClick="@{v -> viewModel.showNavDrawer(v)}"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+
+                android:gravity="center"
+
+                app:layout_constraintWidth_default="wrap"
+
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+
+                android:maxLines="1"
+                android:ellipsize="end"
+
+                android:text="@{viewModel.address}"
+                tools:text="القاهره"
+                android:textColor="#ffffff"
+                style="@style/TextTajawalBold16"
+
+                app:drawableEndCompat="@drawable/ic_arrow_down"
+                app:drawableTint="#ffffff"
+                android:drawablePadding="8dp"
+
+                android:onClick="@{v -> viewModel.editLocation(v)}"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/regularDateTextView"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@{viewModel.regularDate}"
+                tools:text="25 يناير 2022"
+                android:textColor="#ffffff"
+                style="@style/TextTajawalMedium16"
+
+                android:layout_margin="16dp"
+
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/nextPrayExactTimeTextView"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@{viewModel.prayExactTime}"
+                tools:text="الظهر : 11 :53 ص"
+                android:textColor="#ffffff"
+                style="@style/TextTajawalBold16"
+
+                android:layout_marginStart="16dp"
+
+                android:onClick="@{v -> viewModel.toPrayBottomNav(v)}"
+
+                app:layout_constraintTop_toBottomOf="@id/regularDateTextView"
+                app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/nextPrayRemainingTimeTextView"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@{viewModel.prayRemainingTime}"
+                tools:text="( 02:12:21 )"
+                android:textColor="#FFAA00"
+                style="@style/TextTajawalRegular14"
+
+                android:layout_marginStart="4dp"
+
+                app:layout_constraintTop_toTopOf="@id/nextPrayExactTimeTextView"
+                app:layout_constraintBottom_toBottomOf="@id/nextPrayExactTimeTextView"
+                app:layout_constraintStart_toEndOf="@id/nextPrayExactTimeTextView" />
+
+            <TextView
+                android:id="@+id/hijrahDateTextView"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@{viewModel.hijrahDate}"
+                tools:text="25 جماد اول 1443 هـ"
+                android:textColor="#ffffff"
+                style="@style/TextTajawalMedium16"
+
+                android:layout_marginEnd="16dp"
+
+                app:layout_constraintTop_toBottomOf="@id/nextPrayExactTimeTextView"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/searchMaterialCardView"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="16dp"
+
+                app:cardElevation="8dp"
+                app:cardMaxElevation="8dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                app:layout_constraintTop_toBottomOf="@id/hijrahDateTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+
+                    android:hint="@string/search"
+                    app:hintTextColor="#848484"
+                    android:textColorHint="#848484"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                    app:startIconDrawable="@drawable/ic_search_2"
+                    app:startIconTint="@color/colorPrimaryDark"
+                    app:startIconTintMode="src_atop">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/location_search"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextTajawalRegular12"
+                        android:textColor="@color/black"
+                        android:text="@{viewModel.search}"
+
+                        android:background="@color/white"
+
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                        android:enabled="false"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:id="@+id/bottomOfSearchView"
+
+                android:layout_width="0dp"
+                android:layout_height="16dp"
+
+                app:layout_constraintTop_toBottomOf="@id/searchMaterialCardView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/horizontalRecyclerView"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:padding="8dp"
+                android:clipToPadding="false"
+
+                android:scrollbars="horizontal"
+                tools:itemCount="12"
+                tools:orientation="horizontal"
+                tools:listitem="@layout/item_text_in_card"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                app:layout_constraintTop_toBottomOf="@id/bottomOfSearchView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/verticalRecyclerView"
+
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:padding="8dp"
+                android:clipToPadding="false"
+
+                android:scrollbars="vertical"
+                tools:itemCount="12"
+                tools:orientation="vertical"
+                tools:listitem="@layout/item_home_zekr"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                app:layout_constraintTop_toBottomOf="@id/horizontalRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

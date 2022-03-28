@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.location.EditLocationFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.location.viewModel.EditLocationViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="#FFFFFF">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/searchMaterialCardView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+
+            app:cardElevation="0dp"
+            app:cardMaxElevation="0dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+            app:cardBackgroundColor="#FBFBFB"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:boxStrokeWidth="0dp"
+                app:boxStrokeWidthFocused="0dp"
+
+                android:hint="@string/search"
+                app:hintTextColor="#848484"
+                android:textColorHint="#848484"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                android:background="#FBFBFB"
+
+                app:startIconDrawable="@drawable/ic_search_2"
+                app:startIconTint="@color/colorPrimaryDark"
+                app:startIconTintMode="src_atop">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/location_search"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    style="@style/TextTajawalRegular12"
+                    android:textColor="@color/black"
+                    android:text="@{viewModel.search}"
+
+                    android:background="#FBFBFB"
+
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                    android:enabled="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/currentLocationTitleTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalMedium14"
+
+            android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+            android:text="@string/current_location"
+            android:textColor="#777777"
+
+            app:layout_constraintTop_toBottomOf="@id/searchMaterialCardView"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:layout_margin="16dp"/>
+
+        <TextView
+            android:id="@+id/currentLocationValueTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalBold14"
+
+            android:text="@{viewModel.address}"
+            tools:text="النزهة الجديدة - القاهرة"
+            android:textColor="@color/black"
+
+            android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+            app:drawableStartCompat="@drawable/ic_address"
+            android:drawablePadding="8dp"
+
+            android:layout_margin="16dp"
+
+            android:maxLines="1"
+            android:ellipsize="end"
+
+            app:layout_constraintTop_toBottomOf="@id/currentLocationTitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/autoSelectMaterialButton"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/autoSelectMaterialButton"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:onClick="@{v -> viewModel.autoDetectLocation(v)}"
+
+            style="@style/Widget.MaterialComponents.Button"
+
+            android:text="@string/specify_my_location"
+            android:textColor="#17A16E"
+            android:textAppearance="@style/TextTajawalMedium14"
+
+            android:background="@drawable/dr_button_primary_light"
+            app:backgroundTint="@null"
+
+            android:layout_marginEnd="16dp"
+
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/currentLocationTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/currentLocationValueTextView"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationView"
+
+            android:layout_width="92dp"
+            android:layout_height="65dp"
+
+            android:visibility="@{viewModel.showLottie}"
+
+            android:layout_gravity="center"
+
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="edit_location.json"
+            app:lottie_loop="true"
+
+            app:layout_constraintTop_toTopOf="@id/autoSelectMaterialButton"
+            app:layout_constraintStart_toStartOf="@id/autoSelectMaterialButton"
+            app:layout_constraintEnd_toEndOf="@id/autoSelectMaterialButton"
+            app:layout_constraintBottom_toBottomOf="@id/autoSelectMaterialButton"/>
+        
+        <View
+            android:id="@+id/divider1View"
+
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+
+            android:layout_marginTop="16dp"
+
+            android:background="#FBFBFB"
+
+            app:layout_constraintTop_toBottomOf="@id/currentLocationValueTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/citiesTitleTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+
+            style="@style/TextTajawalMedium14"
+
+            android:text="@string/suggested_cities"
+            android:textColor="#B9B9B9"
+
+            app:layout_constraintTop_toBottomOf="@id/divider1View"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/divider2View"
+
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+
+            android:background="#FBFBFB"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:clipToPadding="false"
+
+            android:scrollbars="vertical"
+            tools:itemCount="12"
+            tools:orientation="vertical"
+            tools:listitem="@layout/item_text"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            app:layout_constraintTop_toBottomOf="@id/citiesTitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/divider2View"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

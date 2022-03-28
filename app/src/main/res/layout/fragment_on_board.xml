@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.onBoard.OnBoardFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.onBoard.viewModel.OnBoardViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:padding="12dp"
+            android:clipToPadding="false">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+
+                android:layout_margin="12dp"
+
+                app:layout_constraintVertical_chainStyle="packed"
+
+                android:layout_width="184dp"
+                android:layout_height="184dp"
+
+                android:layout_gravity="center"
+
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="on_board.json"
+                app:lottie_loop="true"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/titleTextView"/>
+
+            <TextView
+                android:id="@+id/titleTextView"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="12dp"
+
+                android:gravity="center"
+
+                style="@style/TextTajawalBold20"
+
+                android:text="@string/do_you_want_to_receive_notifications"
+                android:textColor="#17A16E"
+
+                app:layout_constraintTop_toBottomOf="@id/lottieAnimationView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/bodyTextView"/>
+
+            <TextView
+                android:id="@+id/bodyTextView"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="12dp"
+
+                android:gravity="center"
+
+                style="@style/TextTajawalRegular16"
+
+                android:text="@string/on_board_body"
+                android:textColor="#636363"
+
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/enableMaterialButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/enableMaterialButton"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                style="@style/Widget.MaterialComponents.Button"
+
+                android:onClick="@{v -> viewModel.enableReceivingNotifications(v)}"
+
+                android:text="@string/enable_receiving_notifications"
+                android:textColor="@color/white"
+                android:textAppearance="@style/TextTajawalMedium16"
+
+                android:background="@drawable/dr_project_round"
+                app:backgroundTint="@null"
+
+                android:layout_margin="12dp"
+
+                app:layout_constraintTop_toBottomOf="@id/bodyTextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/disableMaterialButton"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/disableMaterialButton"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:onClick="@{v -> viewModel.disableReceivingNotifications(v)}"
+
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+
+                android:text="@string/stop_receiving_notifications"
+                android:textColor="#17A16E"
+                android:textAppearance="@style/TextTajawalMedium16"
+
+                app:strokeColor="#17A16E"
+                app:strokeWidth="1dp"
+
+                android:layout_margin="12dp"
+
+                android:padding="12dp"
+
+                app:layout_constraintTop_toBottomOf="@id/enableMaterialButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

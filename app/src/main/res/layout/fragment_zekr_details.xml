@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.azkar.ZekrDetailsFragment"
+
+    tools:ignore="ContentDescription" >
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:background="#17A16E"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/bottomPlaceholderView"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            style="@style/TextTajawalMedium16"
+
+            android:background="@drawable/dr_progress_inner"
+
+            android:layout_margin="8dp"
+
+            tools:text="99/99"
+            android:textColor="@color/white"
+
+            android:gravity="center"
+
+            app:layout_constraintTop_toTopOf="@id/progressIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/progressIndicator"
+            app:layout_constraintStart_toStartOf="@id/progressIndicator"
+            app:layout_constraintEnd_toEndOf="@id/progressIndicator"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="8dp"
+
+            app:trackThickness="4dp"
+            app:trackColor="#046D46"
+            app:indicatorColor="#FFAA00"
+            app:indicatorDirectionCircular="clockwise"
+            android:progress="33"
+            android:rotation="-90"
+            app:indicatorSize="50dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.incrementProgress(v)}"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <View
+            android:id="@+id/bottomPlaceholderView"
+
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+
+            app:layout_constraintBottom_toTopOf="@id/progressIndicator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/playImageView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ic_play_in_circle"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.play(v)}"
+
+            app:layout_constraintEnd_toStartOf="@id/progressIndicator"
+            app:layout_constraintStart_toEndOf="@id/shareImageView"
+            app:layout_constraintTop_toTopOf="@id/progressIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
+        <ImageView
+            android:id="@+id/shareImageView"
+
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+
+            android:padding="16dp"
+
+            android:src="@drawable/ic_share"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.share(v)}"
+
+            android:layout_marginStart="8dp"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/progressIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
+        <ImageView
+            android:id="@+id/downloadImageView"
+
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+
+            android:padding="16dp"
+
+            android:src="@drawable/ic_download"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.download(v)}"
+
+            app:layout_constraintStart_toEndOf="@id/progressIndicator"
+            app:layout_constraintEnd_toStartOf="@id/favoriteImageView"
+            app:layout_constraintTop_toTopOf="@id/progressIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
+        <ImageView
+            android:id="@+id/favoriteImageView"
+
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+
+            android:padding="16dp"
+
+            android:src="@drawable/ic_heart"
+            tools:src="@drawable/ic_heart_filled"
+
+            android:layout_marginEnd="8dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.toggleFavorite(v)}"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/progressIndicator"
+            app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager2"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomPlaceholderView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

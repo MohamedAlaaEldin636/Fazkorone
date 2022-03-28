@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/dest_splash">
+
+    <fragment
+        android:id="@+id/dest_splash"
+        android:name="com.grand.ezkorone.presentation.splash.SplashFragment"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_dest_splash_to_dest_on_board"
+            app:destination="@id/dest_on_board"
+
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
+        <action
+            android:id="@+id/action_dest_splash_to_dest_bottom_nav"
+            app:destination="@id/dest_bottom_nav"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_location_selection"
+        android:name="com.grand.ezkorone.presentation.location.LocationSelectionFragment"
+        tools:layout="@layout/fragment_location_selection" >
+        <argument
+            android:name="latitude"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="longitude"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="onBoardLocationSelection"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <deepLink
+            android:id="@+id/deep_link_dest_location_selection"
+            android:autoVerify="true"
+            app:uri="fragment-dest://com.maproductions.mohamedalaa.shared.location.selection/{latitude}/{longitude}" />
+        <deepLink
+            android:id="@+id/deep_link_dest_location_selection_no_args"
+            android:autoVerify="true"
+            app:uri="fragment-dest://com.maproductions.mohamedalaa.shared.location.selection.no.args" />
+        <deepLink
+            android:id="@+id/deep_link_dest_location_selection_on_board_location_selection"
+            android:autoVerify="true"
+            app:uri="fragment-dest://com.maproductions.mohamedalaa.shared.location.selection.on.board.location.selection/{onBoardLocationSelection}" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_on_board"
+        android:name="com.grand.ezkorone.presentation.onBoard.OnBoardFragment"
+        android:label="@string/receive_notifications"
+        tools:layout="@layout/fragment_on_board" >
+        <action
+            android:id="@+id/action_dest_on_board_to_dest_bottom_nav"
+            app:destination="@id/dest_bottom_nav"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+    </fragment>
+    <dialog
+        android:id="@+id/dest_lottie_loader_dialog"
+        android:name="com.grand.ezkorone.presentation.base.dialogs.LottieLoaderDialogFragment"
+        tools:layout="@layout/dialog_fragment_lottie_loader" >
+
+        <deepLink
+            android:id="@+id/deep_link_dest_lottie_loader_dialog"
+            android:autoVerify="true"
+            app:uri="dialog-dest://com.grand.ezkorone.lottie.loader.dialog"/>
+
+    </dialog>
+
+    <dialog
+        android:id="@+id/dest_global_error_dialog"
+        android:name="com.grand.ezkorone.presentation.base.dialogs.GlobalErrorDialogFragment"
+        android:label=""
+        tools:layout="@layout/dialog_fragment_base_ok_cancel">
+
+        <argument
+            android:name="message"
+            app:argType="string" />
+
+        <deepLink
+            android:id="@+id/deep_link_dest_global_error_dialog"
+            android:autoVerify="true"
+            app:uri="dialog-dest://com.grand.ezkorone.global.error.dialog/{message}" />
+
+    </dialog>
+    <fragment
+        android:id="@+id/dest_bottom_nav"
+        android:name="com.grand.ezkorone.presentation.internalNavigation.BottomNavFragment"
+        tools:layout="@layout/fragment_bottom_nav" >
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_edit_location"
+            app:destination="@id/dest_edit_location"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_azkar_list"
+            app:destination="@id/dest_azkar_list"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_zekr_details"
+            app:destination="@id/dest_zekr_details"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_search_queries"
+            app:destination="@id/dest_search_queries"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_sheikh_list"
+            app:destination="@id/dest_sheikh_list"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_edit_location"
+        android:name="com.grand.ezkorone.presentation.location.EditLocationFragment"
+        android:label="@string/home"
+        tools:layout="@layout/fragment_edit_location" />
+    <fragment
+        android:id="@+id/dest_azkar_list"
+        android:name="com.grand.ezkorone.presentation.azkar.AzkarListFragment"
+        tools:layout="@layout/fragment_azkar_list" >
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_dest_azkar_list_to_dest_zekr_details"
+            app:destination="@id/dest_zekr_details"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_zekr_details"
+        android:name="com.grand.ezkorone.presentation.azkar.ZekrDetailsFragment"
+        tools:layout="@layout/fragment_zekr_details">
+        <argument
+            android:name="toolbarTitle"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_search_queries"
+        android:name="com.grand.ezkorone.presentation.search.SearchQueriesFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search_queries" >
+        <action
+            android:id="@+id/action_dest_search_queries_to_dest_zekr_details"
+            app:destination="@id/dest_zekr_details"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/dest_sheikh_list"
+        android:name="com.grand.ezkorone.presentation.sheikh.SheikhListFragment"
+        android:label="@string/pick_sheikh_voice"
+        tools:layout="@layout/fragment_sheikh_list" />
+
+</navigation>

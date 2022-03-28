@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+
+    android:layout_gravity="center"
+
+    android:padding="16dp"
+    android:clipToPadding="false"
+
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/timeTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalBold16"
+
+        tools:text="5:16 AM"/>
+
+    <TextView
+        android:id="@+id/nameTextView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        style="@style/TextTajawalBold16"
+
+        tools:text="الفجر"
+
+        android:layout_marginStart="32dp"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="1dp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_headphone"/>
+
+    <!-- ic_volume_on -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:src="@drawable/ic_volume_off"
+
+        android:layout_marginStart="32dp"/>
+
+</LinearLayout>

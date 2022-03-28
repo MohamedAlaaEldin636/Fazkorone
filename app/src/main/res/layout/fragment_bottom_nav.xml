@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.internalNavigation.BottomNavFragment">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/bottomNavNavHostFragment"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:name="androidx.navigation.fragment.NavHostFragment"
+
+            app:defaultNavHost="false" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+
+            style="@style/Widget.MaterialComponents.BottomNavigationView"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:labelVisibilityMode="labeled"
+
+            android:background="#FFFFFF"
+            app:backgroundTint="#FFFFFF"
+
+            app:elevation="24dp"
+
+            app:itemIconTint="@color/bottom_nav"
+            app:itemTextColor="@color/bottom_nav"
+
+            app:itemTextAppearanceActive="@style/TextTajawalMedium11"
+            app:itemTextAppearanceInactive="@style/TextTajawalMedium11" />
+
+    </LinearLayout>
+
+</layout>

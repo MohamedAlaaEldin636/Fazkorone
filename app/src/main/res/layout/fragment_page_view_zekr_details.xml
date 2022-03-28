@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--es.voghdev.pdfviewpager.library.PDFViewPagerZoom-->
+    <!--
+    /*val k: PDFViewPagerZoom
+        val a = PDFViewPagerZoom(requireActivity(), "")
+        a.adapter = PDFPagerAdapter(requireContext())
+        val mm = RemotePDFViewPager(requireContext(), "url", this)
+        mm.adapter*/
+    -->
+    <!--
+    frame layout 34an bs t7ot feh el pdf view as in here
+    https://github.com/voghDev/PdfViewPager/blob/master/sample/src/main/java/es/voghdev/pdfviewpager/RemotePDFActivity.java
+    using view dynamically created not in xml and use zoom pdf kda isa.
+    -->
+    <FrameLayout
+        android:id="@+id/containerOfPdfFrameLayout"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

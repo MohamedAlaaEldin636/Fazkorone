@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">فاذكرونى اذكركم</string>
+    <string name="location_selection">تحديد الموقع</string>
+    <string name="google_geo_api_key" translatable="false">AIzaSyBs0qcQwZhQAlOVoco8JG5qQ6_OoHZ9EMM</string>
+    <string name="something_went_wrong">حدث خطأ ما</string>
+    <string name="your_address_has_been_selected_successfully">تم اختيار عنوانك بنجاح</string>
+    <string name="you_didn_t_accept_permission">لم تقم بالسماح بالاذن</string>
+    <string name="check_location_turned_on">تحقق من تفعيل اعدادات الموقع</string>
+    <string name="search">بحث</string>
+    <string name="specify_my_location">تحديد موقعي</string>
+    <string name="skip">تخطي</string>
+    <string name="search_for_location">بحث عن موقع</string>
+    <string name="do_you_want_to_receive_notifications">هل تريد تلقي الاشعارات ؟</string>
+    <string name="on_board_body">يمكنك تفعيل تلقي الاشعارات من التطبيق بتذكير ك بالدعاء واذكار الصباح والمساء ومواقيت الصلاة</string>
+    <string name="enable_receiving_notifications">تفعيل تلقي الاشعارات</string>
+    <string name="stop_receiving_notifications">عدم تلقي الاشعارات</string>
+    <string name="receive_notifications">تلقي الاشعارات</string>
+    <string name="nav_app_bar_open_drawer_description_1">افتح القائمة</string>
+    <string name="nav_app_bar_navigate_up_description_1">الرجوع للخلف</string>
+    <string name="home">الرئيسية</string>
+    <string name="pick_sheikh_voice">اختر صوت الشيخ</string>
+    <string name="retry">إعادة المحاولة</string>
+    <string name="back">الرجوع</string>
+    <string name="pray">الصلاة</string>
+    <string name="qibla">القبلة</string>
+    <string name="taspeh">التسبيح</string>
+    <string name="current_location">الموقع الحالي</string>
+    <string name="suggested_cities">المدن المقترحة</string>
+    <string name="share">شارك</string>
+    <string name="play">تشغيل</string>
+    <string name="pray_times">مواقيت الصلاة</string>
+    <string name="fagr">الفجر</string>
+    <string name="dohr">الظهر</string>
+    <string name="asr">العصر</string>
+    <string name="maghrep">المغرب</string>
+    <string name="esha">العشاء</string>
+    <string name="please_colon">من فضلك :</string>
+    <string name="qibla_instructions">من فضلك قم بتثبيت الجوال رأسيا لكي يتم تحديد اتجاه القبلة بشكل صحيح</string>
+    <string name="a_taspeh">تسبيح</string>
+    <string name="pick_another_zekr">اختيار ذاكر اخر</string>
+    <string name="reset">اعادة تعيين</string>
+    <string name="negative_one">-1</string>
+    <string name="count">قم بالعد</string>
+    <string name="determine_yout_location">حدد موقعك</string>
+</resources>

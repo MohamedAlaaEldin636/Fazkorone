@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.search.SearchQueriesFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.search.viewModel.SearchQueriesViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneTextInputLayout"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="16dp"
+
+            android:hint="@string/search"
+            app:hintTextColor="#848484"
+            android:textColorHint="#848484"
+
+            app:startIconDrawable="@drawable/ic_search_7"
+            app:startIconTintMode="src_in"
+            app:startIconTint="#17a16e"
+
+            app:endIconMode="clear_text"
+
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+
+            android:background="@drawable/dr_white_round">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:textSize="12sp"
+
+                android:background="@drawable/dr_white_round"
+
+                android:text="@={viewModel.search}"
+                style="@style/TextTajawalMedium12"
+
+                android:inputType="number"
+                android:imeOptions="actionNone|flagNoFullscreen"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:clipToPadding="false"
+
+            android:scrollbars="vertical"
+            tools:itemCount="12"
+            tools:orientation="vertical"
+            tools:listitem="@layout/item_search_query"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    </LinearLayout>
+
+</layout>

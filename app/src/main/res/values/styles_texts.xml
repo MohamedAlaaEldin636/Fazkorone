@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseTextStyle">
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
+    <style name="TextTajawalBold14" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextTajawalBold16" parent="@style/TextTajawalBold14">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTajawalBold20" parent="@style/TextTajawalBold14">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextTajawalBold12" parent="@style/TextTajawalBold14">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextButtonTajawalBold14" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextButtonDINNextLTW23Medium16" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFBC23</item>
+    </style>
+
+    <style name="TextButtonTajawalBold16" parent="@style/TextButtonTajawalBold14">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTajawalMedium14" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextTajawalBold18" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
+    <style name="ButtonTextTajawalBold16" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="fontFamily">@font/tajawal_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- todo font HS Dream, Medium -->
+    <style name="TextHSDreamMedium16" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#80000000</item>
+    </style>
+
+    <!-- todo font SF Pro Text, Semibold -->
+    <style name="TextProTextSemiBold15" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#80000000</item>
+    </style>
+
+    <!-- todo font SF Pro Text, Semibold -->
+    <style name="TextUKIJDiwaniTomRegular16" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TextTajawalMedium16" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTajawalMedium18" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextTajawalMedium12" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextMontserratMedium12" parent="@style/BaseTextStyle">
+        <!--todo foont-->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextDINNextLTW23Medium13" parent="@style/BaseTextStyle">
+        <!--todo foont-->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="TextDINNextLTW23Medium10" parent="@style/TextDINNextLTW23Medium13">
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="TextDINNextLTW23Medium9" parent="@style/TextDINNextLTW23Medium13">
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="TextMontserratRegular12" parent="@style/BaseTextStyle">
+        <!--todo foont-->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextTajawalMedium11" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="ButtonTextTajawalMedium16" parent="@style/Widget.MaterialComponents.Button.TextButton">
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextRobotoBold27" parent="@style/BaseTextStyle">
+        <!-- todo roboto bold not added xd number 43 -->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">27sp</item>
+        <item name="android:textColor">#9C3E89</item>
+    </style>
+
+    <style name="TextProximaNovaBold22" parent="@style/BaseTextStyle">
+        <!-- todo font not added xd number 14 -->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">#4F1347</item>
+    </style>
+
+    <style name="TextCairoRegular10" parent="@style/BaseTextStyle">
+        <!-- todo font not added xd number 41 -->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#80000000</item>
+    </style>
+
+    <style name="TextCairoLight10" parent="@style/BaseTextStyle">
+        <!-- todo font not added xd number 41 -->
+        <item name="fontFamily">@font/tajawal_medium</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#848484</item>
+    </style>
+
+    <style name="TextCairoSemiBold16" parent="@style/BaseTextStyle">
+        <!-- todo font not added xd number 41 -->
+        <item name="fontFamily">@font/tajawal_bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextTajawalRegular12" parent="@style/BaseTextStyle">
+        <item name="fontFamily">@font/tajawal_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="TextTajawalRegular16" parent="@style/TextTajawalRegular12">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextTajawalRegular14" parent="@style/TextTajawalRegular12">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

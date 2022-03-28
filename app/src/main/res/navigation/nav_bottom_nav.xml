@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_bottom_nav"
+    app:startDestination="@id/dest_home">
+
+
+    <fragment
+        android:id="@+id/dest_home"
+        android:name="com.grand.ezkorone.presentation.internalNavigation.HomeFragment"
+        tools:layout="@layout/fragment_home" />
+    <action
+        android:id="@+id/action_global_dest_home"
+        app:destination="@id/dest_home" />
+    <fragment
+        android:id="@+id/dest_salah"
+        android:name="com.grand.ezkorone.presentation.internalNavigation.SalahFragment"
+        tools:layout="@layout/fragment_salah" />
+    <action
+        android:id="@+id/action_global_dest_salah"
+        app:destination="@id/dest_salah" />
+    <fragment
+        android:id="@+id/dest_qibla"
+        android:name="com.grand.ezkorone.presentation.internalNavigation.QiblaFragment"
+        tools:layout="@layout/fragment_qibla" />
+    <fragment
+        android:id="@+id/dest_taspeh"
+        android:name="com.grand.ezkorone.presentation.internalNavigation.TaspehFragment"
+        tools:layout="@layout/fragment_taspeh" />
+    <action
+        android:id="@+id/action_global_dest_qibla"
+        app:destination="@id/dest_qibla" />
+    <action
+        android:id="@+id/action_global_dest_taspeh"
+        app:destination="@id/dest_taspeh" />
+</navigation>
