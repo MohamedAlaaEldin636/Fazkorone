@@ -140,6 +140,9 @@
         <action
             android:id="@+id/action_dest_bottom_nav_to_dest_pick_zekr"
             app:destination="@id/dest_pick_zekr" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_who_are_we"
+            app:destination="@id/dest_who_are_we" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -192,5 +195,9 @@
         android:name="com.grand.ezkorone.presentation.azkar.PickZekrFragment"
         android:label="@string/pick_zekr"
         tools:layout="@layout/fragment_pick_zekr" />
+    <fragment
+        android:id="@+id/dest_who_are_we"
+        android:name="com.grand.ezkorone.presentation.drawer.WhoAreWeFragment"
+        tools:layout="@layout/fragment_who_are_we" />
 
 </navigation>

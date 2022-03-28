@@ -32,6 +32,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
     private val destinationsHideToolbar = setOf(
         R.id.dest_splash,
         R.id.dest_location_selection,
+        R.id.dest_who_are_we,
     )
 
     private val destinationsIgnoreToolbarVisibility = setOf(

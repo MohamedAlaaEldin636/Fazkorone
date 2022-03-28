@@ -38,7 +38,7 @@
 
             style="@style/TextTajawalMedium16"
 
-            android:text="@string/determine_yout_location"
+            android:text="@string/determine_your_location"
 
             android:layout_marginTop="16dp"
 
