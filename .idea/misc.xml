@@ -9,9 +9,11 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_circle_with_stroke.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_progress_inner.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_project_round.xml" value="0.226" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_project_round_alpha.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_qibla_title.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_taspeh_text.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_white_round.xml" value="0.226" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_arrow_down.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_arrow_right_themed.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_contact_us.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_current_location.xml" value="0.1715" />
@@ -30,6 +32,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/edit_location_fragment.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_azkar_list.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_contact_us.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_edit_location.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_home.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_location_selection.xml" value="0.26510416666666664" />

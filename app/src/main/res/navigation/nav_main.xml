@@ -143,6 +143,9 @@
         <action
             android:id="@+id/action_dest_bottom_nav_to_dest_who_are_we"
             app:destination="@id/dest_who_are_we" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_contact_us"
+            app:destination="@id/dest_contact_us" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -199,5 +202,10 @@
         android:id="@+id/dest_who_are_we"
         android:name="com.grand.ezkorone.presentation.drawer.WhoAreWeFragment"
         tools:layout="@layout/fragment_who_are_we" />
+    <fragment
+        android:id="@+id/dest_contact_us"
+        android:name="com.grand.ezkorone.presentation.drawer.ContactUsFragment"
+        android:label="@string/call_us"
+        tools:layout="@layout/fragment_contact_us" />
 
 </navigation>

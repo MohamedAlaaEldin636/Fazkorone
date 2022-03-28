@@ -7,6 +7,7 @@
     <string name="you_didn_t_accept_permission">لم تقم بالسماح بالاذن</string>
     <string name="check_location_turned_on">تحقق من تفعيل اعدادات الموقع</string>
     <string name="search">بحث</string>
+    <string name="call_us">اتصل بنا</string>
     <string name="specify_my_location">تحديد موقعي</string>
     <string name="skip">تخطي</string>
     <string name="search_for_location">بحث عن موقع</string>
@@ -54,4 +55,11 @@
     <string name="insta">انستجرام</string>
     <string name="twitter">تويتر</string>
     <string name="fazkorone_azkorkom">فاذكروني أذكركم</string>
+    <string name="name">الاسم</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="purpose_of_contact">غرض التواصل</string>
+    <string name="message">الرسالة</string>
+    <string name="put_image_with_data">ارفق صورة مع البيانات</string>
+    <string name="optional_between_brackets">( اختياري )</string>
+    <string name="send">ارسال</string>
 </resources>

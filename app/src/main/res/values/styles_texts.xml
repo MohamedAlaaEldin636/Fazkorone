@@ -171,6 +171,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextTajawalRegular15" parent="@style/TextTajawalRegular12">
+        <item name="android:textSize">15sp</item>
+    </style>
+
     <style name="TextTajawalRegular14" parent="@style/TextTajawalRegular12">
         <item name="android:textSize">14sp</item>
     </style>
