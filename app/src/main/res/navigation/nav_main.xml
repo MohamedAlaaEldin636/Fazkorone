@@ -137,6 +137,9 @@
             app:exitAnim="@anim/anim_slide_out_left"
             app:popEnterAnim="@anim/anim_slide_in_left"
             app:popExitAnim="@anim/anim_slide_out_right" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_pick_zekr"
+            app:destination="@id/dest_pick_zekr" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -184,5 +187,10 @@
         android:name="com.grand.ezkorone.presentation.sheikh.SheikhListFragment"
         android:label="@string/pick_sheikh_voice"
         tools:layout="@layout/fragment_sheikh_list" />
+    <fragment
+        android:id="@+id/dest_pick_zekr"
+        android:name="com.grand.ezkorone.presentation.azkar.PickZekrFragment"
+        android:label="@string/pick_zekr"
+        tools:layout="@layout/fragment_pick_zekr" />
 
 </navigation>

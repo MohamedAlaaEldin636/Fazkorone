@@ -49,6 +49,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
     private val centeredTitleToolbarDestinations = setOf(
         R.id.dest_on_board,
         R.id.dest_search_queries,
+        R.id.dest_pick_zekr,
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main

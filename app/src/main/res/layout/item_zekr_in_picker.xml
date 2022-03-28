@@ -10,21 +10,12 @@
     android:id="@+id/linearLayout"
     android:clickable="true"
     android:focusable="true"
-    android:gravity="center">
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView"
-
-        android:layout_width="86dp"
-        android:layout_height="74dp"
-
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSizeTiny"
-
-        android:src="@drawable/ic_placeholder"/>
+    android:background="#FFFFFF"
+    android:gravity="center"
+    android:paddingTop="24dp"
+    android:paddingBottom="24dp">
 
     <TextView
-        android:id="@+id/checkImageView"
-
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
@@ -37,6 +28,8 @@
         tools:text="مشاري راشد العفاسي"/>
 
     <ImageView
+        android:id="@+id/checkImageView"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

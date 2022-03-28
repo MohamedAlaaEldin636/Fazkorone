@@ -19,6 +19,7 @@
     <string name="nav_app_bar_navigate_up_description_1">الرجوع للخلف</string>
     <string name="home">الرئيسية</string>
     <string name="pick_sheikh_voice">اختر صوت الشيخ</string>
+    <string name="pick_zekr">اختر الذكر</string>
     <string name="retry">إعادة المحاولة</string>
     <string name="back">الرجوع</string>
     <string name="pray">الصلاة</string>
