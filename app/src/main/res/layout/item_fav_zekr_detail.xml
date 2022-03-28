@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    app:cardElevation="4dp"
+    app:cardMaxElevation="4dp"
+
+    app:cardCornerRadius="8dp"
+
+    app:cardBackgroundColor="@color/white"
+
+    android:layout_gravity="center"
+
+    android:layout_margin="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="16dp"
+
+        android:gravity="center_vertical"
+
+        style="@style/TextTajawalMedium16"
+        tools:text="اذكار المساء"
+
+        android:drawablePadding="8dp"
+        app:drawableEndCompat="@drawable/ic_heart_filled" />
+
+</com.google.android.material.card.MaterialCardView>

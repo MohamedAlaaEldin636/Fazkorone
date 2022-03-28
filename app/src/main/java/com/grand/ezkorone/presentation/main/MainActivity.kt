@@ -57,6 +57,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
         R.id.dest_search_queries,
         R.id.dest_pick_zekr,
         R.id.dest_contact_us,
+        R.id.dest_favorite,
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main

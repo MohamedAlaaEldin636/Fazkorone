@@ -62,4 +62,6 @@
     <string name="put_image_with_data">ارفق صورة مع البيانات</string>
     <string name="optional_between_brackets">( اختياري )</string>
     <string name="send">ارسال</string>
+    <string name="favorite_instructions">لم تضف أى أذكار الي المفضلة قم بقرائه الاذكار واضافتها للمفضلة</string>
+    <string name="go_to_azkar">الذهاب الي الاذكار</string>
 </resources>
