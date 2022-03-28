@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,7 +16,9 @@ import com.grand.ezkorone.core.extensions.inflateGraph
 import com.grand.ezkorone.core.extensions.navigateDeepLinkWithoutOptions
 import com.grand.ezkorone.core.extensions.setupWithNavControllerMA
 import com.grand.ezkorone.databinding.ActivityMainBinding
+import com.grand.ezkorone.databinding.DrawerHeaderMainBinding
 import com.grand.ezkorone.presentation.base.MABaseActivity
+import com.grand.ezkorone.presentation.main.viewModel.DrawerHeaderMainViewModel
 import com.grand.ezkorone.presentation.main.viewModel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : MABaseActivity<ActivityMainBinding>() {
 
     private val viewModel by viewModels<MainViewModel>()
+
+    private val navViewViewModel by viewModels<DrawerHeaderMainViewModel>()
 
     private val destinationsHideToolbar = setOf(
         R.id.dest_splash,
@@ -71,8 +76,13 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
         navController.inflateGraph(R.navigation.nav_main)
         binding?.materialToolbar?.setupWithNavControllerMA(
             navController,
-            AppBarConfiguration(topLevelDestinations)
+            AppBarConfiguration(topLevelDestinations, binding?.drawerLayout)
         )
+
+        val navViewBinding = DataBindingUtil.inflate<DrawerHeaderMainBinding>(layoutInflater, R.layout.drawer_header_main, binding?.navigationView, false)
+        navViewBinding.viewModel = navViewViewModel
+        navViewBinding.lifecycleOwner = this
+        binding?.navigationView?.addHeaderView(navViewBinding.root)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             run {

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.main.viewModel.DrawerHeaderMainViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        tools:layout_width="271dp"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@drawable/ic_drawer_header_2"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_placeholder"
+                android:drawablePadding="8dp"
+
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/who_are_we"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.whoAreWe(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_contact_us"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/contact_us"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.contactUs(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_fav"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/favorite"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.favorite(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_alarms"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/alarms"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.alarms(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_notifications"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/notifications"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.notifications(v)}"/>
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_donate"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/donate_for_app"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.donate(v)}"/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_share_3"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/share_app"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.shareApp(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_rate"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/rate_app"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.rateApp(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_insta"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/insta"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.toInsta(v)}"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+
+                android:background="#33707070"
+
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:drawableStartCompat="@drawable/ic_twitter"
+                android:drawablePadding="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+
+                style="@style/TextTajawalMedium16"
+
+                android:text="@string/twitter"
+                android:gravity="center_vertical"
+
+                android:onClick="@{v -> viewModel.toTwitter(v)}"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="32dp"
+
+                android:layout_gravity="center_horizontal"
+
+                android:background="@drawable/ic_grand_logo"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

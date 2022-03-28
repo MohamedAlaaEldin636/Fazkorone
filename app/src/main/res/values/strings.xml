@@ -43,4 +43,14 @@
     <string name="negative_one">-1</string>
     <string name="count">قم بالعد</string>
     <string name="determine_yout_location">حدد موقعك</string>
+    <string name="contact_us">تواصل معنا</string>
+    <string name="who_are_we">من نحن</string>
+    <string name="favorite">المفضلة</string>
+    <string name="alarms">المنبهات</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="donate_for_app">تبرع للتطبيق</string>
+    <string name="share_app">مشاركة التطبيق</string>
+    <string name="rate_app">تقيم التطبيق</string>
+    <string name="insta">انستجرام</string>
+    <string name="twitter">تويتر</string>
 </resources>
