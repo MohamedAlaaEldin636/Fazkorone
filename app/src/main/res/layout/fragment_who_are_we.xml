@@ -20,18 +20,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- android:background="@drawable/bg_who_are_we" -->
+            <!--
+            android:background="@drawable/bg_who_are_we"
+
+            dynamic image and texts isa.
+            -->
             <ImageView
+                android:id="@+id/headerImageView"
+
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="244dp"
 
                 android:src="@drawable/bg_who_are_we"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/subtitleTextView"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -69,54 +74,26 @@
                 app:layout_constraintTop_toTopOf="@id/titleTextView"
                 app:layout_constraintBottom_toBottomOf="@id/titleTextView"/>
 
-            <ImageView
-                android:id="@+id/logoImageView"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:src="@drawable/ic_placeholder"
-
-                android:layout_marginTop="16dp"
-
-                app:layout_constraintTop_toBottomOf="@id/titleTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/subtitleTextView"
-
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:gravity="center"
-                style="@style/TextTajawalRegular16"
-                android:textSize="28sp"
-                android:textColor="@color/white"
-
-                android:layout_marginTop="16dp"
-
-                android:text="@string/fazkorone_azkorkom"
-
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
-
-                app:layout_constraintTop_toBottomOf="@id/logoImageView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <WebView
-                android:id="@+id/webView"
+            <!--todo create item layout 2 items layouts isa.-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
 
                 android:layout_width="0dp"
                 android:layout_height="0dp"
 
-                app:layout_constraintTop_toBottomOf="@id/subtitleTextView"
+                android:padding="8dp"
+                android:clipToPadding="false"
+
+                android:scrollbars="vertical"
+                tools:itemCount="12"
+                tools:orientation="vertical"
+                tools:listitem="@layout/item_zekr_in_list"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+                app:layout_constraintTop_toBottomOf="@id/headerImageView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

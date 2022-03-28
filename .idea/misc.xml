@@ -12,6 +12,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_project_round_alpha.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_qibla_title.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_taspeh_text.xml" value="0.27" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_top_round_white.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_white_round.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_arrow_down.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_arrow_right_themed.xml" value="0.27" />
@@ -26,10 +27,12 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_share.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_who_are_we.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/activity_main.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_alarm_time_picker.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_base_ok_cancel.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_lottie_loader.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/drawer_header_main.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/edit_location_fragment.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_alarms.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_azkar_list.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_bottom_nav.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_contact_us.xml" value="0.26510416666666664" />
@@ -49,6 +52,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_taspeh.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_who_are_we.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_zekr_details.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_alarm.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_fav_zekr_detail.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_home_zekr.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_pick_zekr.xml" value="0.26510416666666664" />

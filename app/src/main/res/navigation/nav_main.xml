@@ -149,6 +149,9 @@
         <action
             android:id="@+id/action_dest_bottom_nav_to_dest_favorite"
             app:destination="@id/dest_favorite" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_alarms"
+            app:destination="@id/dest_alarms" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -215,5 +218,18 @@
         android:name="com.grand.ezkorone.presentation.drawer.FavoriteFragment"
         android:label="@string/favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/dest_alarms"
+        android:name="com.grand.ezkorone.presentation.drawer.AlarmsFragment"
+        android:label="@string/alarms"
+        tools:layout="@layout/fragment_alarms" >
+        <action
+            android:id="@+id/action_dest_alarms_to_dest_alarm_time_picker_dialog"
+            app:destination="@id/dest_alarm_time_picker_dialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/dest_alarm_time_picker_dialog"
+        android:name="com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragment"
+        tools:layout="@layout/dialog_fragment_alarm_time_picker" />
 
 </navigation>

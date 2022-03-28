@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    tools:context="com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.drawer.dialogs.viewModel.AlarmTimePickerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        tools:ignore="ContentDescription"
+
+        android:orientation="vertical"
+
+        android:background="@drawable/dr_top_round_white"
+        tools:backgroundTint="@android:color/darker_gray"
+
+        tools:layout_gravity="bottom"
+
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false">
+
+        <TextView
+            android:id="@+id/titleTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalMedium16"
+            android:text="@string/determine_your_remind_of_azkar"
+
+            android:gravity="center"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/timeTextInputLayout"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+
+            android:hint="@string/determine_time"
+            app:hintTextColor="#000000"
+            android:textColorHint="#000000"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.launchTimePicker(v)}"
+
+            android:background="@drawable/dr_white_round"
+
+            android:layout_marginTop="24dp"
+
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- 08 : 15 PM -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                style="@style/TextTajawalRegular15"
+                android:textColor="@color/black"
+                android:text="@{viewModel.time}"
+                android:inputType="none"
+
+                android:background="@drawable/dr_white_round"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.launchTimePicker(v)}"
+
+                android:enabled="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButton"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:padding="8dp"
+
+            android:layout_marginTop="24dp"
+
+            style="@style/Widget.MaterialComponents.Button"
+
+            android:text="@string/save"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextTajawalMedium14"
+
+            android:background="@drawable/dr_project_round"
+            app:backgroundTint="@null"
+
+            android:onClick="@{v -> viewModel.save(v)}"
+
+            app:layout_constraintTop_toBottomOf="@id/timeTextInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

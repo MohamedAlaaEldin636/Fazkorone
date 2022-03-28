@@ -64,4 +64,7 @@
     <string name="send">ارسال</string>
     <string name="favorite_instructions">لم تضف أى أذكار الي المفضلة قم بقرائه الاذكار واضافتها للمفضلة</string>
     <string name="go_to_azkar">الذهاب الي الاذكار</string>
+    <string name="determine_your_remind_of_azkar">حدد وقت تذكيرك بقراءة اذكار المساء</string>
+    <string name="determine_time">حدد الوقت</string>
+    <string name="save">حفظ</string>
 </resources>

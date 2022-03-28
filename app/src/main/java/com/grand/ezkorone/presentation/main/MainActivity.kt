@@ -39,6 +39,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
         R.id.dest_global_error_dialog,
         R.id.dest_lottie_loader_dialog,
         R.id.dest_bottom_nav,
+        R.id.dest_alarm_time_picker_dialog,
     )
 
     private val topLevelDestinations = setOf(
@@ -58,6 +59,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
         R.id.dest_pick_zekr,
         R.id.dest_contact_us,
         R.id.dest_favorite,
+        R.id.dest_alarms,
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
