@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.extensions.handleRetryAbleFlowWithMustHaveResultWithNullability
 import com.grand.ezkorone.databinding.FragmentOnBoardBinding
 import com.grand.ezkorone.databinding.FragmentSplashBinding
 import com.grand.ezkorone.domain.splash.SplashInitialLaunch
@@ -26,6 +27,16 @@ class OnBoardFragment : MABaseFragment<FragmentOnBoardBinding>() {
 
     override fun initializeBindingVariables() {
         binding?.viewModel = viewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.liveDataOfRetryAbleFlowDisableNotifications.observe(viewLifecycleOwner) {
+            if (it != null) {
+                handleRetryAbleFlowWithMustHaveResultWithNullability(it) {
+                    viewModel.saveLocallyAndProceedToNextScreen(this, false)
+                }
+            }
+        }
     }
 
 }

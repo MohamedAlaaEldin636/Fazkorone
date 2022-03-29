@@ -93,6 +93,12 @@ dependencies {
     api(Deps.material)
     api(Deps.androidx.constraint_layout.constraint_layout)
 
+    api(Deps.squareup.okhttp3.logging_interceptor)
+    api(Deps.squareup.retrofit2.retrofit)
+    api(Deps.squareup.retrofit2.converter_gson)
+
+    api(Deps.firebase_messaging)
+
     api(Deps.androidx.navigation.fragment_ktx)
     api(Deps.androidx.navigation.ui_ktx)
     api(Deps.androidx.hilt.navigation_fragment)
