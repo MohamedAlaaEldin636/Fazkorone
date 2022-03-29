@@ -40,6 +40,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_favorite.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_home.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_location_selection.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_notifications.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_on_board.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_page_view_zekr_details.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/fragment_pick_zekr.xml" value="0.26510416666666664" />
@@ -55,12 +56,14 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_alarm.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_fav_zekr_detail.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_home_zekr.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_notification.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_pick_zekr.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_salah_timing.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_search_query.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_sheikh.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_text.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_text_in_card.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_who_are_we.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_zekr_in_list.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_zekr_in_picker.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/menu/menu_bottom_nav.xml" value="0.26510416666666664" />

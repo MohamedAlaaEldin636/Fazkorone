@@ -74,7 +74,6 @@
                 app:layout_constraintTop_toTopOf="@id/titleTextView"
                 app:layout_constraintBottom_toBottomOf="@id/titleTextView"/>
 
-            <!--todo create item layout 2 items layouts isa.-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
 
@@ -87,7 +86,7 @@
                 android:scrollbars="vertical"
                 tools:itemCount="12"
                 tools:orientation="vertical"
-                tools:listitem="@layout/item_zekr_in_list"
+                tools:listitem="@layout/item_who_are_we"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
                 app:layout_constraintTop_toBottomOf="@id/headerImageView"

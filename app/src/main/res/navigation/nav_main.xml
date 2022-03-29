@@ -152,6 +152,9 @@
         <action
             android:id="@+id/action_dest_bottom_nav_to_dest_alarms"
             app:destination="@id/dest_alarms" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_notifications"
+            app:destination="@id/dest_notifications" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -231,5 +234,10 @@
         android:id="@+id/dest_alarm_time_picker_dialog"
         android:name="com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragment"
         tools:layout="@layout/dialog_fragment_alarm_time_picker" />
+    <fragment
+        android:id="@+id/dest_notifications"
+        android:name="com.grand.ezkorone.presentation.drawer.NotificationsFragment"
+        android:label="@string/notifications"
+        tools:layout="@layout/fragment_notifications" />
 
 </navigation>

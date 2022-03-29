@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/materialCardView"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:layout_gravity="center"
+
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp"
+
+    app:cardCornerRadius="8dp"
+
+    android:clickable="true"
+    android:focusable="true"
+
+    android:layout_margin="8dp"
+
+    app:cardBackgroundColor="#FFFFFF">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+
+            android:layout_width="52dp"
+            android:layout_height="52dp"
+
+            android:src="@drawable/ic_placeholder"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/dateAndTimeTextView"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            tools:text="01 May 2018 , 6 Am"
+            style="@style/TextTajawalMedium9"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/msgTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            tools:text="عليك بقراءة سورة الكهف يوم الجمعة"
+            style="@style/TextTajawalMedium13"
+
+            android:layout_marginStart="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imageView"
+            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            app:layout_constraintStart_toEndOf="@id/imageView"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

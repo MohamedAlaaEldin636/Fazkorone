@@ -81,6 +81,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TextTajawalMedium9" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="TextTajawalMedium13" parent="@style/TextTajawalMedium14">
+        <item name="android:textSize">13sp</item>
+    </style>
+
     <style name="TextTajawalMedium18" parent="@style/TextTajawalMedium14">
         <item name="android:textSize">18sp</item>
     </style>
