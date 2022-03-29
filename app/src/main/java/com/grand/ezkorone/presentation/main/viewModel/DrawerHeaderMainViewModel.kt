@@ -2,6 +2,10 @@ package com.grand.ezkorone.presentation.main.viewModel
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.grand.ezkorone.R
+import com.grand.ezkorone.core.extensions.getAppWebLinkOnGooglePay
+import com.grand.ezkorone.core.extensions.launchAppOnGooglePlay
+import com.grand.ezkorone.core.extensions.launchShareText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -33,11 +37,15 @@ class DrawerHeaderMainViewModel @Inject constructor() : ViewModel() {
     }*/
 
     fun shareApp(view: View) {
-        // todo
+        view.context.apply {
+            launchShareText(
+                "${getString(R.string.app_name)}\n${getAppWebLinkOnGooglePay()}"
+            )
+        }
     }
 
     fun rateApp(view: View) {
-        // todo
+        view.context.launchAppOnGooglePlay()
     }
 
     fun toInsta(view: View) {

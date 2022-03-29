@@ -49,6 +49,8 @@
     <string name="favorite">المفضلة</string>
     <string name="alarms">المنبهات</string>
     <string name="notifications">الاشعارات</string>
+    <string name="app_not_found">التطبيق غير موجود</string>
+    <string name="pick_app">اختر تطبيق</string>
     <string name="donate_for_app">تبرع للتطبيق</string>
     <string name="share_app">مشاركة التطبيق</string>
     <string name="rate_app">تقيم التطبيق</string>
