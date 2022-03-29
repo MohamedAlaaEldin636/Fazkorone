@@ -22,7 +22,7 @@
             android:layout_gravity="center"
 
             app:lottie_autoPlay="true"
-            app:lottie_fileName="lottie_loader_2.json"
+            app:lottie_fileName="global_loading.json"
             app:lottie_loop="true" />
 
     </FrameLayout>
