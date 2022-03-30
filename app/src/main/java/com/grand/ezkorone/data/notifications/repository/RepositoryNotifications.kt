@@ -21,4 +21,8 @@ class RepositoryNotifications @Inject constructor(
         emit(dataSource.enableOrDisableNotifications(enable))
     }
 
+    fun registerDevice() = flowInitialLoadingWithMinExecutionTime<MABaseResponse<Any>> {
+        emit(dataSource.registerDevice())
+    }
+
 }

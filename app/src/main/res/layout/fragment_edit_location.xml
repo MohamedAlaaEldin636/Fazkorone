@@ -67,12 +67,12 @@
 
                     style="@style/TextTajawalRegular12"
                     android:textColor="@color/black"
-                    android:text="@{viewModel.search}"
 
                     android:background="#FBFBFB"
 
                     android:clickable="true"
                     android:focusable="true"
+                    android:focusableInTouchMode="false"
                     android:onClick="@{v -> viewModel.toSearchPlace(v)}"
 
                     android:enabled="false"/>
@@ -80,6 +80,21 @@
             </com.google.android.material.textfield.TextInputLayout>
 
         </com.google.android.material.card.MaterialCardView>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:elevation="9dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+            app:layout_constraintTop_toTopOf="@id/searchMaterialCardView"
+            app:layout_constraintBottom_toBottomOf="@id/searchMaterialCardView"
+            app:layout_constraintStart_toStartOf="@id/searchMaterialCardView"
+            app:layout_constraintEnd_toEndOf="@id/searchMaterialCardView"/>
 
         <TextView
             android:id="@+id/currentLocationTitleTextView"
@@ -135,7 +150,7 @@
 
             style="@style/Widget.MaterialComponents.Button"
 
-            android:text="@string/specify_my_location"
+            android:text="@{viewModel.showLottie ? @string/empty_string : @string/specify_my_location}"
             android:textColor="#17A16E"
             android:textAppearance="@style/TextTajawalMedium14"
 
@@ -220,6 +235,9 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
+            tools:visibility="gone"
+            android:visibility="@{!viewModel.showEmptyView}"
+
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:clipToPadding="false"
@@ -234,6 +252,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/divider2View"/>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:visibility="@{viewModel.showEmptyView,default=gone}"
+            tools:visibility="visible"
+
+            app:layout_constraintTop_toBottomOf="@id/citiesTitleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                layout="@layout/item_text_2"/>
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

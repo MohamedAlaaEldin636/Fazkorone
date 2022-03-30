@@ -18,4 +18,8 @@ class DataSourceNotifications @Inject constructor(
         apiService.enableOrDisableNotifications(prefsApp.getFirebaseToken().first()!!, status)
     }
 
+    suspend fun registerDevice() = safeApiCall {
+        apiService.enableOrDisableNotifications(prefsApp.getFirebaseToken().first()!!, 0)
+    }
+
 }

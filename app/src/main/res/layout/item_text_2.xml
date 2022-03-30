@@ -8,6 +8,7 @@
     android:textColor="@android:color/black"
     android:gravity="center"
     android:textStyle="bold"
+    android:text="@string/no_data_found"
     tools:text="@string/no_data_found"
     android:padding="16dp"
     android:textIsSelectable="false"

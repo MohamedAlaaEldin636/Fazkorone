@@ -23,6 +23,7 @@
     <string name="check_location_turned_on">تحقق من تفعيل اعدادات الموقع</string>
     <string name="search">بحث</string>
     <string name="call_us">اتصل بنا</string>
+    <string name="empty_string"/>
     <string name="specify_my_location">تحديد موقعي</string>
     <string name="skip">تخطي</string>
     <string name="search_for_location">بحث عن موقع</string>

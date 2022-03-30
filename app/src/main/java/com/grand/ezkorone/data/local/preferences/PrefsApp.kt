@@ -5,6 +5,8 @@ import com.google.gson.Gson
 import com.grand.ezkorone.core.customTypes.LocationData
 import com.grand.ezkorone.domain.splash.SplashInitialLaunch
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,10 +20,14 @@ class PrefsApp @Inject constructor(
         private const val KEY_LOCATION_DATA = "KEY_LOCATION_DATA"
         private const val KEY_NOTIFICATIONS_STATUS = "KEY_NOTIFICATIONS_STATUS"
         private const val KEY_FIREBASE_TOKEN = "KEY_FIREBASE_TOKEN"
+        private const val KEY_LOCATIONS_LIST = "KEY_LOCATIONS_LIST"
     }
 
-    suspend fun setLocationData(locationData: LocationData?) =
+    suspend fun setLocationData(locationData: LocationData?) {
+        addInLocationsList(locationData)
+
         setValue(KEY_LOCATION_DATA, locationData)
+    }
 
     fun getLocationData() = getValue<LocationData?>(KEY_LOCATION_DATA)
 
@@ -34,5 +40,24 @@ class PrefsApp @Inject constructor(
         setStringValue(KEY_FIREBASE_TOKEN, token)
 
     fun getFirebaseToken() = getStringValue(KEY_FIREBASE_TOKEN)
+
+    private suspend fun addInLocationsList(locationData: LocationData?) {
+        if (locationData == null) {
+            return
+        }
+
+        val list = getLocationsList().first().toMutableList()
+        if (locationData !in list) {
+            list.add(0, locationData)
+            setLocationsList(list.let {
+                if (it.size > 100) it.dropLast(1) else it
+            })
+        }
+    }
+
+    private suspend fun setLocationsList(locations: List<LocationData>) =
+        setValue(KEY_LOCATIONS_LIST, locations)
+
+    fun getLocationsList() = getValue<List<LocationData>>(KEY_LOCATIONS_LIST).map { it.orEmpty() }
 
 }

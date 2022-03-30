@@ -38,7 +38,6 @@ class HomeViewModel @Inject constructor(
     repoFavorite: RepositoryFavorite,
 ) : AndroidViewModel(application) {
 
-    // todo check that when change in prefs via edit location screen then here changed else keep listeneing to changes dunno how isa.
     private val locationData = prefsApp.getLocationData().map { it!! }.asLiveData()
 
     val currentDateTime = MutableLiveData(LocalDateTime.now())
@@ -61,7 +60,7 @@ class HomeViewModel @Inject constructor(
 
     val todayAndTomorrowSalawatTimes = MutableLiveData<TodayAndTomorrowSalawatTimes>()
 
-    private val calculations = switchMapMultiple(currentDateTime, todayAndTomorrowSalawatTimes) {
+    private val calculations = switchMapMultiple(locationData, currentDateTime, todayAndTomorrowSalawatTimes) {
         val currentDateTime = currentDateTime.value
         val salawatTimes = todayAndTomorrowSalawatTimes.value
 

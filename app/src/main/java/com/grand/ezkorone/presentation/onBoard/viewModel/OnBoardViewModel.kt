@@ -30,6 +30,8 @@ class OnBoardViewModel @Inject constructor(
     private val prefsSplash: PrefsSplash,
 ) : ViewModel() {
 
+    val retryAbleFlow = RetryAbleFlow(repository::registerDevice)
+
     private val _handleDisableNotificationsRetryAbleFlow = MutableLiveData(false)
     val liveDataOfRetryAbleFlowDisableNotifications = _handleDisableNotificationsRetryAbleFlow.map {
         if (it == true) {

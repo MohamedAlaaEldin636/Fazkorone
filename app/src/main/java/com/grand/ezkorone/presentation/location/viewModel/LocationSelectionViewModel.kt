@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationData
 import com.grand.ezkorone.core.extensions.*
+import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.presentation.location.LocationSelectionFragment
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentDirections
@@ -31,6 +32,7 @@ import javax.inject.Inject
 class LocationSelectionViewModel @Inject constructor(
     val arg: LocationSelectionFragmentArgs,
     private val gson: Gson,
+    private val prefsApp: PrefsApp,
 ) : ViewModel() {
 
     /** Used for [LocationSelectionFragmentArgs.onBoardLocationSelection] */
@@ -111,6 +113,8 @@ class LocationSelectionViewModel @Inject constructor(
             val navController = fragment.findNavController()
 
             if (skipAble) {
+                prefsApp.setLocationData(locationData)
+
                 navController.navigate(LocationSelectionFragmentDirections.actionDestLocationSelectionToDestOnBoard())
             }else {
                 navController.navigateUp()

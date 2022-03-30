@@ -1,30 +1,85 @@
 package com.grand.ezkorone.presentation.location.viewModel
 
 import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.fragment.app.findFragment
+import androidx.lifecycle.*
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
+import com.grand.ezkorone.R
+import com.grand.ezkorone.core.customTypes.LocationData
+import com.grand.ezkorone.core.extensions.*
+import com.grand.ezkorone.data.local.preferences.PrefsApp
+import com.grand.ezkorone.presentation.location.EditLocationFragment
+import com.grand.ezkorone.presentation.location.LocationSelectionFragment
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
+import com.grand.ezkorone.presentation.location.LocationSelectionFragmentDirections
+import com.grand.ezkorone.presentation.location.adapter.RVItemText
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EditLocationViewModel @Inject constructor(
-
+    private val prefsApp: PrefsApp
 ) : ViewModel() {
 
-    val search = MutableLiveData("")
+    private val locationData = prefsApp.getLocationData().map { it!! }.asLiveData()
 
-    val address = MutableLiveData("")
+    val address = locationData.map {
+        it.address
+    }
 
     val showLottie = MutableLiveData(false)
 
+    var myCurrentLocation: LatLng? = null
+
+    val addresses = prefsApp.getLocationsList().map { list -> list.map { it.address } }
+
+    val adapter = RVItemText()
+
+    val showEmptyView = MutableLiveData(false)
+
     fun autoDetectLocation(view: View) {
-        // todo
+        view.findFragment<EditLocationFragment>().checkIfPermissionsGrantedToMoveOrRequestThem()
     }
 
     fun toSearchPlace(view: View) {
-        // todo
+        val latitude = locationData.value?.latitude ?: return
+        val longitude = locationData.value?.longitude ?: return
+
+        view.findNavController().navigateDeepLinkWithoutOptions(
+            "fragment-dest",
+            "com.maproductions.mohamedalaa.shared.location.selection",
+            latitude,
+            longitude,
+        )
+    }
+
+    fun onSelectLocationClick(view: View, latitude: String, longitude: String, possibleAddress: String? = null) {
+        val fragment = view.findFragment<EditLocationFragment>()
+
+        fragment.activityViewModel.globalLoading.value = true
+
+        fragment.lifecycleScope.launch {
+            val address = possibleAddress ?: fragment.requireContext().getAddressFromLatitudeAndLongitude(
+                latitude.toDouble(),
+                longitude.toDouble()
+            )
+
+            val locationData = LocationData(
+                latitude,
+                longitude,
+                address
+            )
+
+            prefsApp.setLocationData(locationData)
+
+            fragment.activityViewModel.globalLoading.value = false
+        }
     }
 
 }

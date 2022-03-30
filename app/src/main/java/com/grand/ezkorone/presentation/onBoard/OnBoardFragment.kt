@@ -33,10 +33,12 @@ class OnBoardFragment : MABaseFragment<FragmentOnBoardBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         Timber.e("iodwjowejd 3")
 
-        viewModel.liveDataOfRetryAbleFlowDisableNotifications.observe(viewLifecycleOwner) {
-            if (it != null) {
-                handleRetryAbleFlowWithMustHaveResultWithNullability(it) {
-                    viewModel.saveLocallyAndProceedToNextScreen(this, false)
+        handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAbleFlow) {
+            viewModel.liveDataOfRetryAbleFlowDisableNotifications.observe(viewLifecycleOwner) {
+                if (it != null) {
+                    handleRetryAbleFlowWithMustHaveResultWithNullability(it) {
+                        viewModel.saveLocallyAndProceedToNextScreen(this, false)
+                    }
                 }
             }
         }
