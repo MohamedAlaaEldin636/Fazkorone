@@ -49,7 +49,7 @@ abstract class MAAbstractAppBarOnDestinationChangedListener(
 		if (label != null) {
 			// Fill in the data pattern with the args to build a valid URI
 			val title = StringBuffer()
-			val fillInPattern = Pattern.compile("\\{(.+?)}")
+			val fillInPattern = Pattern.compile("\\{(.+?)\\}")
 			val matcher = fillInPattern.matcher(label)
 			while (matcher.find()) {
 				val argName = matcher.group(1)

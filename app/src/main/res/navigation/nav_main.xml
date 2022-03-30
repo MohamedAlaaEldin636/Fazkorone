@@ -10,22 +10,14 @@
         android:name="com.grand.ezkorone.presentation.splash.SplashFragment"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_dest_splash_to_dest_on_board"
-            app:destination="@id/dest_on_board"
-
-            app:enterAnim="@anim/anim_slide_in_right"
-            app:exitAnim="@anim/anim_slide_out_left"
-            app:popEnterAnim="@anim/anim_slide_in_left"
-            app:popExitAnim="@anim/anim_slide_out_right"
-            app:popUpTo="@id/dest_on_board" />
-        <action
             android:id="@+id/action_dest_splash_to_dest_bottom_nav"
             app:destination="@id/dest_bottom_nav"
             app:enterAnim="@anim/anim_slide_in_right"
             app:exitAnim="@anim/anim_slide_out_left"
             app:popEnterAnim="@anim/anim_slide_in_left"
             app:popExitAnim="@anim/anim_slide_out_right"
-            app:popUpTo="@id/dest_bottom_nav" />
+            app:popUpTo="@id/nav_main"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -58,6 +50,13 @@
             android:id="@+id/deep_link_dest_location_selection_on_board_location_selection"
             android:autoVerify="true"
             app:uri="fragment-dest://com.maproductions.mohamedalaa.shared.location.selection.on.board.location.selection/{onBoardLocationSelection}" />
+        <action
+            android:id="@+id/action_dest_location_selection_to_dest_on_board"
+            app:destination="@id/dest_on_board"
+            app:enterAnim="@anim/anim_slide_in_right"
+            app:exitAnim="@anim/anim_slide_out_left"
+            app:popEnterAnim="@anim/anim_slide_in_left"
+            app:popExitAnim="@anim/anim_slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/dest_on_board"
@@ -71,7 +70,8 @@
             app:exitAnim="@anim/anim_slide_out_left"
             app:popEnterAnim="@anim/anim_slide_in_left"
             app:popExitAnim="@anim/anim_slide_out_right"
-            app:popUpTo="@id/dest_bottom_nav" />
+            app:popUpTo="@id/nav_main"
+            app:popUpToInclusive="true"/>
     </fragment>
     <dialog
         android:id="@+id/dest_lottie_loader_dialog"

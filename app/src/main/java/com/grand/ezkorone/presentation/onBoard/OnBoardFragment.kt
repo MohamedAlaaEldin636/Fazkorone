@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class OnBoardFragment : MABaseFragment<FragmentOnBoardBinding>() {
@@ -30,6 +31,8 @@ class OnBoardFragment : MABaseFragment<FragmentOnBoardBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Timber.e("iodwjowejd 3")
+
         viewModel.liveDataOfRetryAbleFlowDisableNotifications.observe(viewLifecycleOwner) {
             if (it != null) {
                 handleRetryAbleFlowWithMustHaveResultWithNullability(it) {

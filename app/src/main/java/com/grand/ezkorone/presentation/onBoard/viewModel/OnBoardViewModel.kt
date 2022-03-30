@@ -12,7 +12,9 @@ import com.google.gson.Gson
 import com.grand.ezkorone.core.customTypes.RetryAbleFlow
 import com.grand.ezkorone.core.extensions.popAllBackStacks
 import com.grand.ezkorone.data.local.preferences.PrefsApp
+import com.grand.ezkorone.data.local.preferences.PrefsSplash
 import com.grand.ezkorone.data.notifications.repository.RepositoryNotifications
+import com.grand.ezkorone.domain.splash.SplashInitialLaunch
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import com.grand.ezkorone.presentation.onBoard.OnBoardFragment
 import com.grand.ezkorone.presentation.onBoard.OnBoardFragmentDirections
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class OnBoardViewModel @Inject constructor(
     repository: RepositoryNotifications,
-    private val prefsApp: PrefsApp
+    private val prefsApp: PrefsApp,
+    private val prefsSplash: PrefsSplash,
 ) : ViewModel() {
 
     private val _handleDisableNotificationsRetryAbleFlow = MutableLiveData(false)
@@ -51,7 +54,7 @@ class OnBoardViewModel @Inject constructor(
         fragment.lifecycleScope.launch {
             prefsApp.setNotificationStatus(enableNotifications)
 
-            fragment.findNavController().popAllBackStacks()
+            prefsSplash.setInitialLaunch(SplashInitialLaunch.HOME)
 
             fragment.findNavController().navigate(OnBoardFragmentDirections.actionDestOnBoardToDestBottomNav())
         }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import com.grand.ezkorone.R
 
 fun Context.dpToPx(value: Float): Float {
     return TypedValue.applyDimension(
@@ -34,3 +35,8 @@ fun Context.inflateLayout(
 ): View {
     return layoutInflater.inflate(layoutRes, parent, attachToRoot)
 }
+
+/**
+ * @param index ranges from 0 to 11 where 0 is january and 11 is december
+ */
+fun Context.getMonthName(index: Int): String = resources.getStringArray(R.array.year_months)[index]

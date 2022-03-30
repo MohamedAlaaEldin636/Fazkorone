@@ -14,7 +14,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+
+        android:background="#FBFBFB">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -104,6 +106,7 @@
 
                 android:text="@{viewModel.prayExactTime}"
                 tools:text="الظهر : 11 :53 ص"
+                android:textDirection="rtl"
                 android:textColor="#ffffff"
                 style="@style/TextTajawalBold16"
 
@@ -120,6 +123,7 @@
                 android:layout_height="wrap_content"
 
                 android:text="@{viewModel.prayRemainingTime}"
+                android:textDirection="rtl"
                 tools:text="( 02:12:21 )"
                 android:textColor="#FFAA00"
                 style="@style/TextTajawalRegular14"
@@ -192,12 +196,13 @@
 
                         style="@style/TextTajawalRegular12"
                         android:textColor="@color/black"
-                        android:text="@{viewModel.search}"
+                        android:text=""
 
                         android:background="@color/white"
 
                         android:clickable="true"
                         android:focusable="true"
+                        android:focusableInTouchMode="false"
                         android:onClick="@{v -> viewModel.toSearchPlace(v)}"
 
                         android:enabled="false"/>
@@ -205,6 +210,21 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:elevation="9dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.toSearchPlace(v)}"
+
+                app:layout_constraintTop_toTopOf="@id/searchMaterialCardView"
+                app:layout_constraintBottom_toBottomOf="@id/searchMaterialCardView"
+                app:layout_constraintStart_toStartOf="@id/searchMaterialCardView"
+                app:layout_constraintEnd_toEndOf="@id/searchMaterialCardView"/>
 
             <View
                 android:id="@+id/bottomOfSearchView"

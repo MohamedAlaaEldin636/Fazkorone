@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.showErrorToast
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBinding>(),
@@ -65,6 +66,16 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (googleMap != null) {
+            binding?.root?.post {
+                viewModel.moveToCurrentLocation(binding?.root ?: return@post)
+            }
+        }
+    }
+
     override fun getLayoutId(): Int = R.layout.fragment_location_selection
 
     override fun initializeBindingVariables() {
@@ -72,6 +83,8 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Timber.e("iodwjowejd 2")
+
         // Setup map
         (childFragmentManager.findFragmentById(R.id.mapFragmentContainerView) as? SupportMapFragment)
             ?.getMapAsync(this)

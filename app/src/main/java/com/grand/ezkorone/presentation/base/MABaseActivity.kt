@@ -36,7 +36,8 @@ abstract class MABaseActivity<VDB : ViewDataBinding> : AppCompatActivity() {
 
     @CallSuper
     final override fun onCreate(savedInstanceState: Bundle?) {
-        Locale.setDefault(Locale(APPLICATION_DEFAULT_LANGUAGE))
+        //Locale.setDefault(Locale(APPLICATION_DEFAULT_LANGUAGE))
+        LocaleHelper.setLocale(this, Locale(APPLICATION_DEFAULT_LANGUAGE))
 
         super.onCreate(savedInstanceState)
 

@@ -1,4 +1,17 @@
 <resources>
+    <string name="january">يناير</string>
+    <string name="february">فبراير</string>
+    <string name="march">مارس</string>
+    <string name="april">إبريل</string>
+    <string name="may">مايو</string>
+    <string name="june">يونيو</string>
+    <string name="july">يوليو</string>
+    <string name="august">أغسطس</string>
+    <string name="september">سبتمبر</string>
+    <string name="october">أكنوبر</string>
+    <string name="november">نوفمبر</string>
+    <string name="december">ديسمبر</string>
+    <string name="h">هـ</string>
     <string name="app_name">فاذكرونى اذكركم</string>
     <string name="location_selection">تحديد الموقع</string>
     <string name="google_geo_api_key" translatable="false">AIzaSyBs0qcQwZhQAlOVoco8JG5qQ6_OoHZ9EMM</string>
@@ -70,4 +83,7 @@
     <string name="determine_time">حدد الوقت</string>
     <string name="save">حفظ</string>
     <string name="enable_notifications">تشغيل الاشعارات</string>
+    <string name="loading">جارى التحميل</string>
+    <string name="am">ص</string>
+    <string name="pm">م</string>
 </resources>

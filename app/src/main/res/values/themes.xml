@@ -15,6 +15,14 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">#FBFBFB</item>
 
+        <!--<item name="fontFamily">@font/almarai_medium</item>-->
+
+        <item name="android:windowContentTransitions">true</item>
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <!--<item name="android:dialogTheme">@style/PauseDialog</item>-->
+        <item name="android:windowDisablePreview">true</item>
+
         <!--
         <item name="fontFamily">@font/almarai_medium</item>
 
@@ -25,6 +33,17 @@
         <item name="android:windowDisablePreview">true</item>
         -->
         <item name="drawerArrowStyle">@style/MADrawerArrowStyle</item>
+    </style>
+
+    <style name="PauseDialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowAnimationStyle">@style/PauseDialogAnimation</item>
+        <item name="android:windowMinWidthMajor">@android:dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@android:dimen/dialog_min_width_minor</item>
+    </style>
+
+    <style name="PauseDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/anim_slide_in_left</item>
+        <item name="android:windowExitAnimation">@android:anim/slide_out_right</item>
     </style>
 
     <style name="MADrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">

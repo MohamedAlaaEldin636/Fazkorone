@@ -50,6 +50,7 @@ object Deps {
     const val pdf_viewer = "es.voghdev.pdfviewpager:library:${Versions.pdf_viewer}"
 
     const val firebase_messaging = "com.google.firebase:firebase-messaging-ktx:23.0.0"
+    const val firebase_analytics = "com.google.firebase:firebase-analytics-ktx:20.1.0"
 
     // firebase for fcm + tracking realtime databse isa.
 

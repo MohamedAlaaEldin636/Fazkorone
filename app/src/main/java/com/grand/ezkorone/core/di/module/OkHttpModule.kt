@@ -50,11 +50,15 @@ object OkHttpModule {
 	): Interceptor {
 		return Interceptor { chain ->
 			val request = chain.request()
-			
+
+			val url = request.url.toString()
+
 			val builder = request.newBuilder()
 
-			builder.addHeader(HEADER_KEY_DEVICE, context.getDeviceIdWithoutPermission())
-			builder.addHeader(HEADER_KEY_PLATFORM, HEADER_VALUE_PLATFORM)
+			if (url.startsWith(RetrofitModule.BASE_URL)) {
+				builder.addHeader(HEADER_KEY_DEVICE, context.getDeviceIdWithoutPermission())
+				builder.addHeader(HEADER_KEY_PLATFORM, HEADER_VALUE_PLATFORM)
+			}
 
 			chain.proceed(builder.build())
 		}

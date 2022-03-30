@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "781279242802",
+    "project_id": "fazkrony-azkorkom",
+    "storage_bucket": "fazkrony-azkorkom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781279242802:android:5376bf9aec0f78072b6a2b",
+        "android_client_info": {
+          "package_name": "com.grand.ezkorone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "781279242802-tj13r4n4g76cn0tl9dkjf1i6ml92h1jv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbY2ovwp227orw5bsmpdKno_om5LRUrMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "781279242802-tj13r4n4g76cn0tl9dkjf1i6ml92h1jv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

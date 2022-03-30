@@ -46,6 +46,8 @@ fun <VDB : ViewDataBinding, F : MABaseFragment<VDB>, T> F.handleRetryAbleFlowWit
                         onSuccess(it.value)
                     }
                     is MAResult.Failure -> {
+                        Timber.e("failure is $it")
+
                         activityViewModel.globalLoading.value = false
 
                         activityViewModel.globalError.value = GlobalError.Show(it.message)

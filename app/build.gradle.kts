@@ -10,6 +10,8 @@ plugins {
     id("dagger.hilt.android.plugin")
 
     id("androidx.navigation.safeargs.kotlin")
+
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -98,6 +100,7 @@ dependencies {
     api(Deps.squareup.retrofit2.converter_gson)
 
     api(Deps.firebase_messaging)
+    api(Deps.firebase_analytics)
 
     api(Deps.androidx.navigation.fragment_ktx)
     api(Deps.androidx.navigation.ui_ktx)

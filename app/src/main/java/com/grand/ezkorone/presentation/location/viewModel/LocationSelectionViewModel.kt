@@ -17,12 +17,10 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.google.gson.Gson
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationData
-import com.grand.ezkorone.core.extensions.getAddressFromLatitudeAndLongitude
-import com.grand.ezkorone.core.extensions.navigateDeepLinkWithOptions
-import com.grand.ezkorone.core.extensions.showErrorToast
-import com.grand.ezkorone.core.extensions.toJson
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.presentation.location.LocationSelectionFragment
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
+import com.grand.ezkorone.presentation.location.LocationSelectionFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -112,12 +110,16 @@ class LocationSelectionViewModel @Inject constructor(
 
             val navController = fragment.findNavController()
 
-            navController.navigateUp()
+            if (skipAble) {
+                navController.navigate(LocationSelectionFragmentDirections.actionDestLocationSelectionToDestOnBoard())
+            }else {
+                navController.navigateUp()
 
-            navController.currentBackStackEntry?.savedStateHandle?.set(
-                LocationSelectionFragment.KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON,
-                locationData.toJson(gson)
-            )
+                navController.currentBackStackEntry?.savedStateHandle?.set(
+                    LocationSelectionFragment.KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON,
+                    locationData.toJson(gson)
+                )
+            }
         }
     }
 
