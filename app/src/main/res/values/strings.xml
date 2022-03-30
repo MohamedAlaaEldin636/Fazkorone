@@ -1,4 +1,6 @@
 <resources>
+    <string name="no_data_found">لا توجد بيانات</string>
+    <string name="try_again">حاول مرة اخرى</string>
     <string name="january">يناير</string>
     <string name="february">فبراير</string>
     <string name="march">مارس</string>

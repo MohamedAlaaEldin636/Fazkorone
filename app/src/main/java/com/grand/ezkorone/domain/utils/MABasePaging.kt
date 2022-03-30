@@ -41,4 +41,18 @@ data class MABasePaging<T>(
 	@SerializedName("total") val totalNumberOfItems: Int,
 	/** 20 */
 	@SerializedName("per_page") val numOfItemsPerPage: Int,
-)
+) {
+
+	fun <R> mapData(conversion: (T) -> R) = MABasePaging(
+		data?.map { conversion(it) },
+		currentPage,
+		nextPageUrl,
+		firstPageUrl,
+		lastPage,
+		fromInPage,
+		toInPage,
+		totalNumberOfItems,
+		numOfItemsPerPage
+	)
+
+}

@@ -13,10 +13,14 @@ import com.grand.ezkorone.core.extensions.getMonthName
 import com.grand.ezkorone.core.extensions.myApp
 import com.grand.ezkorone.core.extensions.openDrawerLayout
 import com.grand.ezkorone.data.azan.repository.RepositoryAzan
+import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
+import com.grand.ezkorone.data.home.repository.RepositoryHome
 import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.domain.azan.SalawatTimes
 import com.grand.ezkorone.domain.azan.TodayAndTomorrowSalawatTimes
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
+import com.grand.ezkorone.presentation.internalNavigation.adapters.RVItemHomeZekr
+import com.grand.ezkorone.presentation.internalNavigation.adapters.RVItemTextInCard
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
@@ -29,7 +33,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     application: Application,
     prefsApp: PrefsApp,
-    azanRepo: RepositoryAzan
+    azanRepo: RepositoryAzan,
+    homeRepo: RepositoryHome,
+    repoFavorite: RepositoryFavorite,
 ) : AndroidViewModel(application) {
 
     // todo check that when change in prefs via edit location screen then here changed else keep listeneing to changes dunno how isa.
@@ -77,6 +83,14 @@ class HomeViewModel @Inject constructor(
     val prayRemainingTime = calculations.map {
         it?.getRemainingTime().orEmpty()
     }
+
+    val retryAbleFlowHomeCategoriesHorizontal = RetryAbleFlow(homeRepo::getHomeCategoriesHorizontal)
+
+    val homeCategoriesVertical = homeRepo.getHomeCategoriesVertical()
+
+    val adapterItemTextInCard = RVItemTextInCard()
+
+    val adapterItemHomeZekr = RVItemHomeZekr(repoFavorite)
 
     fun showNavDrawer(view: View) {
         view.openDrawerLayout()

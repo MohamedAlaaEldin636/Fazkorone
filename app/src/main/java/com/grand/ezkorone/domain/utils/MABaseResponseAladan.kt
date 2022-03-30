@@ -10,7 +10,7 @@ data class MABaseResponseAladan<T>(
 ) {
 
     fun toMABaseResponse(): MABaseResponse<T> {
-        return MABaseResponse(data, message.orEmpty(), code, null)
+        return MABaseResponse(data, message.orEmpty(), code, null, null)
     }
 
 }
