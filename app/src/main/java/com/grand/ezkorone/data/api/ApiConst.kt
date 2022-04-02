@@ -9,6 +9,7 @@ object ApiConst {
     object Query {
 
         const val TYPE = "type"
+        const val SEARCH = "search"
         const val CATEGORY_ID = "category_id"
         const val AZKAR_ID = "azkar_id"
         const val FIREBASE_TOKEN = "firebase_token"

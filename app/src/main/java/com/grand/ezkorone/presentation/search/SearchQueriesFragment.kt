@@ -3,11 +3,17 @@ package com.grand.ezkorone.presentation.search
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.grand.ezkorone.R
 import com.grand.ezkorone.databinding.FragmentSearchQueriesBinding
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.search.viewModel.SearchQueriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchQueriesFragment : MABaseFragment<FragmentSearchQueriesBinding>() {
@@ -21,16 +27,16 @@ class SearchQueriesFragment : MABaseFragment<FragmentSearchQueriesBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //handleRetryAbleFlowWithMustHaveResultWithNullability() todo see on page change, acc. to page index and list size as well isa.
-        /*viewModel.skipOrStartButtonText.value = if (viewModel.list.isEmpty()) {
-            getString(R.string.skip)
-        }else {
-            getString(R.string.start_application)
-        }
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding?.recyclerView?.adapter = viewModel.adapter
 
-        binding?.sliderView?.setCurrentPageListener {
-            // todo change text accordingly isa.
-        }*/
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.data.collectLatest {
+                    viewModel.adapter.submitData(it)
+                }
+            }
+        }
     }
 
 }

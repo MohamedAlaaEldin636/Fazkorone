@@ -184,6 +184,9 @@
         android:name="com.grand.ezkorone.presentation.azkar.ZekrDetailsFragment"
         tools:layout="@layout/fragment_zekr_details">
         <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
             android:name="toolbarTitle"
             app:argType="string" />
     </fragment>
