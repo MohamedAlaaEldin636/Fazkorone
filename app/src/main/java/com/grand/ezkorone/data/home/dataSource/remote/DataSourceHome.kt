@@ -18,4 +18,8 @@ class DataSourceHome @Inject constructor(
         apiService.getHomeCategories(page)
     }
 
+    suspend fun getAzkarList(id: Int, page: Int) = safeApiCall {
+        apiService.getAzkarList(id, page)
+    }
+
 }

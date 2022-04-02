@@ -51,8 +51,7 @@ class VHItemHomeZekr(parent: ViewGroup, private val adapter: RVItemHomeZekr) : R
             val name = binding.textView.text?.toString().orEmpty()
 
             view.findNavControllerOfProject().navigate(
-                // todo akid will need id as well isa.
-                BottomNavFragmentDirections.actionDestBottomNavToDestAzkarList(name)
+                BottomNavFragmentDirections.actionDestBottomNavToDestAzkarList(id, name)
             )
         }
     }

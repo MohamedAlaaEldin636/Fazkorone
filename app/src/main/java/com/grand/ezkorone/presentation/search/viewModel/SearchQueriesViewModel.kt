@@ -3,6 +3,7 @@ package com.grand.ezkorone.presentation.search.viewModel
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.lifecycle.*
+import com.google.android.material.textfield.TextInputEditText
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.data.home.repository.RepositoryHome
@@ -40,7 +41,9 @@ class SearchQueriesViewModel @Inject constructor(
         false
     }
 
-    fun searchAllData() {
+    fun searchAllData(editText: TextInputEditText) {
+        editText.setText("")
+
         search.value = ""
     }
 

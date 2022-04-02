@@ -7,6 +7,7 @@ import com.grand.ezkorone.data.basePaging.BasePaging
 import com.grand.ezkorone.data.home.dataSource.remote.DataSourceHome
 import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.domain.azan.ResponseAzan
+import com.grand.ezkorone.domain.home.ItemZekrInList
 import com.grand.ezkorone.domain.home.ItemZekrTopCategory
 import com.grand.ezkorone.domain.utils.MABasePaging
 import com.grand.ezkorone.domain.utils.MABaseResponse
@@ -34,6 +35,12 @@ class RepositoryHome @Inject constructor(
                 }
             }
         )
+    }
+
+    fun getAzkarList(id: Int): Flow<PagingData<ItemZekrInList>> {
+        return BasePaging.createFlowViaPager { page ->
+            dataSource.getAzkarList(id, page)
+        }
     }
 
 }

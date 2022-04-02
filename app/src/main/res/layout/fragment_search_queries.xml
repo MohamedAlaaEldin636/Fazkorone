@@ -35,7 +35,7 @@
             app:startIconTint="#17a16e"
 
             app:endIconMode="clear_text"
-            textInputLayout_setEndIconOnClickListener="@{v -> viewModel.searchAllData()}"
+            textInputLayout_setEndIconOnClickListener="@{v -> viewModel.searchAllData(textInputEditText)}"
 
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
@@ -43,6 +43,8 @@
             android:background="@drawable/dr_white_round">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

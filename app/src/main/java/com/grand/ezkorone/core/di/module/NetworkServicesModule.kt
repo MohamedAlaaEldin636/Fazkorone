@@ -3,6 +3,7 @@ package com.grand.ezkorone.core.di.module
 import com.grand.ezkorone.data.favorite.dataSource.remote.ApiFavoriteServices
 import com.grand.ezkorone.data.home.dataSource.remote.ApiHomeServices
 import com.grand.ezkorone.data.notifications.dataSource.remote.ApiNotificationsServices
+import com.grand.ezkorone.data.search.dataSource.remote.ApiSearchService
 import com.grand.ezkorone.data.settings.dataSource.remote.ApiSettingsServices
 import dagger.Module
 import dagger.Provides
@@ -34,5 +35,10 @@ object NetworkServicesModule {
     @Singleton
     fun provideApiFavoriteServices(retrofit: Retrofit): ApiFavoriteServices =
         retrofit.create(ApiFavoriteServices::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiSearchService(retrofit: Retrofit): ApiSearchService =
+        retrofit.create(ApiSearchService::class.java)
 
 }

@@ -13,9 +13,11 @@ interface ApiAzanServices {
 
     //https://api.aladhan.com/v1/timings/29-03-2022?latitude=30.126011848847234&longitude=31.37534849345684&method=5
     /**
+     * - method 5 for egypt - 9 for kewet
+     *
      * @param dayMonthYearFormatted 29-03-2022
      */
-    @GET("timings/{${ApiConst.Path.DD_MM_YYYY}}?method=5")
+    @GET("timings/{${ApiConst.Path.DD_MM_YYYY}}?method=9")
     suspend fun getAzanTimes(
         @Path(ApiConst.Path.DD_MM_YYYY) dayMonthYearFormatted: String,
         @Query(ApiConst.Query.LATITUDE) latitude: String,
