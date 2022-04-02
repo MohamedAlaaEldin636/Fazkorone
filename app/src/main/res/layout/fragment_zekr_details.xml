@@ -17,7 +17,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+
+        android:background="#FBFBFB">
 
         <View
             android:layout_width="0dp"
@@ -127,7 +129,7 @@
 
             android:padding="16dp"
 
-            android:src="@drawable/ic_download"
+            android:src="@drawable/ic_download_2"
 
             android:clickable="true"
             android:focusable="true"

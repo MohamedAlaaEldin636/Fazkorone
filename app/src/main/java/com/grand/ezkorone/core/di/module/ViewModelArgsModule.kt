@@ -2,6 +2,7 @@ package com.grand.ezkorone.core.di.module
 
 import androidx.lifecycle.SavedStateHandle
 import com.grand.ezkorone.core.extensions.asBundle
+import com.grand.ezkorone.presentation.azkar.AzkarListFragmentArgs
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import dagger.Module
 import dagger.Provides
@@ -15,6 +16,11 @@ object ViewModelArgsModule {
     @Provides
     fun provideLocationSelectionFragmentArgs(state: SavedStateHandle): LocationSelectionFragmentArgs {
         return LocationSelectionFragmentArgs.fromBundle(state.asBundle())
+    }
+
+    @Provides
+    fun provideAzkarListFragmentArgs(state: SavedStateHandle): AzkarListFragmentArgs {
+        return AzkarListFragmentArgs.fromBundle(state.asBundle())
     }
 
 }

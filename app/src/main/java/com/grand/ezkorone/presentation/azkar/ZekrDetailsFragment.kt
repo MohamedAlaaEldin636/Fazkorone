@@ -6,6 +6,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
 import com.grand.ezkorone.R
 import com.grand.ezkorone.databinding.FragmentSearchQueriesBinding
@@ -23,6 +24,8 @@ import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>() {
 
     private val viewModel by viewModels<ZekrDetailsViewModel>()
+
+    private val args by navArgs<ZekrDetailsFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -42,6 +45,8 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>() {
     // TODO
     // TODO FOR INTERNAL FRAGMENT -> https://github.com/voghDev/PdfViewPager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        activityViewModel.titleToolbar.postValue(args.toolbarTitle)
+
         // todo view pager + actual page page transformation + inside fragment has a zoom effect so zoomable panable etc... isa.
         /*val k: PDFViewPagerZoom
         val a = PDFViewPagerZoom(requireActivity(), "")
