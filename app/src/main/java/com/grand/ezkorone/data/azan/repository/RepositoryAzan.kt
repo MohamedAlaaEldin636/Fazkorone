@@ -8,6 +8,8 @@ import com.grand.ezkorone.domain.azan.ResponseAzan
 import com.grand.ezkorone.domain.azan.TodayAndTomorrowSalawatTimes
 import com.grand.ezkorone.domain.utils.MABaseResponse
 import kotlinx.coroutines.flow.first
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class RepositoryAzan @Inject constructor(
@@ -15,10 +17,14 @@ class RepositoryAzan @Inject constructor(
     private val prefsApp: PrefsApp,
 ) {
 
-    fun getAzanTimes() = flowInitialLoadingWithMinExecutionTime<MABaseResponse<ResponseAzan>> {
+    fun getAzanTimes(localDate: LocalDate) = flowInitialLoadingWithMinExecutionTime<MABaseResponse<ResponseAzan>> {
         val locationData = prefsApp.getLocationData().first()!!
 
-        emit(dataSource.getAzanTimes(locationData.latitude, locationData.longitude))
+        emit(dataSource.getAzanTimes(localDate, locationData.latitude, locationData.longitude))
+    }
+
+    suspend fun getAzanTimesSuspend(localDate: LocalDate) = prefsApp.getLocationData().first()!!.let { locationData ->
+        dataSource.getAzanTimes(localDate, locationData.latitude, locationData.longitude)
     }
 
     fun getAzanTimesTodayAndTomorrow() = flowInitialLoadingWithMinExecutionTime<MABaseResponse<TodayAndTomorrowSalawatTimes>> {

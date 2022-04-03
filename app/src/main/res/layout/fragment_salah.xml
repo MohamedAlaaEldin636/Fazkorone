@@ -153,6 +153,7 @@
                         style="@style/TextTajawalBold16"
                         android:textColor="#160000"
 
+                        android:text="@{viewModel.day}"
                         tools:text="الاثنين"
 
                         app:layout_constraintTop_toTopOf="parent"
@@ -170,6 +171,7 @@
                         style="@style/TextTajawalBold16"
                         android:textColor="#160000"
 
+                        android:text="@{viewModel.date}"
                         tools:text="27 / 12 / 2021"
 
                         android:layout_marginTop="24dp"
@@ -204,7 +206,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.prevDay(v)}"
+                android:onClick="@{() -> viewModel.prevDay()}"
 
                 app:layout_constraintHorizontal_bias="0.33"
 
@@ -225,7 +227,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.nextDay(v)}"
+                android:onClick="@{() -> viewModel.nextDay()}"
 
                 app:layout_constraintHorizontal_bias="0.67"
 
@@ -279,6 +281,7 @@
 
                     style="@style/TextTajawalBold16"
 
+                    android:text="@{viewModel.fajrTime}"
                     tools:text="5:16 AM"/>
 
                 <TextView
@@ -315,7 +318,8 @@
                     android:focusable="true"
                     android:onClick="@{v -> viewModel.toggleMuteState(v, SalahFardType.FAGR)}"
 
-                    android:src="@drawable/ic_volume_off"
+                    android:src="@{viewModel.canRingFajr ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
+                    tools:src="@drawable/ic_volume_off"
 
                     android:layout_marginStart="32dp"/>
 
@@ -354,6 +358,7 @@
 
                     style="@style/TextTajawalBold16"
 
+                    android:text="@{viewModel.dohrTime}"
                     tools:text="5:16 AM"/>
 
                 <TextView
@@ -391,7 +396,8 @@
                     android:focusable="true"
                     android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.DOHR)}"
 
-                    android:src="@drawable/ic_volume_on"
+                    android:src="@{viewModel.canRingDohr ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
+                    tools:src="@drawable/ic_volume_on"
 
                     android:layout_marginStart="32dp"/>
 
@@ -428,6 +434,7 @@
 
                     style="@style/TextTajawalBold16"
 
+                    android:text="@{viewModel.asrTime}"
                     tools:text="5:16 AM"/>
 
                 <TextView
@@ -459,7 +466,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:src="@drawable/ic_volume_on"
+                    android:src="@{viewModel.canRingAsr ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
+                    tools:src="@drawable/ic_volume_on"
 
                     android:clickable="true"
                     android:focusable="true"
@@ -500,6 +508,7 @@
 
                     style="@style/TextTajawalBold16"
 
+                    android:text="@{viewModel.maghrepTime}"
                     tools:text="5:16 AM"/>
 
                 <TextView
@@ -535,7 +544,8 @@
                     android:focusable="true"
                     android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.MAGHREP)}"
 
-                    android:src="@drawable/ic_volume_on"
+                    android:src="@{viewModel.canRingMaghrep ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
+                    tools:src="@drawable/ic_volume_on"
 
                     android:layout_marginStart="32dp"/>
 
@@ -573,6 +583,7 @@
 
                     style="@style/TextTajawalBold16"
 
+                    android:text="@{viewModel.eshaTime}"
                     tools:text="5:16 AM"/>
 
                 <TextView
@@ -608,7 +619,8 @@
                     android:focusable="true"
                     android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.ESHA)}"
 
-                    android:src="@drawable/ic_volume_on"
+                    android:src="@{viewModel.canRingEsha ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
+                    tools:src="@drawable/ic_volume_on"
 
                     android:layout_marginStart="32dp"/>
 

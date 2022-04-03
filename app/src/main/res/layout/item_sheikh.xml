@@ -23,7 +23,7 @@
         android:src="@drawable/ic_placeholder"/>
 
     <TextView
-        android:id="@+id/checkImageView"
+        android:id="@+id/textView"
 
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -37,6 +37,8 @@
         tools:text="مشاري راشد العفاسي"/>
 
     <ImageView
+        android:id="@+id/checkImageView"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 

@@ -210,7 +210,11 @@
         android:id="@+id/dest_sheikh_list"
         android:name="com.grand.ezkorone.presentation.sheikh.SheikhListFragment"
         android:label="@string/pick_sheikh_voice"
-        tools:layout="@layout/fragment_sheikh_list" />
+        tools:layout="@layout/fragment_sheikh_list" >
+        <argument
+            android:name="salahFardType"
+            app:argType="com.grand.ezkorone.domain.salah.SalahFardType" />
+    </fragment>
     <fragment
         android:id="@+id/dest_pick_zekr"
         android:name="com.grand.ezkorone.presentation.azkar.PickZekrFragment"

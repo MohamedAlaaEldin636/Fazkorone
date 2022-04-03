@@ -17,6 +17,7 @@ object ApiConst {
         const val LATITUDE = "latitude"
         const val LONGITUDE = "longitude"
         const val PAGE = "page"
+        const val PRAYER_ID = "prayer_id"
 
     }
 

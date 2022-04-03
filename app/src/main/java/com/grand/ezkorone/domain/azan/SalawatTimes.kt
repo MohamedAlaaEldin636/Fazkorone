@@ -41,6 +41,26 @@ data class SalawatTimes(
     val eshaHour get() = getHour(esha)
     val eshaMinutes get() = getMinutes(esha)
 
+    fun getFajrSalahTimeFormat(context: Context): String =
+        "$fajrHour:$fajrMinutes ${context.getIsAmOrPm(fajrHour)}"
+
+    fun getDohrSalahTimeFormat(context: Context): String =
+        "$dohrHour:$dohrMinutes ${context.getIsAmOrPm(dohrHour)}"
+
+    fun getAsrSalahTimeFormat(context: Context): String =
+        "$asrHour:$asrMinutes ${context.getIsAmOrPm(asrHour)}"
+
+    fun getMaghrepSalahTimeFormat(context: Context): String =
+        "$maghrepHour:$maghrepMinutes ${context.getIsAmOrPm(maghrepHour)}"
+
+    fun getEshaSalahTimeFormat(context: Context): String =
+        "$eshaHour:$eshaMinutes ${context.getIsAmOrPm(eshaHour)}"
+
+    private fun Context.getIsAmOrPm(hour: Int) = when {
+        hour < 12 -> getString(R.string.am)
+        else -> getString(R.string.pm)
+    }
+
     /*
             /*
         "timings": {

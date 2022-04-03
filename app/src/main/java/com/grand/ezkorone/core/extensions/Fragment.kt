@@ -21,6 +21,7 @@ import com.grand.ezkorone.domain.utils.MABaseResponse
 import com.grand.ezkorone.domain.utils.MAResult
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -174,6 +175,51 @@ fun <VDB : ViewDataBinding, F : MABaseFragment<VDB>, T> F.handleRetryAbleFlowWit
                 }
             }
             job?.cancel()
+        }
+    }
+}
+
+fun <T> MABaseFragment<*>.executeOnGlobalLoadingAndAutoHandleRetry(
+    afterShowingLoading: suspend () -> MAResult.Immediate<MABaseResponse<T>>,
+    afterHidingLoading: (T) -> Unit
+) {
+    lifecycleScope.launch {
+        activityViewModel.globalLoading.value = true
+
+        delay(150)
+
+        when (val result = afterShowingLoading()) {
+            is MAResult.Failure -> {
+                Timber.e("failure is $result")
+
+                activityViewModel.globalLoading.value = false
+
+                delay(150)
+
+                activityViewModel.globalError.value = GlobalError.Show(result.message)
+
+                activityViewModel.globalError.observe(viewLifecycleOwner, object :
+                    Observer<GlobalError> {
+                    override fun onChanged(globalError: GlobalError?) {
+                        if (globalError is GlobalError.Retry) {
+                            activityViewModel.globalError.removeObserver(this)
+
+                            activityViewModel.globalError.value = GlobalError.Cancel
+
+                            Handler(Looper.getMainLooper()).post {
+                                executeOnGlobalLoadingAndAutoHandleRetry(afterShowingLoading, afterHidingLoading)
+                            }
+                        }
+                    }
+                })
+            }
+            is MAResult.Success -> {
+                activityViewModel.globalLoading.value = false
+
+                delay(150)
+
+                afterHidingLoading(result.value.data!!)
+            }
         }
     }
 }

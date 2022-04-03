@@ -11,8 +11,8 @@ class DataSourceAzan @Inject constructor(
     private val apiService: ApiAzanServices,
 ) : MABaseRemoteDataSource() {
 
-    suspend fun getAzanTimes(latitude: String, longitude: String) = safeApiCall {
-        val dayMonthYearFormatted = LocalDate.now().let {
+    suspend fun getAzanTimes(localDate: LocalDate, latitude: String, longitude: String) = safeApiCall {
+        val dayMonthYearFormatted = localDate.let {
             "${it.dayOfMonth.minLengthOrPrefixZeros(2)}-${it.monthValue.minLengthOrPrefixZeros(2)}-${it.year}"
         }
 
