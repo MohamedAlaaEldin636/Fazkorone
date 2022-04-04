@@ -11,91 +11,88 @@
             type="com.grand.ezkorone.presentation.drawer.viewModel.WhoAreWeViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:background="#FBFBFB">
 
-            <!--
-            android:background="@drawable/bg_who_are_we"
+        <!--
+        android:background="@drawable/bg_who_are_we"
 
-            dynamic image and texts isa.
-            -->
-            <ImageView
-                android:id="@+id/headerImageView"
+        dynamic image and texts isa.
+        -->
+        <ImageView
+            android:id="@+id/headerImageView"
 
-                android:layout_width="0dp"
-                android:layout_height="244dp"
+            android:layout_width="0dp"
+            android:layout_height="244dp"
 
-                android:src="@drawable/bg_who_are_we"
-                android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder"
+            android:scaleType="fitCenter"
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="ContentDescription" />
+            imageView_setUrlViaGlideOrIgnore="@{viewModel.imageUrl}"
 
-            <TextView
-                android:id="@+id/titleTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ContentDescription" />
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/titleTextView"
 
-                style="@style/TextTajawalMedium16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-                android:text="@string/who_are_we"
-                android:textColor="@color/white"
+            style="@style/TextTajawalMedium16"
 
-                android:layout_marginTop="16dp"
+            android:text="@string/who_are_we"
+            android:textColor="@color/white"
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+            android:layout_marginTop="16dp"
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/upButtonImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-                android:onClick="@{v -> viewModel.goBack(v)}"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/upButtonImageView"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            android:onClick="@{v -> viewModel.goBack(v)}"
 
-                android:layout_marginStart="16dp"
-                android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-                android:src="@drawable/ic_back"
-                app:tint="@android:color/white"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/titleTextView"
-                app:layout_constraintBottom_toBottomOf="@id/titleTextView"/>
+            android:src="@drawable/ic_back"
+            app:tint="@android:color/white"
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/titleTextView"
+            app:layout_constraintBottom_toBottomOf="@id/titleTextView"/>
 
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
 
-                android:padding="8dp"
-                android:clipToPadding="false"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
 
-                android:scrollbars="vertical"
-                tools:itemCount="12"
-                tools:orientation="vertical"
-                tools:listitem="@layout/item_who_are_we"
-                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:padding="8dp"
+            android:clipToPadding="false"
 
-                app:layout_constraintTop_toBottomOf="@id/headerImageView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+            android:scrollbars="vertical"
+            tools:itemCount="12"
+            tools:orientation="vertical"
+            tools:listitem="@layout/item_who_are_we"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/headerImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

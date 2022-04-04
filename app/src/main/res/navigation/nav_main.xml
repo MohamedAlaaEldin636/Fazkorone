@@ -95,10 +95,20 @@
             android:name="message"
             app:argType="string" />
 
+        <argument
+            android:name="cancellable"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+
         <deepLink
             android:id="@+id/deep_link_dest_global_error_dialog"
             android:autoVerify="true"
             app:uri="dialog-dest://com.grand.ezkorone.global.error.dialog/{message}" />
+
+        <deepLink
+            android:id="@+id/deep_link_dest_global_error_dialog_cancellable"
+            android:autoVerify="true"
+            app:uri="dialog-dest://com.grand.ezkorone.global.error.dialog.cancellable/{message}/{cancellable}" />
 
     </dialog>
     <fragment

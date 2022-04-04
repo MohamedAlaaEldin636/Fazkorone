@@ -24,7 +24,7 @@ class GlobalErrorDialogFragment : BaseOkCancelDialogFragment() {
     }
 
     override val cancelButtonText: String by lazy {
-        requireContext().getString(R.string.back)
+        if (args.cancellable) requireContext().getString(R.string.cancel) else requireContext().getString(R.string.back)
     }
 
     override val message: String by lazy {
@@ -47,7 +47,9 @@ class GlobalErrorDialogFragment : BaseOkCancelDialogFragment() {
         activityViewModel.globalError.value = GlobalError.Cancel
 
         findNavController().navigateUp()
-        findNavController().navigateUp()
+        if (!args.cancellable) {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDismissListener() {

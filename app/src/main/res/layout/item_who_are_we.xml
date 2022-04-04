@@ -10,6 +10,8 @@
     android:layout_margin="8dp">
 
     <TextView
+        android:id="@+id/titleTextView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -18,6 +20,8 @@
         tools:text="عن التطبيق"/>
 
     <TextView
+        android:id="@+id/bodyTextView"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 

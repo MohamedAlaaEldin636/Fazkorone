@@ -15,7 +15,9 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+
+        android:background="#FBFBFB">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -48,7 +50,7 @@
 
                     style="@style/TextTajawalRegular15"
                     android:textColor="@color/black"
-                    android:text="@{viewModel.name}"
+                    android:text="@={viewModel.name}"
                     android:inputType="text"
 
                     android:background="@drawable/dr_white_round"/>
@@ -82,7 +84,7 @@
 
                     style="@style/TextTajawalRegular15"
                     android:textColor="@color/black"
-                    android:text="@{viewModel.email}"
+                    android:text="@={viewModel.email}"
                     android:inputType="text"
 
                     android:background="@drawable/dr_white_round"/>
@@ -124,7 +126,7 @@
 
                     style="@style/TextTajawalRegular15"
                     android:textColor="@color/black"
-                    android:text="@{viewModel.purpose}"
+                    android:text="@={viewModel.purpose}"
                     android:inputType="none"
 
                     android:background="@drawable/dr_white_round"
@@ -136,6 +138,21 @@
                     android:enabled="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:elevation="8dp"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.showPurposeOfContactPopUp(v)}"
+
+                app:layout_constraintTop_toTopOf="@id/purposeTextInputLayout"
+                app:layout_constraintBottom_toBottomOf="@id/purposeTextInputLayout"
+                app:layout_constraintStart_toStartOf="@id/purposeTextInputLayout"
+                app:layout_constraintEnd_toEndOf="@id/purposeTextInputLayout"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/messageTextInputLayout"
@@ -166,7 +183,7 @@
 
                     style="@style/TextTajawalRegular15"
                     android:textColor="@color/black"
-                    android:text="@{viewModel.email}"
+                    android:text="@={viewModel.message}"
                     tools:text="الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة الرسالة "
                     android:inputType="textMultiLine"
 
@@ -214,6 +231,9 @@
 
                 android:layout_marginTop="32dp"
 
+                android:visibility="@{viewModel.imageUri == null}"
+                tools:visibility="visible"
+
                 app:layout_constraintTop_toBottomOf="@id/messageTextInputLayout"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -233,6 +253,8 @@
 
                 android:layout_marginTop="16dp"
 
+                android:visibility="@{viewModel.imageUri == null}"
+
                 app:layout_constraintTop_toBottomOf="@id/downloadImageView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/downloadOptionalDataTextView"/>
@@ -248,10 +270,30 @@
 
                 android:layout_marginStart="8dp"
 
+                android:visibility="@{viewModel.imageUri == null}"
+
                 app:layout_constraintTop_toTopOf="@id/downloadEnterDataTextView"
                 app:layout_constraintBottom_toBottomOf="@id/downloadEnterDataTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/downloadEnterDataTextView"/>
+
+            <ImageView
+                android:id="@+id/imageView"
+
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:src="@drawable/ic_placeholder"
+
+                imageView_setViaGlideUsingUriOrIgnore="@{viewModel.imageUri}"
+
+                android:visibility="@{viewModel.imageUri != null,default=gone}"
+                tools:visibility="gone"
+
+                app:layout_constraintTop_toTopOf="@id/pickImageView"
+                app:layout_constraintBottom_toBottomOf="@id/pickImageView"
+                app:layout_constraintStart_toStartOf="@id/pickImageView"
+                app:layout_constraintEnd_toEndOf="@id/pickImageView"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendMaterialButton"

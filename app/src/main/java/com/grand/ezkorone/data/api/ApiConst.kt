@@ -8,6 +8,11 @@ object ApiConst {
 
     object Query {
 
+        const val NAME = "name"
+        const val EMAIL = "email"
+        const val COMMUNICATION_ID = "communication_id"
+        const val MESSAGE = "message"
+
         const val TYPE = "type"
         const val SEARCH = "search"
         const val CATEGORY_ID = "category_id"

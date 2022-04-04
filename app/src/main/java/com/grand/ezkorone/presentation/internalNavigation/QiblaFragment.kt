@@ -174,11 +174,11 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
     }
 
     override fun onPause() {
-        super.onPause()
-
         sensorManager?.unregisterListener(this, accelerometer)
         sensorManager?.unregisterListener(this, magnetometer)
         sensorManager?.unregisterListener(this, trialSensor)
+
+        super.onPause()
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
@@ -233,7 +233,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             System.currentTimeMillis()
         )
 
-        head -= geoField.declination // converts magnetic north into true north
+        //head -= geoField.declination // converts magnetic north into true north
 
         if (bearTo < 0) {
             bearTo += 360
@@ -245,6 +245,15 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         // If the direction is smaller than 0, add 360 to get the rotation clockwise.
         if (direction < 0) {
             direction += 360;
+        }
+
+        // todo
+        if (true) {
+            Timber.e("direction $direction")
+
+            binding?.likeNeedleImageView?.rotation = direction
+
+            return
         }
 
         val raQibla = RotateAnimation(

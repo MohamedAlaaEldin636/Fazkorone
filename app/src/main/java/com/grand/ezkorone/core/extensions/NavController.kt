@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.annotation.NavigationRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.findFragment
@@ -22,12 +23,27 @@ fun Fragment.findNavControllerOfProject(): NavController {
 	)
 }
 
+fun MainActivity.findNavControllerOfProject(): NavController {
+	return Navigation.findNavController(
+		this,
+		R.id.mainNavHostFragment
+	)
+}
+
 fun View.findNavControllerOfProject(): NavController {
 	return findFragment<Fragment>().findNavControllerOfProject()
 }
 
 fun View.openDrawerLayout() {
 	(findFragment<Fragment>().activity as? MainActivity)?.binding?.drawerLayout?.openDrawer(GravityCompat.START)
+}
+
+fun View.closeDrawerLayout() {
+	(findFragment<Fragment>().activity as? MainActivity)?.binding?.drawerLayout?.closeDrawer(GravityCompat.START)
+}
+
+fun MainActivity.closeDrawerLayout() {
+	binding?.drawerLayout?.closeDrawer(GravityCompat.START)
 }
 
 fun NavController.popAllBackStacks() {

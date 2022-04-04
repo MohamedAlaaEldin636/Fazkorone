@@ -136,11 +136,20 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
 
         viewModel.globalError.distinctUntilChanged().observe(this) {
             if (it is GlobalError.Show) {
-                navController.navigateDeepLinkWithoutOptions(
-                    "dialog-dest",
-                    "com.grand.ezkorone.global.error.dialog",
-                    if (it.errorMsg.isNullOrEmpty()) getString(R.string.something_went_wrong) else it.errorMsg,
-                )
+                if (it.canCancelDialog) {
+                    navController.navigateDeepLinkWithoutOptions(
+                        "dialog-dest",
+                        "com.grand.ezkorone.global.error.dialog.cancellable",
+                        if (it.errorMsg.isNullOrEmpty()) getString(R.string.something_went_wrong) else it.errorMsg,
+                        true.toString()
+                    )
+                }else {
+                    navController.navigateDeepLinkWithoutOptions(
+                        "dialog-dest",
+                        "com.grand.ezkorone.global.error.dialog",
+                        if (it.errorMsg.isNullOrEmpty()) getString(R.string.something_went_wrong) else it.errorMsg,
+                    )
+                }
             }
         }
     }

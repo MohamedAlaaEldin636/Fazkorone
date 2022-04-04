@@ -8,6 +8,7 @@ import com.grand.ezkorone.core.extensions.flowInitialLoadingWithMinExecutionTime
 import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.data.settings.dataSource.remote.DataSourceSettings
 import com.grand.ezkorone.domain.aboutUs.ItemAboutUs
+import com.grand.ezkorone.domain.contactUs.ItemContactUsPurpose
 import com.grand.ezkorone.domain.utils.MABaseResponse
 import com.grand.ezkorone.domain.utils.MAResult
 import kotlinx.coroutines.flow.Flow
@@ -37,6 +38,18 @@ class RepositorySettings @Inject constructor(
             emit(MAResult.Failure(MAResult.Failure.Status.ERROR, null, firebaseToken.first?.message))
         }
     }
+
+    fun getContactUsPurposes() = flowInitialLoadingWithMinExecutionTime<MABaseResponse<List<ItemContactUsPurpose>>> {
+        emit(dataSource.getContactUsPurposes())
+    }
+
+    suspend fun contactUs(
+        name: String,
+        email: String,
+        purposeId: Int,
+        message: String,
+        image: MultipartBody.Part? = null,
+    ) = dataSource.contactUs(name, email, purposeId, message, image)
 
     private suspend fun getCurrentFirebaseToken(): Pair<Exception?, String?> {
         return suspendCoroutine { continuation ->

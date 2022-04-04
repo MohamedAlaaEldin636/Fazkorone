@@ -1,23 +1,30 @@
 package com.grand.ezkorone.presentation.main.viewModel
 
 import android.view.View
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.grand.ezkorone.R
-import com.grand.ezkorone.core.extensions.getAppWebLinkOnGooglePay
-import com.grand.ezkorone.core.extensions.launchAppOnGooglePlay
-import com.grand.ezkorone.core.extensions.launchShareText
+import com.grand.ezkorone.core.extensions.*
+import com.grand.ezkorone.databinding.DrawerHeaderMainBinding
+import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
+import com.grand.ezkorone.presentation.main.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class DrawerHeaderMainViewModel @Inject constructor() : ViewModel() {
 
-    fun whoAreWe(view: View) {
-        // todo
+    fun whoAreWe(view: View) = view.closeDrawerThenActWithNavController {
+        navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestWhoAreWe()
+        )
     }
 
-    fun contactUs(view: View) {
-        // todo
+    fun contactUs(view: View) = view.closeDrawerThenActWithNavController {
+        navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestContactUs()
+        )
     }
 
     fun favorite(view: View) {
@@ -54,6 +61,27 @@ class DrawerHeaderMainViewModel @Inject constructor() : ViewModel() {
 
     fun toTwitter(view: View) {
         // todo
+    }
+
+    private fun View.closeDrawerThenActWithNavController(action: NavController.() -> Unit) {
+        val activity = getMainActivityOrNull() ?: return
+
+        activity.closeDrawerLayout()
+
+        activity.findNavControllerOfProject().action()
+    }
+
+    private fun View.closeDrawerThenActWithActivity(action: MainActivity.() -> Unit) {
+        val activity = getMainActivityOrNull() ?: return
+
+        activity.closeDrawerLayout()
+
+        activity.action()
+    }
+
+    private fun View.getMainActivityOrNull(): MainActivity? {
+        return DataBindingUtil.findBinding<DrawerHeaderMainBinding>(this)
+            ?.lifecycleOwner as? MainActivity
     }
 
 }
