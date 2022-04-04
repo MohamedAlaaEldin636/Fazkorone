@@ -3,9 +3,12 @@ package com.grand.ezkorone.presentation.main.viewModel
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.navigation.NavController
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.*
+import com.grand.ezkorone.data.local.preferences.PrefsSplash
 import com.grand.ezkorone.databinding.DrawerHeaderMainBinding
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.main.MainActivity
@@ -13,7 +16,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DrawerHeaderMainViewModel @Inject constructor() : ViewModel() {
+class DrawerHeaderMainViewModel @Inject constructor(
+    prefsSplash: PrefsSplash,
+) : ViewModel() {
+
+    private val initialDataForApp = prefsSplash.getInitialDataForApp().asLiveData()
+
+    val instaLink = initialDataForApp.map { it?.socialMedia?.instaUrl }
+
+    val twitterLink = initialDataForApp.map { it?.socialMedia?.instaUrl }
 
     fun whoAreWe(view: View) = view.closeDrawerThenActWithNavController {
         navigate(
@@ -56,11 +67,11 @@ class DrawerHeaderMainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun toInsta(view: View) {
-        // todo
+        view.context.launchBrowser(instaLink.value ?: return)
     }
 
     fun toTwitter(view: View) {
-        // todo
+        view.context.launchBrowser(twitterLink.value ?: return)
     }
 
     private fun View.closeDrawerThenActWithNavController(action: NavController.() -> Unit) {

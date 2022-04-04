@@ -40,6 +40,10 @@ fun Context.launchShareText(text: String) {
 }
 
 fun Context.launchBrowser(link: String) {
+	if (link.isEmpty()) {
+		return
+	}
+
 	val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
 	
 	launchActivitySafely {

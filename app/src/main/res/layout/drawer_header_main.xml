@@ -251,6 +251,8 @@
                 android:text="@string/insta"
                 android:gravity="center_vertical"
 
+                android:contentDescription="@{viewModel.instaLink}"
+
                 android:onClick="@{v -> viewModel.toInsta(v)}"/>
 
             <View
@@ -276,6 +278,8 @@
 
                 android:text="@string/twitter"
                 android:gravity="center_vertical"
+
+                android:contentDescription="@{viewModel.twitterLink}"
 
                 android:onClick="@{v -> viewModel.toTwitter(v)}"/>
 
