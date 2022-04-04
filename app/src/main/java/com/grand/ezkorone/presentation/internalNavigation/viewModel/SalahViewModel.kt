@@ -120,9 +120,6 @@ class SalahViewModel @Inject constructor(
     }
 
     fun toggleMuteState(view: View, type: SalahFardType) {
-        // todo la2 shof ba2a on change time call el api elle kanet f el home ya zaki sooooooo fe 7agat f el xml not binded isa.
-        // LocalDate.from(LocalDateTime.now())
-
         // todo default all muted as osama said and from local prefs saved locally isa,
         //  ALSO on toggle to be not mute immediately launch worker manager and alarm manager
         //  to set alarms isa, also get mawa3ed el salaha mn el save elle kan f el home isa.

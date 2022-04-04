@@ -67,8 +67,6 @@
             android:textColor="#ffffff"
             style="@style/TextTajawalMedium16"
 
-            android:onClick="@{v -> viewModel.editLocation(v)}"
-
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -116,7 +114,7 @@
 
         <!--todo see https://www.youtube.com/watch?v=n5BDhwWvCW4 isa.-->
         <ImageView
-            android:id="@+id/qiblaImageView"
+            android:id="@+id/likeCompassImageView"
 
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -127,12 +125,59 @@
 
             app:layout_constraintVertical_bias="0"
 
-            android:src="@drawable/ic_home_title_bg"
+            android:src="@drawable/ic_like_compass"
+
+            android:visibility="@{viewModel.featureIsSupported}"
+            tools:visibility="gone"
 
             app:layout_constraintTop_toBottomOf="@id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/likeNeedleImageView"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            app:layout_constraintDimensionRatio="1:1"
+
+            android:layout_margin="32dp"
+
+            app:layout_constraintVertical_bias="0"
+
+            tools:rotation="30"
+
+            android:src="@drawable/ic_like_needle"
+
+            android:visibility="@{viewModel.featureIsSupported}"
+            tools:visibility="gone"
+
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/notSupportedFeatureTextView"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            style="@style/TextTajawalBold18"
+            android:gravity="center"
+            android:text="@string/this_feature_is_not_supported"
+            android:padding="16dp"
+            android:textIsSelectable="false"
+
+            android:visibility="@{!viewModel.featureIsSupported,default=gone}"
+            tools:visibility="visible"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
