@@ -34,6 +34,12 @@ class BottomNavFragment : MABaseFragment<FragmentBottomNavBinding>() {
                         activityViewModel.titleToolbar.value = it
                     }
                 }
+
+                getSelectedItemIdFromCurrentDestinationId(destination.id)?.also {
+                    if (binding?.bottomNavigationView?.selectedItemId != it) {
+                        binding?.bottomNavigationView?.selectedItemId = it
+                    }
+                }
             }
         }
     }
@@ -46,7 +52,7 @@ class BottomNavFragment : MABaseFragment<FragmentBottomNavBinding>() {
             binding?.bottomNavigationView?.selectedItemId = it
         }
         binding?.bottomNavigationView?.setOnItemSelectedListener {
-            onItemSelectedListener(it)
+            onItemSelectedListener(navController, it)
 
             true // change to be selected instead of ignoring the click.
         }
@@ -75,7 +81,7 @@ class BottomNavFragment : MABaseFragment<FragmentBottomNavBinding>() {
         }
     }
 
-    private fun onItemSelectedListener(menuItem: MenuItem) {
+    private fun onItemSelectedListener(navController: NavController, menuItem: MenuItem) {
         val action = when (menuItem.itemId) {
             R.id.action_home -> NavBottomNavDirections.actionGlobalDestHome()
             R.id.action_pray -> NavBottomNavDirections.actionGlobalDestSalah()
@@ -84,7 +90,7 @@ class BottomNavFragment : MABaseFragment<FragmentBottomNavBinding>() {
             else -> return
         }
 
-        findNavController().navigate(action)
+        navController.navigate(action)
     }
 
 }

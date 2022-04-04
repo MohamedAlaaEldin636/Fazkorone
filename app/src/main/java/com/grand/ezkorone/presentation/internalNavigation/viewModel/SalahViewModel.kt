@@ -101,6 +101,7 @@ class SalahViewModel @Inject constructor(
 
     fun pickDay(view: View) {
         val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTheme(R.style.ThemeOverlay_App_DatePicker)
             .setTitleText(view.context.getString(R.string.determine_the_date))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
             .build()

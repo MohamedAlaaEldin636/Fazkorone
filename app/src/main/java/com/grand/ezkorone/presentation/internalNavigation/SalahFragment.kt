@@ -9,6 +9,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.grand.ezkorone.R
@@ -25,6 +26,7 @@ import com.grand.ezkorone.presentation.sheikh.SheikhListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.time.LocalDate
@@ -70,20 +72,25 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(
+                Timber.d("SPTAG1 Entered here ch 1")
+
+                findNavControllerOfProject().currentBackStackEntry?.savedStateHandle?.getLiveData(
                     SheikhListFragment.SAVED_STATE_SELECTED_JSON_ITEM_SHEIKH,
                     ""
                 )?.observe(viewLifecycleOwner) {
                     if (!it.isNullOrEmpty()) {
-                        findNavController().currentBackStackEntry?.savedStateHandle?.set(
+                        findNavControllerOfProject().currentBackStackEntry?.savedStateHandle?.set(
                             SheikhListFragment.SAVED_STATE_SELECTED_JSON_ITEM_SHEIKH,
                             ""
                         )
+
+                        Timber.d("SPTAG1 ${findNavControllerOfProject().currentBackStackEntry?.destination?.label}")
 
                         val itemSheikh = it.fromJson<ItemSheikh>(gson)
 
                         val file = File(requireContext().filesDir, "${viewModel.salahFardType}_${itemSheikh.id}")
 
+                        Timber.d("file.exists() ${file.exists()}")
                         if (!file.exists()) {
                             downloadAudio(itemSheikh.audioUrl, file)
                         }else {
@@ -103,6 +110,8 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
         executeOnGlobalLoadingAfterShowingLoading {
             if (DownloadingUtils.downloadFile(link, destinationFile)) {
                 val uri = Uri.fromFile(destinationFile)
+
+                Timber.d("Download done successfully isa. with uri $uri")
 
                 viewModel.prefsSalah.setSalahFardTypeNotificationSoundUri(
                     viewModel.salahFardType, uri.toString()

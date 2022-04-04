@@ -13,6 +13,7 @@ import com.grand.ezkorone.domain.sheikh.ItemSheikh
 import com.grand.ezkorone.domain.utils.MAResult
 import com.grand.ezkorone.presentation.sheikh.SheikhListFragment
 import com.grand.ezkorone.presentation.sheikh.adapter.RVItemSheikh
+import timber.log.Timber
 
 class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private val gson: Gson) : RecyclerView.ViewHolder(
     parent.context.inflateLayout(R.layout.item_sheikh, parent)
@@ -27,14 +28,7 @@ class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private
 
             view.executeOnGlobalLoading(
                 afterShowingLoading = {
-                    adapter.repoSheikh.toggleSheikhSelectionForSalawat(itemSheikh.id).also {
-                        if (it is MAResult.Success) {
-                            view.findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                                SheikhListFragment.SAVED_STATE_SELECTED_JSON_ITEM_SHEIKH,
-                                jsonItemSheikh
-                            )
-                        }
-                    }
+                    adapter.repoSheikh.toggleSheikhSelectionForSalawat(itemSheikh.id)
                 },
                 afterHidingLoading = { result ->
                     when (result) {
@@ -44,6 +38,12 @@ class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private
                             ))
                         }
                         is MAResult.Success -> {
+                            Timber.d("SPTAG1 ${view.findNavController().previousBackStackEntry?.destination?.label}")
+                            view.findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                                SheikhListFragment.SAVED_STATE_SELECTED_JSON_ITEM_SHEIKH,
+                                jsonItemSheikh
+                            )
+
                             adapter.refresh()
                         }
                     }

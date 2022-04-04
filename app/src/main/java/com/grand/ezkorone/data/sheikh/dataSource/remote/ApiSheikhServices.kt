@@ -6,10 +6,7 @@ import com.grand.ezkorone.domain.home.ItemZekrTopCategory
 import com.grand.ezkorone.domain.sheikh.ItemSheikh
 import com.grand.ezkorone.domain.utils.MABasePaging
 import com.grand.ezkorone.domain.utils.MABaseResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiSheikhServices {
 
@@ -20,7 +17,7 @@ interface ApiSheikhServices {
     ): MABaseResponse<MABasePaging<ItemSheikh>>
 
     @FormUrlEncoded
-    @GET("shaikhs/add_or_remove")
+    @POST("shaikhs/add_or_remove")
     suspend fun toggleSheikhSelectionForSalawat(
         @Field(ApiConst.Query.PRAYER_ID) sheikhId: Int,
     ): MABaseResponse<Any>

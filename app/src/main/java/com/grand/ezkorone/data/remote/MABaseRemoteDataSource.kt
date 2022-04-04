@@ -66,10 +66,10 @@ open class MABaseRemoteDataSource {
 					MAResult.Failure(errorStatus, throwable.code(), throwable.message())
 				}
 				is UnknownHostException/*, is SocketException*/, is ConnectException -> {
-					MAResult.Failure(MAResult.Failure.Status.NO_INTERNET)
+					MAResult.Failure(MAResult.Failure.Status.NO_INTERNET, message = throwable.message)
 				}
 				else -> {
-					MAResult.Failure(MAResult.Failure.Status.OTHER)
+					MAResult.Failure(MAResult.Failure.Status.OTHER, message = throwable.message)
 				}
 			}
 		}
