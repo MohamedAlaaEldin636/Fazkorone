@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -89,6 +90,7 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
         navViewBinding.viewModel = navViewViewModel
         navViewBinding.lifecycleOwner = this
         binding?.navigationView?.addHeaderView(navViewBinding.root)
+        binding?.drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             run {
