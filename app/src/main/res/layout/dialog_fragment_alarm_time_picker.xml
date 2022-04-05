@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
 
             style="@style/TextTajawalMedium16"
-            android:text="@string/determine_your_remind_of_azkar"
+            tools:text="@string/determine_your_remind_of_azkar"
+            android:text="@{viewModel.title}"
 
             android:gravity="center"
 
@@ -89,6 +90,21 @@
                 android:enabled="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:elevation="8dp"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{v -> viewModel.launchTimePicker(v)}"
+
+            app:layout_constraintTop_toTopOf="@id/timeTextInputLayout"
+            app:layout_constraintBottom_toBottomOf="@id/timeTextInputLayout"
+            app:layout_constraintStart_toStartOf="@id/timeTextInputLayout"
+            app:layout_constraintEnd_toEndOf="@id/timeTextInputLayout"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/materialButton"

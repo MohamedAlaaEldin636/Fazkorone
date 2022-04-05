@@ -12,24 +12,226 @@
             type="com.grand.ezkorone.presentation.drawer.viewModel.AlarmsViewModel" />
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-
+    <!-- Bakrey hwa elle 2al enaha static isa. -->
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
 
-        android:padding="8dp"
-        android:clipToPadding="false"
+        android:background="#FBFBFB">
 
-        android:scrollbars="vertical"
-        tools:itemCount="12"
-        tools:orientation="vertical"
-        tools:listitem="@layout/item_alarm"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
 
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+            android:background="#FBFBFB"
+
+            android:padding="16dp"
+            android:clipToPadding="false">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/azkarSabahMaterialCardView"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+
+                app:cardCornerRadius="8dp"
+
+                app:cardBackgroundColor="@color/white"
+
+                android:onClick="@{v -> viewModel.toggleAzkarSabah(v)}"
+
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/azkarSabahLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="32dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/azkarSabahNameTextView"
+
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center_vertical"
+
+                        android:layout_marginEnd="8dp"
+
+                        style="@style/TextTajawalMedium14"
+                        android:text="@string/azkar_sabah_alarm"/>
+
+                    <!-- OR -> ic_toggler_on -->
+                    <TextView
+                        android:id="@+id/azkarSabahTimeWithIconTextView"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="8dp"
+
+                        android:gravity="center_vertical"
+
+                        style="@style/TextTajawalBold18"
+                        android:text="@{viewModel.azkarSabahTime}"
+
+                        textView_setDrawableEndCompatBA="@{viewModel.azkarSabahTime.length() > 0 ? @drawable/ic_toggler_on : @drawable/ic_toggler_off}"
+                        android:drawablePadding="16dp"
+                        app:drawableEndCompat="@drawable/ic_toggler_off" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/azkarMasaaMaterialCardView"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+
+                app:cardCornerRadius="8dp"
+
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+
+                app:cardBackgroundColor="@color/white"
+
+                android:onClick="@{v -> viewModel.toggleAzkarMasaa(v)}"
+
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/azkarMasaaLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="32dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/azkarMasaaNameTextView"
+
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center_vertical"
+
+                        android:layout_marginEnd="8dp"
+
+                        style="@style/TextTajawalMedium14"
+                        android:text="@string/azkar_masaa_alarm"/>
+
+                    <!-- OR -> ic_toggler_on -->
+                    <TextView
+                        android:id="@+id/azkarMasaaTimeWithIconTextView"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="8dp"
+
+                        android:gravity="center_vertical"
+
+                        style="@style/TextTajawalBold18"
+                        tools:text="7 : 16 am"
+                        android:text="@{viewModel.azkarMasaaTime}"
+
+                        textView_setDrawableEndCompatBA="@{viewModel.azkarMasaaTime.length() > 0 ? @drawable/ic_toggler_on : @drawable/ic_toggler_off}"
+
+                        android:drawablePadding="16dp"
+                        app:drawableEndCompat="@drawable/ic_toggler_off"
+                        tools:drawableEndCompat="@drawable/ic_toggler_on" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/taspehMaterialCardView"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:cardElevation="0dp"
+                app:cardMaxElevation="0dp"
+
+                app:cardCornerRadius="8dp"
+
+                app:cardBackgroundColor="@color/white"
+
+                android:onClick="@{v -> viewModel.toggleTaspeh(v)}"
+
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/taspehLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="32dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/taspehNameTextView"
+
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="center_vertical"
+
+                        android:layout_marginEnd="8dp"
+
+                        style="@style/TextTajawalMedium14"
+                        android:text="@string/taspeh_alarm"/>
+
+                    <!-- OR -> ic_toggler_on -->
+                    <TextView
+                        android:id="@+id/taspehTimeWithIconTextView"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="8dp"
+
+                        android:gravity="center_vertical"
+
+                        style="@style/TextTajawalBold18"
+                        tools:text=""
+                        android:text="@{viewModel.taspehTime}"
+
+                        textView_setDrawableEndCompatBA="@{viewModel.taspehTime.length() > 0 ? @drawable/ic_toggler_on : @drawable/ic_toggler_off}"
+
+                        android:drawablePadding="16dp"
+                        app:drawableEndCompat="@drawable/ic_toggler_off" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

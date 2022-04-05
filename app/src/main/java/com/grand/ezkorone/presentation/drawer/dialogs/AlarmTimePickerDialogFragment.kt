@@ -10,6 +10,7 @@ import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.getMyDrawable
 import com.grand.ezkorone.databinding.DialogFragmentAlarmTimePickerBinding
 import com.grand.ezkorone.databinding.FragmentContactUsBinding
+import com.grand.ezkorone.domain.alarms.TimeInDay
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.base.dialogs.MADialogFragment
 import com.grand.ezkorone.presentation.drawer.dialogs.viewModel.AlarmTimePickerViewModel
@@ -18,6 +19,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AlarmTimePickerDialogFragment : MADialogFragment<DialogFragmentAlarmTimePickerBinding>() {
+
+    companion object {
+        const val SAVED_STATE_RESULT_JSON = "SAVED_STATE_RESULT_JSON"
+    }
 
     private val viewModel by viewModels<AlarmTimePickerViewModel>()
 
@@ -36,8 +41,9 @@ class AlarmTimePickerDialogFragment : MADialogFragment<DialogFragmentAlarmTimePi
         binding?.viewModel = viewModel
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-    }
+    data class Result(
+        val argTitleName: String,
+        val timeInDay: TimeInDay,
+    )
 
 }

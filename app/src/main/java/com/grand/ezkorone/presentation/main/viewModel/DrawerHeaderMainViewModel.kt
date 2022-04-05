@@ -44,8 +44,10 @@ class DrawerHeaderMainViewModel @Inject constructor(
         )
     }
 
-    fun alarms(view: View) {
-        // todo
+    fun alarms(view: View) = view.closeDrawerThenActWithNavController {
+        navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestAlarms()
+        )
     }
 
     fun notifications(view: View) = view.closeDrawerThenActWithNavController {
@@ -86,13 +88,13 @@ class DrawerHeaderMainViewModel @Inject constructor(
         activity.findNavControllerOfProject().action()
     }
 
-    private fun View.closeDrawerThenActWithActivity(action: MainActivity.() -> Unit) {
+    /*private fun View.closeDrawerThenActWithActivity(action: MainActivity.() -> Unit) {
         val activity = getMainActivityOrNull() ?: return
 
         activity.closeDrawerLayout()
 
         activity.action()
-    }
+    }*/
 
     private fun View.getMainActivityOrNull(): MainActivity? {
         return DataBindingUtil.findBinding<DrawerHeaderMainBinding>(this)

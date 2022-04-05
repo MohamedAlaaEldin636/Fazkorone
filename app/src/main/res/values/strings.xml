@@ -87,12 +87,18 @@
     <string name="favorite_instructions">لم تضف أى أذكار الي المفضلة قم بقرائه الاذكار واضافتها للمفضلة</string>
     <string name="go_to_azkar">الذهاب الي الاذكار</string>
     <string name="determine_your_remind_of_azkar">حدد وقت تذكيرك بقراءة اذكار المساء</string>
+    <string name="determine_your_remind_time">حدد وقت تذكيرك</string>
     <string name="determine_time">حدد الوقت</string>
     <string name="save">حفظ</string>
     <string name="enable_notifications">تشغيل الاشعارات</string>
     <string name="loading">جارى التحميل</string>
     <string name="am">ص</string>
+    <string name="field_required">هذا الحقل مطلوب</string>
     <string name="pm">م</string>
     <string name="this_feature_is_not_supported">هذه الخاصية غير مدعومة</string>
     <string name="cancel">الغاء</string>
+    <string name="azkar_masaa_alarm">منبه اذكار المساء</string>
+    <string name="azkar_sabah_alarm">منبه اذكار الصباح</string>
+    <string name="taspeh_alarm">منبه التسبيح</string>
+    <string name="determine_the_time">حدد الوقت</string>
 </resources>

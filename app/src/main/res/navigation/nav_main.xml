@@ -263,7 +263,11 @@
     <dialog
         android:id="@+id/dest_alarm_time_picker_dialog"
         android:name="com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragment"
-        tools:layout="@layout/dialog_fragment_alarm_time_picker" />
+        tools:layout="@layout/dialog_fragment_alarm_time_picker" >
+        <argument
+            android:name="titleName"
+            app:argType="string" />
+    </dialog>
     <fragment
         android:id="@+id/dest_notifications"
         android:name="com.grand.ezkorone.presentation.drawer.NotificationsFragment"
