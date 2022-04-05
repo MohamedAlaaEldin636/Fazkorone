@@ -22,4 +22,8 @@ class DataSourceNotifications @Inject constructor(
         apiService.enableOrDisableNotifications(prefsApp.getFirebaseToken().first()!!, 0)
     }
 
+    suspend fun getNotifications() = safeApiCall {
+        apiService.getNotifications()
+    }
+
 }

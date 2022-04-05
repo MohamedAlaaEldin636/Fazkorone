@@ -34,7 +34,7 @@ class PrefsApp @Inject constructor(
     suspend fun setNotificationStatus(enable: Boolean?) =
         setBooleanValue(KEY_NOTIFICATIONS_STATUS, enable)
 
-    fun isNotificationsEnabled() = getBooleanValue(KEY_NOTIFICATIONS_STATUS)
+    fun isNotificationsEnabled() = getBooleanValue(KEY_NOTIFICATIONS_STATUS).map { it ?: false }
 
     suspend fun setFirebaseToken(token: String?) =
         setStringValue(KEY_FIREBASE_TOKEN, token)

@@ -2,6 +2,7 @@ package com.grand.ezkorone.data.notifications.repository
 
 import com.google.firebase.messaging.FirebaseMessaging
 import com.grand.ezkorone.core.extensions.flowInitialLoadingWithMinExecutionTime
+import com.grand.ezkorone.data.basePaging.BasePaging
 import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.data.notifications.dataSource.remote.DataSourceNotifications
 import com.grand.ezkorone.data.settings.dataSource.remote.DataSourceSettings
@@ -23,6 +24,10 @@ class RepositoryNotifications @Inject constructor(
 
     fun registerDevice() = flowInitialLoadingWithMinExecutionTime<MABaseResponse<Any>> {
         emit(dataSource.registerDevice())
+    }
+
+    fun getNotifications() = BasePaging.createFlowViaPager {
+        dataSource.getNotifications()
     }
 
 }
