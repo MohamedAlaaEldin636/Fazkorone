@@ -46,8 +46,10 @@ class DrawerHeaderMainViewModel @Inject constructor(
         // todo
     }
 
-    fun notifications(view: View) {
-        // todo
+    fun notifications(view: View) = view.closeDrawerThenActWithNavController {
+        navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestNotifications()
+        )
     }
 
     /*fun donate(view: View) {
