@@ -16,4 +16,8 @@ class DataSourceFavorite @Inject constructor(
         apiService.toggleFavoriteForVerticalList(id)
     }
 
+    suspend fun getFavoriteList() = safeApiCall {
+        apiService.getFavoriteList()
+    }
+
 }

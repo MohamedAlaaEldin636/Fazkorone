@@ -243,7 +243,14 @@
         android:id="@+id/dest_favorite"
         android:name="com.grand.ezkorone.presentation.drawer.FavoriteFragment"
         android:label="@string/favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_dest_favorite_to_dest_zekr_details"
+            app:destination="@id/dest_zekr_details" />
+        <action
+            android:id="@+id/action_dest_favorite_to_dest_azkar_list"
+            app:destination="@id/dest_azkar_list" />
+    </fragment>
     <fragment
         android:id="@+id/dest_alarms"
         android:name="com.grand.ezkorone.presentation.drawer.AlarmsFragment"

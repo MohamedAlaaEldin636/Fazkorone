@@ -17,12 +17,13 @@ class LSAdapterLoadingErrorEmpty(
 	private val adapter: PagingDataAdapter<*, *>,
 	private val isFooter: Boolean,
 	@StringRes private val emptyListMsgStringRes: Int = R.string.no_data_found,
+	private val canShowEmptyView: Boolean = true,
 ) : LoadStateAdapter<ViewHolderFooterLoadState>() {
 	
 	override fun displayLoadStateAsItem(loadState: LoadState): Boolean {
 		return loadState is LoadState.Loading || loadState is LoadState.Error
 			// used to show empty view.
-			|| (isFooter && loadState is LoadState.NotLoading && loadState.endOfPaginationReached && adapter.snapshot().isEmpty())
+			|| (canShowEmptyView && isFooter && loadState is LoadState.NotLoading && loadState.endOfPaginationReached && adapter.snapshot().isEmpty())
 	}
 	
 	override fun onCreateViewHolder(

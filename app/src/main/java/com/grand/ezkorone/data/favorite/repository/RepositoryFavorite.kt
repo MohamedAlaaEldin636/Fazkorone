@@ -1,5 +1,6 @@
 package com.grand.ezkorone.data.favorite.repository
 
+import com.grand.ezkorone.data.basePaging.BasePaging
 import com.grand.ezkorone.data.favorite.dataSource.remote.DataSourceFavorite
 import com.grand.ezkorone.data.home.dataSource.remote.DataSourceHome
 import com.grand.ezkorone.data.local.preferences.PrefsApp
@@ -13,5 +14,9 @@ class RepositoryFavorite @Inject constructor(
     suspend fun toggleFavoriteForHorizontalList(id: Int) = dataSource.toggleFavoriteForHorizontalList(id)
 
     suspend fun toggleFavoriteForVerticalList(id: Int) = dataSource.toggleFavoriteForVerticalList(id)
+
+    fun getFavoriteList() = BasePaging.createFlowViaPager {
+        dataSource.getFavoriteList()
+    }
 
 }

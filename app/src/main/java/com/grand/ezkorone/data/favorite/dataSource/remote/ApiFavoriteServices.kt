@@ -1,11 +1,10 @@
 package com.grand.ezkorone.data.favorite.dataSource.remote
 
 import com.grand.ezkorone.data.api.ApiConst
+import com.grand.ezkorone.domain.favorite.ItemFavorite
+import com.grand.ezkorone.domain.utils.MABasePaging
 import com.grand.ezkorone.domain.utils.MABaseResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiFavoriteServices {
 
@@ -20,5 +19,8 @@ interface ApiFavoriteServices {
     suspend fun toggleFavoriteForHorizontalList(
         @Field(ApiConst.Query.AZKAR_ID) id: Int
     ): MABaseResponse<Any>
+
+    @GET("favorite")
+    suspend fun getFavoriteList(): MABaseResponse<MABasePaging<ItemFavorite>>
 
 }

@@ -38,8 +38,10 @@ class DrawerHeaderMainViewModel @Inject constructor(
         )
     }
 
-    fun favorite(view: View) {
-        // todo
+    fun favorite(view: View) = view.closeDrawerThenActWithNavController {
+        navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestFavorite()
+        )
     }
 
     fun alarms(view: View) {
