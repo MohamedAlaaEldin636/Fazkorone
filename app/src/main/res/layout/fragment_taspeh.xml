@@ -58,7 +58,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
 
-                android:src="@drawable/ic_download"
+                android:src="@drawable/ic_download_2"
 
                 android:layout_margin="8dp"
                 android:padding="8dp"
@@ -88,8 +88,6 @@
                 android:text="@string/a_taspeh"
                 android:textColor="#ffffff"
                 style="@style/TextTajawalMedium16"
-
-                android:onClick="@{v -> viewModel.editLocation(v)}"
 
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

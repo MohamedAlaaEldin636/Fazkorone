@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.grand.ezkorone.core.extensions.findNavControllerOfProject
+import com.grand.ezkorone.core.extensions.openDrawerLayout
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,13 +28,7 @@ class TaspehViewModel @Inject constructor(
     }
 
     fun showNavDrawer(view: View) {
-        view.findNavControllerOfProject()
-        //HijrahChronology
-        // todo
-    }
-
-    fun editLocation(view: View) {
-        // todo
+        view.openDrawerLayout()
     }
 
     fun download(view: View) {
