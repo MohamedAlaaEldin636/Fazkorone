@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.grand.ezkorone">
 
+    <!--Required for API 31 and above isa.-->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -52,6 +55,14 @@
             <nav-graph android:value="@navigation/nav_bottom_nav" />
             -->
         </activity>
+
+        <receiver android:name=".broadcastReceiver.AlarmsBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <!--<action android:name="com.jsiajsi"/>-->
+                <data android:scheme="my-app" android:path="com.grand.ezkorone.broadcastReceiver"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

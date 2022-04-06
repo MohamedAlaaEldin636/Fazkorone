@@ -21,15 +21,15 @@ class PrefsAlarms @Inject constructor(
         private const val KEY_DRAWER_ALARMS_TASPEH = "KEY_DRAWER_ALARMS_TASPEH"
     }
 
-    suspend fun setDrawerAlarmAzkarSabah(timeInDay: TimeInDay) =
+    suspend fun setDrawerAlarmAzkarSabah(timeInDay: TimeInDay?) =
         setValue(KEY_DRAWER_ALARMS_AZKAR_SABAH, timeInDay)
     fun getDrawerAlarmAzkarSabah() = getValue<TimeInDay?>(KEY_DRAWER_ALARMS_AZKAR_SABAH)
 
-    suspend fun setDrawerAlarmAzkarMasaa(timeInDay: TimeInDay) =
+    suspend fun setDrawerAlarmAzkarMasaa(timeInDay: TimeInDay?) =
         setValue(KEY_DRAWER_ALARMS_AZKAR_MASAA, timeInDay)
     fun getDrawerAlarmAzkarMasaa() = getValue<TimeInDay?>(KEY_DRAWER_ALARMS_AZKAR_MASAA)
 
-    suspend fun setDrawerAlarmTaspeh(timeInDay: TimeInDay) =
+    suspend fun setDrawerAlarmTaspeh(timeInDay: TimeInDay?) =
         setValue(KEY_DRAWER_ALARMS_TASPEH, timeInDay)
     fun getDrawerAlarmTaspeh() = getValue<TimeInDay?>(KEY_DRAWER_ALARMS_TASPEH)
 

@@ -77,7 +77,7 @@ object Versions {
 
     const val toasty = "1.5.2"
 
-    const val androidx_work = "2.7.0"
+    const val androidx_work = "2.7.1"
 
     const val androidx_annotation = "1.2.0"
 

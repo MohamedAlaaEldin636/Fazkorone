@@ -1,21 +1,33 @@
 package com.grand.ezkorone.presentation.drawer.viewModel
 
+import android.app.AlarmManager
 import android.app.Application
 import android.view.View
+import androidx.core.content.getSystemService
+import androidx.fragment.app.findFragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
+import androidx.work.WorkManager
 import com.grand.ezkorone.R
+import com.grand.ezkorone.broadcastReceiver.AlarmsBroadcastReceiver
 import com.grand.ezkorone.core.extensions.myApp
+import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.data.local.preferences.PrefsAlarms
 import com.grand.ezkorone.domain.alarms.TimeInDay
+import com.grand.ezkorone.presentation.drawer.AlarmsFragment
+import com.grand.ezkorone.presentation.drawer.AlarmsFragmentDirections
+import com.grand.ezkorone.workManager.DrawerAlarmsWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AlarmsViewModel @Inject constructor(
     application: Application,
-    prefsAlarms: PrefsAlarms,
+    val prefsAlarms: PrefsAlarms,
 ) : AndroidViewModel(application) {
 
     private val stringAm by lazy {
@@ -39,27 +51,41 @@ class AlarmsViewModel @Inject constructor(
     }.asLiveData()
 
     fun toggleAzkarSabah(view: View) {
-        if (azkarSabahTime.value.isNullOrEmpty()) {
-            // Turn ON
-
-        }else {
-            // Turn OFF
-
+        toggleAlarm(azkarSabahTime.value.isNullOrEmpty(), view, myApp.getString(R.string.azkar_sabah_alarm)) {
+            prefsAlarms.setDrawerAlarmAzkarSabah(null)
         }
-        // todo either off and in that case cancel alarm manager or on to launch dialog fragment isa.
-        //  and also change el text in data store as well isa.
     }
 
     fun toggleAzkarMasaa(view: View) {
-        // todo
+        toggleAlarm(azkarMasaaTime.value.isNullOrEmpty(), view, myApp.getString(R.string.azkar_masaa_alarm)) {
+            prefsAlarms.setDrawerAlarmAzkarMasaa(null)
+        }
     }
 
     fun toggleTaspeh(view: View) {
-        // todo
+        toggleAlarm(taspehTime.value.isNullOrEmpty(), view, myApp.getString(R.string.taspeh_alarm)) {
+            prefsAlarms.setDrawerAlarmTaspeh(null)
+        }
+    }
+
+    private fun toggleAlarm(performTurnOn: Boolean, view: View, tag: String, prefsAction: suspend () -> Unit) {
+        if (performTurnOn) {
+            // Turn ON
+            view.findNavController().navigate(
+                AlarmsFragmentDirections.actionDestAlarmsToDestAlarmTimePickerDialog(tag)
+            )
+        }else {
+            // Turn OFF so cancel alarm manager work manager and data store as well isa.
+            AlarmsBroadcastReceiver.cancelWorkManagerAndAlarmManager(view.context, tag)
+
+            viewModelScope.launch {
+                prefsAction()
+            }
+        }
     }
 
     private fun TimeInDay.format(): String {
-        return "$hour12 : $minute ${if (isAm) stringAm else stringPm}"
+        return "$minute : $hour12 ${if (isAm) stringAm else stringPm}"
     }
 
 }

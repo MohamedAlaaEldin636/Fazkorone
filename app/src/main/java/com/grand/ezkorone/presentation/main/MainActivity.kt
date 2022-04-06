@@ -121,8 +121,10 @@ class MainActivity : MABaseActivity<ActivityMainBinding>() {
                     }
                 }
 
-                binding?.materialToolbar?.post {
-                    binding?.materialToolbar?.isTitleCentered = destination.id in centeredTitleToolbarDestinations
+                if (destination.id !in destinationsIgnoreToolbarVisibility) {
+                    binding?.materialToolbar?.post {
+                        binding?.materialToolbar?.isTitleCentered = destination.id in centeredTitleToolbarDestinations
+                    }
                 }
             }
         }

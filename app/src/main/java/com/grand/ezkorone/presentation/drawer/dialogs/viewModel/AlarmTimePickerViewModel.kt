@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.extensions.findNavControllerOfProject
 import com.grand.ezkorone.core.extensions.myApp
 import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.core.extensions.toJson
@@ -54,6 +55,7 @@ class AlarmTimePickerViewModel @Inject constructor(
         val now = LocalDateTime.now()
 
         val timePicker = MaterialTimePicker.Builder()
+            .setTheme(R.style.ThemeOverlay_App_TimePicker)
             .setTitleText(view.context.getString(R.string.determine_the_time))
             .setTimeFormat(TimeFormat.CLOCK_12H)
             .setHour(now.hour)
@@ -71,7 +73,7 @@ class AlarmTimePickerViewModel @Inject constructor(
         val timeInDay = timeInDay.value
             ?: return view.context.showErrorToast(view.context.getString(R.string.field_required))
 
-        val navController = view.findNavController()
+        val navController = view.findNavControllerOfProject()
 
         navController.navigateUp()
 
@@ -82,7 +84,7 @@ class AlarmTimePickerViewModel @Inject constructor(
     }
 
     private fun TimeInDay.format(): String {
-        return "$hour12 : $minute ${if (isAm) stringAm else stringPm}"
+        return "$minute : $hour12 ${if (isAm) stringAm else stringPm}"
     }
 
 }

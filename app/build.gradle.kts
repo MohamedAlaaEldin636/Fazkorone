@@ -83,6 +83,8 @@ dependencies {
     implementation(Deps.dagger.hilt_android)
     kapt(Deps.dagger.hilt_android_compiler)
 
+    implementation(Deps.androidx.work.work_runtime_ktx)
+
     implementation(Deps.glide.glide)
     kapt(Deps.glide.compiler)
 

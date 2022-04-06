@@ -33,6 +33,9 @@
         <item name="android:windowDisablePreview">true</item>
         -->
         <item name="drawerArrowStyle">@style/MADrawerArrowStyle</item>
+
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
+        <item name="materialTimePickerTheme">@style/ThemeOverlay.App.TimePicker</item>
     </style>
 
     <style name="PauseDialog" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
@@ -51,6 +54,11 @@
     </style>
 
     <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TimePicker" parent="@style/ThemeOverlay.MaterialComponents.TimePicker">
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
