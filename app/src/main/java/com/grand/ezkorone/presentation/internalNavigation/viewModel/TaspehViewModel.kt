@@ -22,6 +22,7 @@ import com.grand.ezkorone.domain.utils.toSuccessOrNull
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.internalNavigation.TaspehFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -73,7 +74,9 @@ class TaspehViewModel @Inject constructor(
         view.openDrawerLayout()
     }
 
-    fun prevZekr() {
+    fun prevZekr(view: View) {
+        view.findFragment<TaspehFragment>().pauseAudio()
+
         reset()
 
         currentIndex.value = currentIndex.value!!.dec()
@@ -81,6 +84,8 @@ class TaspehViewModel @Inject constructor(
 
     fun nextZekr(view: View) {
         if (currentIndex.value!! < responseTaspeh.value?.list.orEmpty().lastIndex) {
+            view.findFragment<TaspehFragment>().pauseAudio()
+
             reset()
 
             currentIndex.value = currentIndex.value!!.inc()
@@ -126,8 +131,20 @@ class TaspehViewModel @Inject constructor(
         // todo
     }
 
+    val loadingAudio = MutableLiveData(false)
+
+    val showPlayNotPause = MutableLiveData(true)
+
     fun play(view: View) {
-        // todo
+        val audioUrl = currentItem.value?.audioUrl.orEmpty()
+
+        if (audioUrl.isEmpty()) {
+            return
+        }
+
+        Timber.e("audioUrl $audioUrl")
+
+        view.findFragment<TaspehFragment>().playAudio(audioUrl)
     }
 
     fun share(view: View) {

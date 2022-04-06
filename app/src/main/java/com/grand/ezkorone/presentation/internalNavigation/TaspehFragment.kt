@@ -1,8 +1,12 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetry
 import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
@@ -21,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
 
     private val viewModel by viewModels<TaspehViewModel>()
+
+    private var player: ExoPlayer? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_taspeh
 
@@ -57,6 +63,97 @@ class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
                 viewModel.changeCurrentItem(this, itemTaspeh)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            initializePlayer()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || player == null) {
+            initializePlayer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            releasePlayer()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            releasePlayer()
+        }
+    }
+
+    private fun initializePlayer() {
+        player = /*Simple*/ExoPlayer.Builder(requireContext())
+            .build()
+    }
+
+    private var currentAudioUrl: String? = null
+    private var isPlaying = false
+
+    fun pauseAudio() {
+        player?.pause()
+
+        viewModel.showPlayNotPause.value = true
+
+        isPlaying = false
+    }
+
+    fun playAudio(audioUrl: String) {
+        if (currentAudioUrl == audioUrl) {
+            if (isPlaying) {
+                player?.pause()
+            }else {
+                player?.play()
+            }
+
+            isPlaying = !isPlaying
+
+            viewModel.showPlayNotPause.value = !isPlaying
+        }else {
+            player?.also { exoPlayer ->
+                isPlaying = true
+
+                viewModel.showPlayNotPause.value = false
+
+                exoPlayer.addListener(object : Player.Listener {
+                    override fun onPlaybackStateChanged(playbackState: Int) {
+                        if (playbackState == ExoPlayer.STATE_READY) {
+                            viewModel.loadingAudio.value = false
+                        }
+                    }
+                })
+
+                val mediaItem = MediaItem.fromUri(audioUrl)
+                exoPlayer.setMediaItem(mediaItem)
+
+                exoPlayer.playWhenReady = true
+                exoPlayer.prepare()
+
+                viewModel.loadingAudio.value = true
+            }
+        }
+
+        currentAudioUrl = audioUrl
+    }
+
+    private fun releasePlayer() {
+        player?.release()
+        player = null
     }
 
 }

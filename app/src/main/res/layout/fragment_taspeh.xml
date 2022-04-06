@@ -96,8 +96,8 @@
             <TextView
                 android:id="@+id/knownMaxCountTextView"
 
-                android:layout_width="54dp"
-                android:layout_height="54dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
 
                 android:background="@drawable/dr_circle_with_stroke"
 
@@ -124,7 +124,8 @@
 
                 android:layout_marginEnd="16dp"
 
-                app:layout_constraintEnd_toStartOf="@id/knownMaxCountTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/knownMaxCountTextView"/>
 
             <TextView
@@ -223,7 +224,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{() -> viewModel.prevZekr()}"
+                android:onClick="@{v -> viewModel.prevZekr(v)}"
 
                 view_setVisibleOrInvisible="@{viewModel.canShowPreviousTaspeh}"
                 tools:visibility="invisible"
@@ -316,10 +317,10 @@
             <ImageView
                 android:id="@+id/playImageView"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="63dp"
+                android:layout_height="63dp"
 
-                android:src="@drawable/ic_play_themed"
+                android:src="@{viewModel.showPlayNotPause ? @drawable/ic_play_themed : @drawable/ic_pause,default=@drawable/ic_play_themed}"
 
                 android:layout_marginTop="16dp"
 
@@ -327,9 +328,26 @@
                 android:focusable="true"
                 android:onClick="@{v -> viewModel.play(v)}"
 
+                android:visibility="invisible"
+                view_setVisibleOrInvisible="@{!viewModel.loadingAudio}"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/anotherZekrTextView"/>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:visibility="@{viewModel.loadingAudio,default=gone}"
+                tools:visibility="visible"
+
+                app:layout_constraintTop_toTopOf="@id/playImageView"
+                app:layout_constraintBottom_toBottomOf="@id/playImageView"
+                app:layout_constraintStart_toStartOf="@id/playImageView"
+                app:layout_constraintEnd_toEndOf="@id/playImageView"/>
 
             <ImageView
                 android:id="@+id/headphoneImageView"
