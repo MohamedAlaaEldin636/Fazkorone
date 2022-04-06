@@ -1,16 +1,17 @@
 package com.grand.ezkorone.presentation.internalNavigation.viewModel
 
+import android.app.DownloadManager
+import android.net.Uri
+import android.os.Environment
 import android.view.View
+import androidx.core.content.getSystemService
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.switchMapMultiple
-import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
-import com.grand.ezkorone.core.extensions.findNavControllerOfProject
-import com.grand.ezkorone.core.extensions.openDrawerLayout
-import com.grand.ezkorone.core.extensions.showErrorToast
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.data.sheikh.repository.RepositorySheikh
 import com.grand.ezkorone.data.taspeh.repository.RepositoryTaspeh
 import com.grand.ezkorone.domain.salah.SalahFardType
@@ -128,7 +129,21 @@ class TaspehViewModel @Inject constructor(
     }
 
     fun download(view: View) {
-        // todo
+        val item = currentItem.value ?: return
+
+        val request = DownloadManager.Request(Uri.parse(item.audioUrl))
+            .setTitle(view.context.getString(R.string.app_name))
+            .setDescription(item.name)
+            //.allowScanningByMediaScanner()
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, item.name)
+
+        val downloadManager = view.context.getSystemService<DownloadManager>()
+            ?: return
+
+        downloadManager.enqueue(request)
+
+        view.context.showSuccessToast(view.context.getString(R.string.loading))
     }
 
     val loadingAudio = MutableLiveData(false)
@@ -148,7 +163,7 @@ class TaspehViewModel @Inject constructor(
     }
 
     fun share(view: View) {
-        // todo
+        // todo dynamic links of firebase isa.
     }
 
     fun changeCurrentItem(fragment: TaspehFragment, itemTaspeh: ItemTaspeh) {
