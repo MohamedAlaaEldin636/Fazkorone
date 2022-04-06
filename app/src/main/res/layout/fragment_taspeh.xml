@@ -107,6 +107,7 @@
                 android:textColor="#FFAA00"
 
                 tools:text="33"
+                android:text="@{viewModel.maxCount}"
 
                 android:layout_margin="16dp"
 
@@ -142,7 +143,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.reset(v)}"
+                android:onClick="@{() -> viewModel.reset()}"
 
                 app:layout_constraintTop_toTopOf="@id/counterBgView"
                 app:layout_constraintEnd_toEndOf="@id/counterBgView"/>
@@ -186,7 +187,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.decrement(v)}"
+                android:onClick="@{() -> viewModel.decrement()}"
 
                 app:layout_constraintTop_toBottomOf="@id/countTextView"
                 app:layout_constraintEnd_toEndOf="@id/counterBgView"/>
@@ -205,7 +206,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.increment(v)}"
+                android:onClick="@{() -> viewModel.increment()}"
 
                 app:layout_constraintBottom_toBottomOf="@id/counterBgView"
                 app:layout_constraintStart_toStartOf="@id/counterBgView"/>
@@ -222,7 +223,10 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{v -> viewModel.prevZekr(v)}"
+                android:onClick="@{() -> viewModel.prevZekr()}"
+
+                view_setVisibleOrInvisible="@{viewModel.canShowPreviousTaspeh}"
+                tools:visibility="invisible"
 
                 android:layout_marginStart="8dp"
 
@@ -243,6 +247,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{v -> viewModel.nextZekr(v)}"
+
+                view_setVisibleOrInvisible="@{viewModel.canShowNextTaspeh}"
 
                 android:layout_marginEnd="8dp"
 
@@ -267,6 +273,7 @@
                 android:layout_marginTop="16dp"
 
                 tools:text="سبحان الله وبحمده سبحان الله العظيم"
+                android:text="@{viewModel.taspehText}"
 
                 android:padding="16dp"
 

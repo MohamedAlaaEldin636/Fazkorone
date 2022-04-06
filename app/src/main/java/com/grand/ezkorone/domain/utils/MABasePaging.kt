@@ -1,6 +1,7 @@
 package com.grand.ezkorone.domain.utils
 
 import com.google.gson.annotations.SerializedName
+import com.grand.ezkorone.domain.utils.common.Links
 
 /*
         "data": [
@@ -24,15 +25,17 @@ import com.google.gson.annotations.SerializedName
  */
 data class MABasePaging<T>(
 	val data: List<T>?,
-	
+
+	val links: Links?,
+
 	@SerializedName("current_page") val currentPage: Int,
-	
+
 	@SerializedName("next_page_url") val nextPageUrl: String?,
 	/** "first_page_url": "https://samee.my-staff.net/api/v1/orders?page=1" */
 	@SerializedName("first_page_url") val firstPageUrl: String?,
-	
+
 	@SerializedName("last_page") val lastPage: Int,
-	
+
 	/** 1 is the start number ex. index + 1 as doesn't start from 0 */
 	@SerializedName("from") val fromInPage: Int,
 	/** 1 */
@@ -45,6 +48,7 @@ data class MABasePaging<T>(
 
 	fun <R> mapData(conversion: (T) -> R) = MABasePaging(
 		data?.map { conversion(it) },
+		links,
 		currentPage,
 		nextPageUrl,
 		firstPageUrl,

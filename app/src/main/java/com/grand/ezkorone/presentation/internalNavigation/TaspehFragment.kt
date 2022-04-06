@@ -1,7 +1,11 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetry
+import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
 import com.grand.ezkorone.databinding.FragmentQiblaBinding
 import com.grand.ezkorone.databinding.FragmentTaspehBinding
 import com.grand.ezkorone.presentation.base.MABaseFragment
@@ -18,6 +22,17 @@ class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
 
     override fun initializeBindingVariables() {
         binding?.viewModel = viewModel
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        executeOnGlobalLoadingAndAutoHandleRetry(
+            afterShowingLoading = {
+                viewModel.repoTaspeh.getAzkarList(1)
+            },
+            afterHidingLoading = {
+                viewModel.responseTaspeh.value = it
+            }
+        )
     }
 
 }

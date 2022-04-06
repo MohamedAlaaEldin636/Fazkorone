@@ -6,6 +6,7 @@ import com.grand.ezkorone.data.notifications.dataSource.remote.ApiNotificationsS
 import com.grand.ezkorone.data.search.dataSource.remote.ApiSearchService
 import com.grand.ezkorone.data.settings.dataSource.remote.ApiSettingsServices
 import com.grand.ezkorone.data.sheikh.dataSource.remote.ApiSheikhServices
+import com.grand.ezkorone.data.taspeh.dataSource.remote.ApiTaspehServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,5 +47,10 @@ object NetworkServicesModule {
     @Singleton
     fun provideApiSheikhServices(retrofit: Retrofit): ApiSheikhServices =
         retrofit.create(ApiSheikhServices::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiTaspehServices(retrofit: Retrofit): ApiTaspehServices =
+        retrofit.create(ApiTaspehServices::class.java)
 
 }
