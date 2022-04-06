@@ -11,7 +11,7 @@ import com.grand.ezkorone.domain.sheikh.ItemSheikh
 import com.grand.ezkorone.presentation.internalNavigation.adapters.viewHolder.VHItemHomeZekr
 import com.grand.ezkorone.presentation.sheikh.adapter.viewModel.VHItemSheikh
 
-class RVItemSheikh(val repoSheikh: RepositorySheikh, private val gson: Gson) : PagingDataAdapter<ItemSheikh, VHItemSheikh>(COMPARATOR) {
+class RVItemSheikh(val repoSheikh: RepositorySheikh, private val gson: Gson, private val isSalawatNotTaspeh: Boolean) : PagingDataAdapter<ItemSheikh, VHItemSheikh>(COMPARATOR) {
 
     companion object {
         val COMPARATOR = object : DiffUtil.ItemCallback<ItemSheikh>() {
@@ -28,7 +28,7 @@ class RVItemSheikh(val repoSheikh: RepositorySheikh, private val gson: Gson) : P
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHItemSheikh {
-        return VHItemSheikh(parent, this, gson)
+        return VHItemSheikh(parent, this, gson, isSalawatNotTaspeh)
     }
 
     override fun onBindViewHolder(holder: VHItemSheikh, position: Int) {

@@ -20,4 +20,8 @@ class DataSourceTaspeh @Inject constructor(
         }
     }
 
+    suspend fun getTaspehListPaginated(page: Int) = safeApiCall {
+        apiService.getTaspehList(page)
+    }
+
 }

@@ -168,6 +168,9 @@
         <action
             android:id="@+id/action_dest_bottom_nav_to_dest_notifications"
             app:destination="@id/dest_notifications" />
+        <action
+            android:id="@+id/action_dest_bottom_nav_to_dest_taspeh_list"
+            app:destination="@id/dest_taspeh_list" />
     </fragment>
     <fragment
         android:id="@+id/dest_edit_location"
@@ -224,6 +227,10 @@
         <argument
             android:name="salahFardType"
             app:argType="com.grand.ezkorone.domain.salah.SalahFardType" />
+        <argument
+            android:name="taspehId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/dest_pick_zekr"
@@ -273,5 +280,14 @@
         android:name="com.grand.ezkorone.presentation.drawer.NotificationsFragment"
         android:label="@string/notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/dest_taspeh_list"
+        android:name="com.grand.ezkorone.presentation.taspeh.TaspehListFragment"
+        android:label="@string/pick_zekr"
+        tools:layout="@layout/fragment_taspeh_list" >
+        <argument
+            android:name="taspehId"
+            app:argType="integer" />
+    </fragment>
 
 </navigation>

@@ -15,7 +15,7 @@ import com.grand.ezkorone.presentation.sheikh.SheikhListFragment
 import com.grand.ezkorone.presentation.sheikh.adapter.RVItemSheikh
 import timber.log.Timber
 
-class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private val gson: Gson) : RecyclerView.ViewHolder(
+class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private val gson: Gson, private val isSalawatNotTaspeh: Boolean) : RecyclerView.ViewHolder(
     parent.context.inflateLayout(R.layout.item_sheikh, parent)
 ) {
 
@@ -28,7 +28,11 @@ class VHItemSheikh(parent: ViewGroup, private val adapter: RVItemSheikh, private
 
             view.executeOnGlobalLoading(
                 afterShowingLoading = {
-                    adapter.repoSheikh.toggleSheikhSelectionForSalawat(itemSheikh.id)
+                    if (isSalawatNotTaspeh) {
+                        adapter.repoSheikh.toggleSheikhSelectionForSalawat(itemSheikh.id)
+                    }else {
+                        adapter.repoSheikh.toggleSheikhSelectionForTaspeh(itemSheikh.id)
+                    }
                 },
                 afterHidingLoading = { result ->
                     when (result) {

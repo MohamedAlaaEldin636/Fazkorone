@@ -14,8 +14,16 @@ class DataSourceSheikh @Inject constructor(
         apiService.getSheikhListForSalawat(type.apiIntValue, page)
     }
 
+    suspend fun getSheikhListForTaspeh(taspehId: Int, page: Int) = safeApiCall {
+        apiService.getSheikhListForTaspeh(taspehId, page)
+    }
+
     suspend fun toggleSheikhSelectionForSalawat(sheikhId: Int) = safeApiCall {
         apiService.toggleSheikhSelectionForSalawat(sheikhId)
+    }
+
+    suspend fun toggleSheikhSelectionForTaspeh(sheikhId: Int) = safeApiCall {
+        apiService.toggleSheikhSelectionForTaspeh(sheikhId)
     }
 
 }

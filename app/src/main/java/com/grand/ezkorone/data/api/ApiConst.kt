@@ -23,6 +23,7 @@ object ApiConst {
         const val LONGITUDE = "longitude"
         const val PAGE = "page"
         const val PRAYER_ID = "prayer_id"
+        const val PRAISE_ID = "praise_id"
 
     }
 

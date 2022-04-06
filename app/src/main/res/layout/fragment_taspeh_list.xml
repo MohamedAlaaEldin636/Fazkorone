@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:context="com.grand.ezkorone.presentation.taspeh.TaspehListFragment"
+    tools:ignore="ContentDescription" >
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.grand.ezkorone.presentation.taspeh.viewModel.TaspehListViewModel" />
+    </data>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+
+        android:background="#FBFBFB"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:padding="8dp"
+        android:clipToPadding="false"
+
+        android:scrollbars="vertical"
+        tools:itemCount="12"
+        tools:orientation="vertical"
+        tools:listitem="@layout/item_taspeh"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</layout>

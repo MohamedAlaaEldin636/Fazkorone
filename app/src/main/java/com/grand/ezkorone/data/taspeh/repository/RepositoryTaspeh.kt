@@ -8,6 +8,7 @@ import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.data.taspeh.dataSource.remote.DataSourceTaspeh
 import com.grand.ezkorone.domain.home.ItemZekrInList
 import com.grand.ezkorone.domain.home.ItemZekrTopCategory
+import com.grand.ezkorone.domain.taspeh.ItemTaspeh
 import com.grand.ezkorone.domain.utils.MABaseResponse
 import com.grand.ezkorone.domain.utils.common.IdAndName
 import com.grand.ezkorone.domain.utils.mapImmediate
@@ -19,13 +20,13 @@ class RepositoryTaspeh @Inject constructor(
     private val prefsApp: PrefsApp,
 ) {
 
-    /*fun getHomeCategoriesVertical(): Flow<PagingData<ItemZekrTopCategory>> {
-        return BasePaging.createFlowViaPager { page ->
-            dataSource.getHomeCategories(page)
-        }
-    }*/
-
     suspend fun getAzkarList(page: Int) =
         dataSource.getTaspehList(page)
+
+    fun getTaspehListPaginated(): Flow<PagingData<ItemTaspeh>> {
+        return BasePaging.createFlowViaPager { page ->
+            dataSource.getTaspehListPaginated(page)
+        }
+    }
 
 }

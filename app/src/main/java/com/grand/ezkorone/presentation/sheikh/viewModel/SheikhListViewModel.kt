@@ -15,8 +15,12 @@ class SheikhListViewModel @Inject constructor(
     gson: Gson,
 ) : ViewModel() {
 
-    val sheikhList = repoSheikh.getSheikhListForSalahFardType(args.salahFardType)
+    val sheikhList = if (args.taspehId >= 0) {
+        repoSheikh.getSheikhListForTaspeh(args.taspehId)
+    }else {
+        repoSheikh.getSheikhListForSalahFardType(args.salahFardType)
+    }
 
-    val adapter = RVItemSheikh(repoSheikh, gson)
+    val adapter = RVItemSheikh(repoSheikh, gson, args.taspehId < 0)
 
 }

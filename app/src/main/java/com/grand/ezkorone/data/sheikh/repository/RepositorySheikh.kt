@@ -10,6 +10,7 @@ import com.grand.ezkorone.domain.home.ItemZekrInList
 import com.grand.ezkorone.domain.home.ItemZekrTopCategory
 import com.grand.ezkorone.domain.salah.SalahFardType
 import com.grand.ezkorone.domain.sheikh.ItemSheikh
+import com.grand.ezkorone.domain.taspeh.ItemTaspeh
 import com.grand.ezkorone.domain.utils.MABaseResponse
 import com.grand.ezkorone.domain.utils.common.IdAndName
 import com.grand.ezkorone.domain.utils.mapImmediate
@@ -26,7 +27,16 @@ class RepositorySheikh @Inject constructor(
         }
     }
 
+    fun getSheikhListForTaspeh(taspehId: Int): Flow<PagingData<ItemSheikh>> {
+        return BasePaging.createFlowViaPager { page ->
+            dataSource.getSheikhListForTaspeh(taspehId, page)
+        }
+    }
+
     suspend fun toggleSheikhSelectionForSalawat(sheikhId: Int) = dataSource
         .toggleSheikhSelectionForSalawat(sheikhId)
+
+    suspend fun toggleSheikhSelectionForTaspeh(sheikhId: Int) = dataSource
+        .toggleSheikhSelectionForTaspeh(sheikhId)
 
 }

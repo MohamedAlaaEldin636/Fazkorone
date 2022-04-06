@@ -11,16 +11,22 @@ import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRet
 import com.grand.ezkorone.core.extensions.findNavControllerOfProject
 import com.grand.ezkorone.core.extensions.openDrawerLayout
 import com.grand.ezkorone.core.extensions.showErrorToast
+import com.grand.ezkorone.data.sheikh.repository.RepositorySheikh
 import com.grand.ezkorone.data.taspeh.repository.RepositoryTaspeh
+import com.grand.ezkorone.domain.salah.SalahFardType
 import com.grand.ezkorone.domain.taspeh.ItemTaspeh
 import com.grand.ezkorone.domain.taspeh.ResponseTaspeh
+import com.grand.ezkorone.domain.utils.MAResult
+import com.grand.ezkorone.domain.utils.mapImmediate
+import com.grand.ezkorone.domain.utils.toSuccessOrNull
+import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.internalNavigation.TaspehFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class TaspehViewModel @Inject constructor(
-    val repoTaspeh: RepositoryTaspeh
+    val repoTaspeh: RepositoryTaspeh,
 ) : ViewModel() {
 
     private val _count = MutableLiveData(0)
@@ -67,10 +73,6 @@ class TaspehViewModel @Inject constructor(
         view.openDrawerLayout()
     }
 
-    fun download(view: View) {
-        // todo
-    }
-
     fun prevZekr() {
         reset()
 
@@ -106,10 +108,21 @@ class TaspehViewModel @Inject constructor(
     }
 
     fun pickAnotherZekr(view: View) {
-        // todo
+        view.findNavControllerOfProject().navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestTaspehList(currentItem.value?.id ?: return)
+        )
     }
 
     fun sheikh(view: View) {
+        view.findNavControllerOfProject().navigate(
+            BottomNavFragmentDirections.actionDestBottomNavToDestSheikhList(
+                SalahFardType.FAGR, // has no effect as long as below id >= 0 isa.
+                currentItem.value?.id ?: return
+            )
+        )
+    }
+
+    fun download(view: View) {
         // todo
     }
 
@@ -119,6 +132,64 @@ class TaspehViewModel @Inject constructor(
 
     fun share(view: View) {
         // todo
+    }
+
+    fun changeCurrentItem(fragment: TaspehFragment, itemTaspeh: ItemTaspeh) {
+        val index = responseTaspeh.value?.list?.indexOfFirst { it.id == itemTaspeh.id }
+        if (index != null && index >= 0) {
+            currentIndex.value = index
+        }else {
+            val startPage = responseTaspeh.value!!.currentPage.inc()
+
+            fragment.executeOnGlobalLoadingAndAutoHandleRetryCancellable(
+                afterShowingLoading = {
+                    val list = mutableListOf<ItemTaspeh>()
+                    list += responseTaspeh.value!!.list
+                    while (true) {
+                        val result = repoTaspeh.getAzkarList(startPage)
+
+                        if (result is MAResult.Success) {
+                            list += result.value.data?.list.orEmpty()
+
+                            val indexOfItem = list.indexOfFirst { it.id == itemTaspeh.id }
+
+                            if (indexOfItem != -1) {
+                                this.currentIndex.value
+
+                                return@executeOnGlobalLoadingAndAutoHandleRetryCancellable result.mapImmediate { maBaseResponse ->
+                                    maBaseResponse.mapData {
+                                        it?.copy(
+                                            list = list
+                                        ) to indexOfItem
+                                    }
+                                }
+                            }
+                        }else {
+                            // Will auto retry if user want to do so isa.
+                            return@executeOnGlobalLoadingAndAutoHandleRetryCancellable result.mapImmediate { maBaseResponse ->
+                                maBaseResponse.mapData { it to 0 }
+                            }
+                        }
+
+                    }
+
+                    @Suppress("UNREACHABLE_CODE")
+                    repoTaspeh.getAzkarList(startPage).mapImmediate { maBaseResponse ->
+                        maBaseResponse.mapData { it to 0 }
+                    }
+                },
+                afterHidingLoading = { pair ->
+                    if (pair?.first != null) {
+                        responseTaspeh.value = pair.first!!
+
+                        currentIndex.value = pair.second
+                    }else {
+                        fragment.requireContext().showErrorToast(fragment.getString(R.string.something_went_wrong))
+                    }
+                },
+                canCancelDialog = true
+            )
+        }
     }
 
 }

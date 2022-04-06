@@ -6,6 +6,7 @@ import com.grand.ezkorone.presentation.azkar.AzkarListFragmentArgs
 import com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragmentArgs
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import com.grand.ezkorone.presentation.sheikh.SheikhListFragmentArgs
+import com.grand.ezkorone.presentation.taspeh.TaspehListFragmentArgs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,6 +34,11 @@ object ViewModelArgsModule {
     @Provides
     fun provideAlarmTimePickerDialogFragmentArgs(state: SavedStateHandle): AlarmTimePickerDialogFragmentArgs {
         return AlarmTimePickerDialogFragmentArgs.fromBundle(state.asBundle())
+    }
+
+    @Provides
+    fun provideTaspehListFragmentArgs(state: SavedStateHandle): TaspehListFragmentArgs {
+        return TaspehListFragmentArgs.fromBundle(state.asBundle())
     }
 
 }
