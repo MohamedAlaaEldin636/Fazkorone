@@ -169,8 +169,14 @@ class TaspehViewModel @Inject constructor(
     fun changeCurrentItem(fragment: TaspehFragment, itemTaspeh: ItemTaspeh) {
         val index = responseTaspeh.value?.list?.indexOfFirst { it.id == itemTaspeh.id }
         if (index != null && index >= 0) {
-            currentIndex.value = index
+            if (currentIndex.value != index) {
+                reset()
+
+                currentIndex.value = index
+            }
         }else {
+            reset()
+
             val startPage = responseTaspeh.value!!.currentPage.inc()
 
             fragment.executeOnGlobalLoadingAndAutoHandleRetryCancellable(
@@ -186,8 +192,6 @@ class TaspehViewModel @Inject constructor(
                             val indexOfItem = list.indexOfFirst { it.id == itemTaspeh.id }
 
                             if (indexOfItem != -1) {
-                                this.currentIndex.value
-
                                 return@executeOnGlobalLoadingAndAutoHandleRetryCancellable result.mapImmediate { maBaseResponse ->
                                     maBaseResponse.mapData {
                                         it?.copy(
