@@ -18,7 +18,9 @@ import com.grand.ezkorone.presentation.main.MainActivity
 object NotificationUtils {
 
     private const val ALARMS_CHANNEL_ID = "ALARMS_CHANNEL_ID"
+    private const val NOTIFICATIONS_CHANNEL_ID = "NOTIFICATIONS_CHANNEL_ID"
     private const val ALARMS_NOTIFICATION_ID = 47
+    private const val NOTIFICATIONS_NOTIFICATION_ID = 48
 
     fun showNotificationToLaunchMainActivityForAlarms(
         appContext: Context,
@@ -31,6 +33,21 @@ object NotificationUtils {
             ALARMS_CHANNEL_ID,
             appContext.getString(R.string.alarms),
             ALARMS_NOTIFICATION_ID
+        )
+    }
+
+    fun showNotificationToLaunchMainActivityForFirebaseNotification(
+        appContext: Context,
+        title: String,
+        body: String,
+    ) {
+        showNotificationToLaunchMainActivity(
+            appContext,
+            title,
+            body,
+            NOTIFICATIONS_CHANNEL_ID,
+            appContext.getString(R.string.alarms),
+            NOTIFICATIONS_NOTIFICATION_ID
         )
     }
 
