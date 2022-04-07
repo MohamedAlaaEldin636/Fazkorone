@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
@@ -43,6 +44,16 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
     /** true show play, false pause, else loading */
     private var allPlayerShowPlayNotPause = true
 
+    private var currentAudioUrl: String? = null
+
+    private val singlePlayerListener = object : Player.Listener {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            if (playbackState == ExoPlayer.STATE_READY) {
+                viewModel.showAudioLoading.value = false
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
 
@@ -57,6 +68,13 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activityViewModel.titleToolbar.postValue(args.toolbarTitle)
+
+        viewModel.currentIndex.distinctUntilChanged().observe(viewLifecycleOwner) {
+            playerSingle?.removeListener(singlePlayerListener)
+            playerSingle?.pause()
+            viewModel.showAudioLoading.value = false
+            viewModel.showAudioPlayNotPause.value = true
+        }
 
         handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAblFlowResponseZekrDetails) {
             viewModel.showLoading.value = true
@@ -206,15 +224,6 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
                 val mediaItem = MediaItem.fromUri(response.data[0].audioUrl)
                 exoPlayer.setMediaItem(mediaItem)
 
-                context?.showNormalToast("here 1")
-                exoPlayer.addListener(object : Player.Listener {
-                    override fun onPlaybackStateChanged(playbackState: Int) {
-                        if (playbackState == ExoPlayer.STATE_READY) {
-                            context?.showSuccessToast("readyyyyyyyyyyy")
-                        }
-                    }
-                })
-
                 exoPlayer.playWhenReady = false
                 exoPlayer.prepare()
             }
@@ -227,6 +236,39 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
         playerSingle?.release()
         playerSingle = null
+    }
+
+    fun toggleSinglePlayerPlayAndPauseStatue(audioUrl: String) {
+        playerSingle?.also { exoPlayer ->
+            when {
+                currentAudioUrl == null || currentAudioUrl != audioUrl -> {
+                    exoPlayer.removeListener(singlePlayerListener)
+
+                    val mediaItem = MediaItem.fromUri(audioUrl)
+                    exoPlayer.setMediaItem(mediaItem)
+
+                    viewModel.showAudioLoading.value = true
+                    viewModel.showAudioPlayNotPause.value = false
+                    exoPlayer.addListener(singlePlayerListener)
+
+                    exoPlayer.playWhenReady = true
+                    exoPlayer.prepare()
+                }
+                else -> /* currentAudioUrl == audioUrl */ {
+                    val playIconIsShown = viewModel.showAudioPlayNotPause.value!!
+
+                    if (playIconIsShown) {
+                        exoPlayer.play()
+                    }else {
+                        exoPlayer.pause()
+                    }
+
+                    viewModel.showAudioPlayNotPause.value = !playIconIsShown
+                }
+            }
+
+            currentAudioUrl = audioUrl
+        }
     }
 
 }

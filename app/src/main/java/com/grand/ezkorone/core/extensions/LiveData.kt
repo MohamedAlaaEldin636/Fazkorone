@@ -1,7 +1,9 @@
 package com.grand.ezkorone.core.extensions
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataScope
+import androidx.lifecycle.Observer
 import com.grand.ezkorone.domain.utils.MAResult
 import kotlinx.coroutines.delay
 import kotlin.coroutines.CoroutineContext
@@ -22,5 +24,25 @@ fun <T> liveDataInitialLoadingWithMinExecutionTime(
 	val remaining = timeInMillis - (System.currentTimeMillis() - current)
 	if (remaining > 0) {
 		delay(remaining)
+	}
+}
+
+fun <T> LiveData<T?>.observeOnceUntilNotNull(owner: LifecycleOwner, action: (T) -> Unit) {
+	val value = value
+
+	if (value != null) {
+		action(value)
+	}else {
+		val observer = object : Observer<T?> {
+			override fun onChanged(newValue: T?) {
+				if (newValue != null) {
+					action(newValue)
+
+					removeObserver(this)
+				}
+			}
+		}
+
+		observe(owner, observer)
 	}
 }

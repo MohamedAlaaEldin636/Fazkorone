@@ -106,7 +106,7 @@
             android:onClick="@{v -> viewModel.play(v)}"
 
             android:visibility="@{!viewModel.showAudioLoading}"
-            tools:visibility="visible"
+            tools:visibility="gone"
 
             app:layout_constraintEnd_toStartOf="@id/progressIndicator"
             app:layout_constraintStart_toEndOf="@id/shareImageView"

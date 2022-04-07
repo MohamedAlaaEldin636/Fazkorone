@@ -135,7 +135,7 @@ class ZekrDetailsViewModel @Inject constructor(
             response.data[currentIndex.value!!]
         }
 
-        // todo 3ayzen ne3mel el loading progress lono abyad w el kalam dah w pause abyad kaman so wait
+        view.findFragment<ZekrDetailsFragment>().toggleSinglePlayerPlayAndPauseStatue(item.audioUrl)
     }
 
     fun share(view: View) {
