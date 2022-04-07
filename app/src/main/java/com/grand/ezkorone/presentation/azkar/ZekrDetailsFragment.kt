@@ -1,18 +1,21 @@
 package com.grand.ezkorone.presentation.azkar
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.RTLRemotePDFViewPager
-import com.grand.ezkorone.core.extensions.handleRetryAbleFlowWithMustHaveResultWithNullability
-import com.grand.ezkorone.core.extensions.launchShareText
-import com.grand.ezkorone.core.extensions.showErrorToast
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
 import com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel
 import com.grand.ezkorone.presentation.base.MABaseFragment
@@ -34,6 +37,12 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
     private var adapter: PDFPagerAdapter? = null
 
+    private var playerAll: ExoPlayer? = null
+    private var playerSingle: ExoPlayer? = null
+
+    /** true show play, false pause, else loading */
+    private var allPlayerShowPlayNotPause = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
 
@@ -54,7 +63,15 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
             viewModel.responseZekrDetail.value = it.data
 
-            remotePDFViewPager = RTLRemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
+            initializePlayer()
+
+            if (it.data?.data.orEmpty().isEmpty()) {
+                context?.showErrorToast(getString(R.string.empty_data))
+
+                findNavController().navigateUp()
+            }else {
+                remotePDFViewPager = RTLRemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
+            }
         }
     }
 
@@ -108,14 +125,30 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
 
-        inflater.inflate(R.menu.menu_zekr_details, menu)
+        val menuRes = if (allPlayerShowPlayNotPause) {
+            R.menu.menu_zekr_details
+        }else {
+            R.menu.menu_zekr_details_pause
+        }
+        inflater.inflate(menuRes, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // todo prepare once loaded asln isa. for update icon ba2a 3eee4 nta isa.
-            //  khalena f elle ta7t tb el awal isa.
-            R.id.action_play -> TODO("see other play isa.")
+            R.id.action_play -> {
+                playerAll?.play()
+
+                allPlayerShowPlayNotPause = false
+
+                requireActivity().invalidateOptionsMenu()
+            }
+            R.id.action_pause -> {
+                playerAll?.pause()
+
+                allPlayerShowPlayNotPause = true
+
+                requireActivity().invalidateOptionsMenu()
+            }
             R.id.action_share -> viewModel.responseZekrDetail.value?.also { response ->
                 context?.launchShareText(response.data[0].pdfUrl)
             }
@@ -128,6 +161,72 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         super.onDestroy()
 
         adapter?.close()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            initializePlayer()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N || playerAll == null || playerSingle == null) {
+            initializePlayer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            releasePlayer()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            releasePlayer()
+        }
+    }
+
+    private fun initializePlayer() {
+        playerAll = /*Simple*/ExoPlayer.Builder(requireContext())
+            .build()
+        playerSingle = /*Simple*/ExoPlayer.Builder(requireContext())
+            .build()
+
+        viewModel.responseZekrDetail.value?.also { response ->
+            playerAll?.also { exoPlayer ->
+                val mediaItem = MediaItem.fromUri(response.data[0].audioUrl)
+                exoPlayer.setMediaItem(mediaItem)
+
+                context?.showNormalToast("here 1")
+                exoPlayer.addListener(object : Player.Listener {
+                    override fun onPlaybackStateChanged(playbackState: Int) {
+                        if (playbackState == ExoPlayer.STATE_READY) {
+                            context?.showSuccessToast("readyyyyyyyyyyy")
+                        }
+                    }
+                })
+
+                exoPlayer.playWhenReady = false
+                exoPlayer.prepare()
+            }
+        }
+    }
+
+    private fun releasePlayer() {
+        playerAll?.release()
+        playerAll = null
+
+        playerSingle?.release()
+        playerSingle = null
     }
 
 }

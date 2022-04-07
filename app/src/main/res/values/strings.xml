@@ -101,4 +101,6 @@
     <string name="azkar_sabah_alarm">منبه اذكار الصباح</string>
     <string name="taspeh_alarm">منبه التسبيح</string>
     <string name="determine_the_time">حدد الوقت</string>
+    <string name="pause">توقيف</string>
+    <string name="empty_data">البيانات فارغة</string>
 </resources>
