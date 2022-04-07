@@ -3,11 +3,14 @@ package com.grand.ezkorone.presentation.azkar.viewModel
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.grand.ezkorone.presentation.azkar.ZekrDetailsFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ZekrDetailsViewModel @Inject constructor() : ViewModel() {
+class ZekrDetailsViewModel @Inject constructor(
+    args: ZekrDetailsFragmentArgs
+) : ViewModel() {
 
     val search = MutableLiveData("")
 

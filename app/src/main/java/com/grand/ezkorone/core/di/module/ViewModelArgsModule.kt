@@ -3,6 +3,7 @@ package com.grand.ezkorone.core.di.module
 import androidx.lifecycle.SavedStateHandle
 import com.grand.ezkorone.core.extensions.asBundle
 import com.grand.ezkorone.presentation.azkar.AzkarListFragmentArgs
+import com.grand.ezkorone.presentation.azkar.ZekrDetailsFragmentArgs
 import com.grand.ezkorone.presentation.drawer.dialogs.AlarmTimePickerDialogFragmentArgs
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import com.grand.ezkorone.presentation.sheikh.SheikhListFragmentArgs
@@ -39,6 +40,11 @@ object ViewModelArgsModule {
     @Provides
     fun provideTaspehListFragmentArgs(state: SavedStateHandle): TaspehListFragmentArgs {
         return TaspehListFragmentArgs.fromBundle(state.asBundle())
+    }
+
+    @Provides
+    fun provideZekrDetailsFragmentArgs(state: SavedStateHandle): ZekrDetailsFragmentArgs {
+        return ZekrDetailsFragmentArgs.fromBundle(state.asBundle())
     }
 
 }

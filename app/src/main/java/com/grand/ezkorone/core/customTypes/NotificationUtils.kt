@@ -71,7 +71,7 @@ object NotificationUtils {
 
         //val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
-            .setPriority(NotificationManagerCompat.IMPORTANCE_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSmallIcon(R.mipmap.ic_app_launcher)
             .setLargeIcon(BitmapFactory.decodeResource(applicationContext.resources, R.mipmap.ic_app_launcher))
             .setContentTitle(title)
