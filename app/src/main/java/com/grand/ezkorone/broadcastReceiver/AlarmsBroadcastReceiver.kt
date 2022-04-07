@@ -15,6 +15,7 @@ import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.NotificationUtils
 import com.grand.ezkorone.core.extensions.toEpochMilliUTCOffset
 import com.grand.ezkorone.core.extensions.toLocalDateTimeUTCOffset
+import com.grand.ezkorone.presentation.main.MainActivity
 import com.grand.ezkorone.workManager.DrawerAlarmsWorker
 import timber.log.Timber
 import java.time.LocalDateTime
@@ -45,10 +46,18 @@ class AlarmsBroadcastReceiver : BroadcastReceiver() {
 
             // todo better just launch activity dest_splash but with arguments to launch alarms directly
             //  and to ensure splash called api to get drawer value isa.
-            val showOrEditIntent = NavDeepLinkBuilder(context)
+            val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            val showOrEditIntent = PendingIntent.getActivity(
+                context,
+                0 /* Request code */,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            /*val showOrEditIntent = NavDeepLinkBuilder(context)
                 .setGraph(R.navigation.nav_main)
                 .addDestination(R.id.dest_alarms)
-                .createPendingIntent()
+                .createPendingIntent()*/
 
             val triggerTimeInMillis = localDateTime.toEpochMilliUTCOffset()
 
