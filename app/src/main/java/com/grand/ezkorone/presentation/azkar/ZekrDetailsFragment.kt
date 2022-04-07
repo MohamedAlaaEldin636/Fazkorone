@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.RTLRemotePDFViewPager
 import com.grand.ezkorone.core.extensions.handleRetryAbleFlowWithMustHaveResultWithNullability
+import com.grand.ezkorone.core.extensions.launchShareText
 import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
 import com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel
@@ -112,8 +113,12 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_play -> TODO()
-            R.id.action_share -> TODO()
+            // todo prepare once loaded asln isa. for update icon ba2a 3eee4 nta isa.
+            //  khalena f elle ta7t tb el awal isa.
+            R.id.action_play -> TODO("see other play isa.")
+            R.id.action_share -> viewModel.responseZekrDetail.value?.also { response ->
+                context?.launchShareText(response.data[0].pdfUrl)
+            }
         }
 
         return super.onOptionsItemSelected(item)

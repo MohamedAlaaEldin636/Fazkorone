@@ -1,15 +1,22 @@
 package com.grand.ezkorone.presentation.azkar.viewModel
 
+import android.app.DownloadManager
+import android.net.Uri
+import android.os.Environment
 import android.view.View
+import androidx.core.content.getSystemService
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.RetryAbleFlow
 import com.grand.ezkorone.core.customTypes.map
 import com.grand.ezkorone.core.customTypes.switchMapMultiple
 import com.grand.ezkorone.core.customTypes.switchMapMultiple2
 import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
+import com.grand.ezkorone.core.extensions.launchShareText
+import com.grand.ezkorone.core.extensions.showSuccessToast
 import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
 import com.grand.ezkorone.data.home.repository.RepositoryHome
 import com.grand.ezkorone.domain.azkar.ResponseZekrDetail
@@ -32,6 +39,9 @@ class ZekrDetailsViewModel @Inject constructor(
     val responseZekrDetail = MutableLiveData<ResponseZekrDetail>()
 
     val showLoading = MutableLiveData(false)
+
+    val showAudioLoading = MutableLiveData(false)
+    val showAudioPlayNotPause = MutableLiveData(true)
 
     val currentIndex = MutableLiveData(1)
 
@@ -91,15 +101,53 @@ class ZekrDetailsViewModel @Inject constructor(
     }
 
     fun download(view: View) {
-        // todo
+        // Download el PDF
+        val response = responseZekrDetail.value ?: return
+
+        val item = if (response.data.size < 2) {
+            response.data[0]
+        }else {
+            response.data[currentIndex.value!!]
+        }
+
+        val name = "${args.toolbarTitle}_${item.id}"
+        val request = DownloadManager.Request(Uri.parse(item.pdfUrl))
+            .setTitle(view.context.getString(R.string.app_name))
+            .setDescription(name)
+            //.allowScanningByMediaScanner()
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name)
+
+        val downloadManager = view.context.getSystemService<DownloadManager>()
+            ?: return
+
+        downloadManager.enqueue(request)
+
+        view.context.showSuccessToast(view.context.getString(R.string.loading))
     }
 
     fun play(view: View) {
-        // todo
+        val response = responseZekrDetail.value ?: return
+
+        val item = if (response.data.size < 2) {
+            response.data[0]
+        }else {
+            response.data[currentIndex.value!!]
+        }
+
+        // todo 3ayzen ne3mel el loading progress lono abyad w el kalam dah w pause abyad kaman so wait
     }
 
     fun share(view: View) {
-        // todo
+        val response = responseZekrDetail.value ?: return
+
+        val item = if (response.data.size < 2) {
+            response.data[0]
+        }else {
+            response.data[currentIndex.value!!]
+        }
+
+        view.context.launchShareText(item.pdfUrl)
     }
 
     fun incrementProgress() {

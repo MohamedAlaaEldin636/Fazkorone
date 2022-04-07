@@ -99,16 +99,37 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@drawable/ic_play_in_circle"
+            android:src="@{viewModel.showAudioPlayNotPause ? @drawable/ic_play_in_circle : @drawable/ic_pause,default=@drawable/ic_play_in_circle}"
 
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{v -> viewModel.play(v)}"
 
+            android:visibility="@{!viewModel.showAudioLoading}"
+            tools:visibility="visible"
+
             app:layout_constraintEnd_toStartOf="@id/progressIndicator"
             app:layout_constraintStart_toEndOf="@id/shareImageView"
             app:layout_constraintTop_toTopOf="@id/progressIndicator"
             app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:trackThickness="4dp"
+            app:indicatorColor="@color/white"
+            app:indicatorDirectionCircular="clockwise"
+            android:indeterminate="true"
+            android:rotation="-90"
+            app:indicatorSize="32dp"
+
+            android:visibility="@{viewModel.showAudioLoading,default=gone}"
+            tools:visibility="visible"
+
+            app:layout_constraintTop_toTopOf="@id/playImageView"
+            app:layout_constraintBottom_toBottomOf="@id/playImageView"
+            app:layout_constraintStart_toStartOf="@id/playImageView"
+            app:layout_constraintEnd_toEndOf="@id/playImageView"/>
         <ImageView
             android:id="@+id/shareImageView"
 
