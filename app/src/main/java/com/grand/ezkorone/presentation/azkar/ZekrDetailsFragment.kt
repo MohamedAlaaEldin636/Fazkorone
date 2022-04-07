@@ -5,21 +5,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.customTypes.RTLRemotePDFViewPager
 import com.grand.ezkorone.core.extensions.handleRetryAbleFlowWithMustHaveResultWithNullability
 import com.grand.ezkorone.core.extensions.showErrorToast
-import com.grand.ezkorone.databinding.FragmentSearchQueriesBinding
 import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
 import com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel
 import com.grand.ezkorone.presentation.base.MABaseFragment
-import com.grand.ezkorone.presentation.search.viewModel.SearchQueriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import es.voghdev.pdfviewpager.library.PDFViewPagerZoom
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 import es.voghdev.pdfviewpager.library.remote.DownloadFile
@@ -57,8 +53,7 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
             viewModel.responseZekrDetail.value = it.data
 
-            // todo for rtl try -> https://stackoverflow.com/a/57052318 isa.
-            remotePDFViewPager = RemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
+            remotePDFViewPager = RTLRemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
         }
     }
 
