@@ -7,7 +7,7 @@ import com.grand.ezkorone.domain.home.ItemZekrInList
 import com.grand.ezkorone.domain.search.ItemSearchQuery
 import com.grand.ezkorone.presentation.search.adapter.viewModel.VHSearchQueries
 
-class RVZekrInList : PagingDataAdapter<ItemZekrInList, VHZekrInList>(COMPARATOR) {
+class RVZekrInList(private val idToBeUsedForFavoriteToggle: Int) : PagingDataAdapter<ItemZekrInList, VHZekrInList>(COMPARATOR) {
 
     companion object {
         val COMPARATOR = object : DiffUtil.ItemCallback<ItemZekrInList>() {
@@ -24,7 +24,7 @@ class RVZekrInList : PagingDataAdapter<ItemZekrInList, VHZekrInList>(COMPARATOR)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VHZekrInList {
-        return VHZekrInList(parent)
+        return VHZekrInList(parent, idToBeUsedForFavoriteToggle)
     }
 
     override fun onBindViewHolder(holder: VHZekrInList, position: Int) {

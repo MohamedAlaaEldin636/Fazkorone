@@ -15,6 +15,6 @@ class AzkarListViewModel @Inject constructor(
 
     val azkar = repoHome.getAzkarList(args.id)
 
-    val adapter = RVZekrInList()
+    val adapter = RVZekrInList(args.id)
 
 }

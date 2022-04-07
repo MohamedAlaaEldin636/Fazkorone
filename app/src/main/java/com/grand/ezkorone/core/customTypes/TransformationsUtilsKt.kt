@@ -21,3 +21,10 @@ inline fun <Y> switchMapMultiple(
 		*liveData
 	)
 }
+
+inline fun <Y> switchMapMultiple2(
+	vararg liveData: LiveData<*>,
+	crossinline transform: () -> Y
+): LiveData<Y> = switchMapMultiple(*liveData) {
+	MutableLiveData(transform())
+}

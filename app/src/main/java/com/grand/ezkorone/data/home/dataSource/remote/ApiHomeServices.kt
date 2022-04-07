@@ -2,6 +2,7 @@ package com.grand.ezkorone.data.home.dataSource.remote
 
 import com.grand.ezkorone.data.api.ApiConst
 import com.grand.ezkorone.domain.azan.ResponseAzan
+import com.grand.ezkorone.domain.azkar.ResponseZekrDetail
 import com.grand.ezkorone.domain.home.ItemZekrInList
 import com.grand.ezkorone.domain.home.ItemZekrTopCategory
 import com.grand.ezkorone.domain.utils.MABasePaging
@@ -23,5 +24,10 @@ interface ApiHomeServices {
         @Query(ApiConst.Query.CATEGORY_ID) categoryId: Int,
         @Query(ApiConst.Query.PAGE) page: Int,
     ): MABaseResponse<MABasePaging<ItemZekrInList>>
+
+    @GET("adhkar")
+    suspend fun getZekrDetails(
+        @Query(ApiConst.Query.CATEGORY_ID) id: Int,
+    ): MABaseResponse<ResponseZekrDetail>
 
 }

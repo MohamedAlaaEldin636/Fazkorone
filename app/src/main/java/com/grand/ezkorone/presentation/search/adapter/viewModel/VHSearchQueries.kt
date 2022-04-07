@@ -28,10 +28,14 @@ class VHSearchQueries(parent: ViewGroup) : RecyclerView.ViewHolder(
     init {
         binding.textView.setOnClickListener { view ->
             val id = binding.textView.tag as? Int ?: return@setOnClickListener
+            val type = binding.textView.getTag(R.id.additional_for_tag) as? Int ?: return@setOnClickListener
 
             view.findNavController().navigate(
                 SearchQueriesFragmentDirections.actionDestSearchQueriesToDestZekrDetails(
-                    id, binding.textView.text?.toString().orEmpty()
+                    id,
+                    type == 1,
+                    id,
+                    binding.textView.text?.toString().orEmpty()
                 )
             )
         }
@@ -39,6 +43,7 @@ class VHSearchQueries(parent: ViewGroup) : RecyclerView.ViewHolder(
 
     fun bind(item: ItemSearchQuery) {
         binding.textView.tag = item.id
+        binding.textView.setTag(R.id.additional_for_tag, item.type)
 
         binding.textView.text = item.name
     }

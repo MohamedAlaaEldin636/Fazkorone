@@ -1,9 +1,6 @@
 package com.grand.ezkorone.presentation.azkar
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -14,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.withCustomAdapters
 import com.grand.ezkorone.databinding.FragmentAzkarListBinding
-import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
 import com.grand.ezkorone.presentation.azkar.viewModel.AzkarListViewModel
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.base.adapters.LSAdapterLoadingErrorEmpty

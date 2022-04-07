@@ -24,7 +24,12 @@ class VHItemTextInCard(parent: ViewGroup) : RecyclerView.ViewHolder(
             val name = binding.textView.text?.toString().orEmpty()
 
             view.findNavControllerOfProject().navigate(
-                BottomNavFragmentDirections.actionDestBottomNavToDestZekrDetails(id, name)
+                BottomNavFragmentDirections.actionDestBottomNavToDestZekrDetails(
+                    id,
+                    true,
+                    id,
+                    name
+                )
             )
         }
     }

@@ -12,7 +12,7 @@ import com.grand.ezkorone.domain.search.ItemSearchQuery
 import com.grand.ezkorone.presentation.azkar.AzkarListFragmentDirections
 import com.grand.ezkorone.presentation.search.SearchQueriesFragmentDirections
 
-class VHZekrInList(parent: ViewGroup) : RecyclerView.ViewHolder(
+class VHZekrInList(parent: ViewGroup, private val idToBeUsedForFavoriteToggle: Int) : RecyclerView.ViewHolder(
     parent.context.inflateLayout(R.layout.item_zekr_in_list, parent)
 ) {
 
@@ -24,7 +24,10 @@ class VHZekrInList(parent: ViewGroup) : RecyclerView.ViewHolder(
 
             view.findNavController().navigate(
                 AzkarListFragmentDirections.actionDestAzkarListToDestZekrDetails(
-                    id, binding.textView.text?.toString().orEmpty()
+                    id,
+                    false,
+                    idToBeUsedForFavoriteToggle,
+                    binding.textView.text?.toString().orEmpty()
                 )
             )
         }

@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/bottomPlaceholderView"/>
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="0dp"
 
@@ -42,10 +42,16 @@
 
             android:layout_margin="8dp"
 
-            tools:text="99/99"
+            tools:text="1/1"
+            android:text="@{viewModel.progressText}"
             android:textColor="@color/white"
 
             android:gravity="center"
+
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
 
             app:layout_constraintTop_toTopOf="@id/progressIndicator"
             app:layout_constraintBottom_toBottomOf="@id/progressIndicator"
@@ -65,12 +71,13 @@
             app:indicatorColor="#FFAA00"
             app:indicatorDirectionCircular="clockwise"
             android:progress="33"
+            circularProgressIndicator_setProgressBA="@{viewModel.progressPercentage}"
             android:rotation="-90"
             app:indicatorSize="50dp"
 
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{v -> viewModel.incrementProgress(v)}"
+            android:onClick="@{() -> viewModel.incrementProgress()}"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -147,7 +154,7 @@
 
             android:padding="16dp"
 
-            android:src="@drawable/ic_heart"
+            android:src="@{viewModel.showIsFavorite ? @drawable/ic_heart_filled : @drawable/ic_heart}"
             tools:src="@drawable/ic_heart_filled"
 
             android:layout_marginEnd="8dp"
@@ -160,8 +167,21 @@
             app:layout_constraintTop_toTopOf="@id/progressIndicator"
             app:layout_constraintBottom_toBottomOf="@id/progressIndicator"/>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager2"
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:visibility="@{viewModel.showLoading,default=gone}"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bottomPlaceholderView"/>
+
+        <FrameLayout
+            android:id="@+id/containerFrameLayout"
 
             android:layout_width="0dp"
             android:layout_height="0dp"

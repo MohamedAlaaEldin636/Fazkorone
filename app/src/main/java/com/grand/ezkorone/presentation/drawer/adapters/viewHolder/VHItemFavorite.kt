@@ -58,7 +58,12 @@ class VHItemFavZekrDetail(parent: ViewGroup, private val adapter: RVItemFavorite
             val name = binding.textView.text?.toString().orEmpty()
 
             view.findNavControllerOfProject().navigate(
-                FavoriteFragmentDirections.actionDestFavoriteToDestZekrDetails(id, name)
+                FavoriteFragmentDirections.actionDestFavoriteToDestZekrDetails(
+                    id,
+                    true,
+                    id,
+                    name
+                )
             )
         }
     }

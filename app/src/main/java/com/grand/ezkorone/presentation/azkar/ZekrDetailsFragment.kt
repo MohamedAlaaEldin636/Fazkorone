@@ -5,10 +5,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.extensions.handleRetryAbleFlowWithMustHaveResultWithNullability
+import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.databinding.FragmentSearchQueriesBinding
 import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
 import com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel
@@ -18,14 +22,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.voghdev.pdfviewpager.library.PDFViewPagerZoom
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
+import es.voghdev.pdfviewpager.library.remote.DownloadFile
+import timber.log.Timber
+import java.lang.Exception
 
-// todo USE -> fragment_page_view_zekr_details as the page in adapter isa.
 @AndroidEntryPoint
-class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>() {
+class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), DownloadFile.Listener {
 
     private val viewModel by viewModels<ZekrDetailsViewModel>()
 
     private val args by navArgs<ZekrDetailsFragmentArgs>()
+
+    private var remotePDFViewPager: RemotePDFViewPager? = null
+
+    private var adapter: PDFPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -39,20 +49,64 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>() {
         binding?.viewModel = viewModel
     }
 
-    // todo VIEW PAGER -> https://developer.android.com/training/animation/screen-slide-2#depth-page
-    // TODO
-    // TODO
-    // TODO
-    // TODO FOR INTERNAL FRAGMENT -> https://github.com/voghDev/PdfViewPager
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activityViewModel.titleToolbar.postValue(args.toolbarTitle)
 
-        // todo view pager + actual page page transformation + inside fragment has a zoom effect so zoomable panable etc... isa.
-        /*val k: PDFViewPagerZoom
-        val a = PDFViewPagerZoom(requireActivity(), "")
-        a.adapter = PDFPagerAdapter(requireContext())
-        val mm = RemotePDFViewPager(requireContext(), "url", this)
-        mm.adapter*/
+        handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAblFlowResponseZekrDetails) {
+            viewModel.showLoading.value = true
+
+            viewModel.responseZekrDetail.value = it.data
+
+            // todo for rtl try -> https://stackoverflow.com/a/57052318 isa.
+            remotePDFViewPager = RemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
+        }
+    }
+
+    override fun onSuccess(url: String?, destinationPath: String?) {
+        viewModel.showLoading.value = false
+
+        adapter = PDFPagerAdapter(requireContext(), destinationPath)
+
+        remotePDFViewPager?.adapter = adapter
+
+        binding?.containerFrameLayout?.removeAllViews()
+        binding?.containerFrameLayout?.addView(remotePDFViewPager)
+
+        if (viewModel.responseZekrDetail.value?.data.orEmpty().size > 1) {
+            remotePDFViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                override fun onPageScrollStateChanged(state: Int) {}
+
+                override fun onPageSelected(position: Int) {
+                    viewModel.currentIndex.value = position + 1
+
+                    viewModel.count.value = 0
+                }
+            })
+        }
+    }
+
+    override fun onFailure(e: Exception?) {
+        viewModel.showLoading.value = false
+
+        // This will be called if download fails
+        Timber.e("Unexpected error occurred while downloading PDF -> $e")
+
+        val errorMsg = e?.message.let {
+            if (it.isNullOrEmpty()) getString(R.string.something_went_wrong) else it
+        }
+        requireContext().showErrorToast(errorMsg)
+
+        // Retry download isa.
+        remotePDFViewPager = RemotePDFViewPager(
+            requireContext(), viewModel.responseZekrDetail.value!!.data[0].pdfUrl, this
+        )
+    }
+
+    override fun onProgressUpdate(progress: Int, total: Int) {
+        // You will get download progress here
+        // Always on UI Thread so feel free to update your views here
+        viewModel.showLoading.value = true
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -68,6 +122,12 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        adapter?.close()
     }
 
 }

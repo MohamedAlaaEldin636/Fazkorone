@@ -203,6 +203,12 @@
             android:name="id"
             app:argType="integer" />
         <argument
+            android:name="isFromHorzNotVertHomeScreenList"
+            app:argType="boolean"/>
+        <argument
+            android:name="idToBeUsedForFavoriteToggle"
+            app:argType="integer"/>
+        <argument
             android:name="toolbarTitle"
             app:argType="string" />
     </fragment>
