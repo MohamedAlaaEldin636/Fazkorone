@@ -241,9 +241,14 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         }
 
         // 180 360 bs kda isa.
-        Timber.e("other Degree -> $otherDegree\ncalc Degree -> $degrees\nnew Degree $newDegrees")
+        Timber.v("other Degree -> $otherDegree\ncalc Degree -> $degrees\nnew Degree $newDegrees")
 
         binding?.likeNeedleImageView?.rotation = newDegrees
+
+        val showOn = newDegrees in 355f..360f || newDegrees in 0f..5f
+        binding?.indicatorImageView?.setImageResource(
+            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
+        )
     }
 
     private fun calcDegrees(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

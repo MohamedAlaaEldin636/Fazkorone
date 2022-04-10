@@ -10,6 +10,8 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_progress_inner.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_project_round.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_project_round_alpha.xml" value="0.226" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_qibla_off.xml" value="0.226" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_qibla_on.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_qibla_title.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_taspeh_text.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_top_round_white.xml" value="0.226" />
@@ -21,6 +23,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_download.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_headphone.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_heart_filled.xml" value="0.27" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_like_compass_2.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_location_icon.xml" value="0.1715" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_play_in_circle.xml" value="0.27" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/ic_play_themed.xml" value="0.27" />
