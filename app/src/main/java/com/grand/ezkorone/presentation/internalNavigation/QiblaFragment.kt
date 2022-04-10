@@ -27,7 +27,10 @@ import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.internalNavigation.viewModel.QiblaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.round
+import kotlin.math.sin
 
 // todo https://stackoverflow.com/a/44182427
 @AndroidEntryPoint
@@ -212,7 +215,50 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         }*/
     }
 
+    private fun trial1(otherDegree: Float) {
+        val myCurrentLocation = viewModel.myCurrentLocation ?: return
+        val kaabaLocation = viewModel.kaabaLocation ?: return
+
+        val lat1 = myCurrentLocation.latitude
+        val lon1 = myCurrentLocation.longitude
+        val lat2 = kaabaLocation.latitude
+        val lon2 = kaabaLocation.longitude
+
+        val degrees = calcDegrees(lat1, lon1, lat2, lon2)
+
+        val newDegrees = (otherDegree - degrees.toFloat()).let {
+            val new1 = if (it >= 0f) it else it.plus(360f)
+
+            val new2 = if (new1 >= 360f) new1.minus(360f) else new1
+
+            val new3 = new2 - 180f // +3.7f
+
+            when {
+                new3 >= 360f -> new3.minus(360f)
+                new3 < 0f -> new3.plus(360f)
+                else -> new3
+            }
+        }
+
+        // 180 360 bs kda isa.
+        Timber.e("other Degree -> $otherDegree\ncalc Degree -> $degrees\nnew Degree $newDegrees")
+
+        binding?.likeNeedleImageView?.rotation = newDegrees
+    }
+
+    private fun calcDegrees(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val lonDelta = lon2 - lon1
+        val y = sin(lonDelta) * cos(lat2)
+        val x = ( cos(lat1) * sin(lat2) ) - ( sin(lat1) * cos(lat2) * cos(lonDelta) )
+        return Math.toDegrees(atan2(y, x))
+    }
+
     private fun onOrientationChanged(orientation: FloatArray) {
+        if (true) {
+            trial1(orientation[0])
+            return
+        }
+
         val myCurrentLocation = viewModel.myCurrentLocation ?: return
         val kaabaLocation = viewModel.kaabaLocation ?: return
 
