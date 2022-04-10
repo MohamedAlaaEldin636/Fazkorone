@@ -20,6 +20,7 @@ import com.grand.ezkorone.domain.taspeh.ResponseTaspeh
 import com.grand.ezkorone.domain.utils.MAResult
 import com.grand.ezkorone.domain.utils.mapImmediate
 import com.grand.ezkorone.domain.utils.toSuccessOrNull
+import com.grand.ezkorone.presentation.azkar.ZekrDetailsFragment
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.internalNavigation.TaspehFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -129,21 +130,32 @@ class TaspehViewModel @Inject constructor(
     }
 
     fun download(view: View) {
-        val item = currentItem.value ?: return
+        val fragment = view.findFragment<TaspehFragment>()
 
-        val request = DownloadManager.Request(Uri.parse(item.audioUrl))
-            .setTitle(view.context.getString(R.string.app_name))
-            .setDescription(item.name)
-            //.allowScanningByMediaScanner()
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, item.name)
+        val context = fragment.requireContext()
+        if (context.checkSelfPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            && context.checkSelfPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            val item = currentItem.value ?: return
 
-        val downloadManager = view.context.getSystemService<DownloadManager>()
-            ?: return
+            val request = DownloadManager.Request(Uri.parse(item.audioUrl))
+                .setTitle(view.context.getString(R.string.app_name))
+                .setDescription(item.name)
+                //.allowScanningByMediaScanner()
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, item.name)
 
-        downloadManager.enqueue(request)
+            val downloadManager = view.context.getSystemService<DownloadManager>()
+                ?: return
 
-        view.context.showSuccessToast(view.context.getString(R.string.loading))
+            downloadManager.enqueue(request)
+
+            view.context.showSuccessToast(view.context.getString(R.string.loading))
+        }else {
+            fragment.permissionsStorageRequest.launch(arrayOf(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ))
+        }
     }
 
     val loadingAudio = MutableLiveData(false)

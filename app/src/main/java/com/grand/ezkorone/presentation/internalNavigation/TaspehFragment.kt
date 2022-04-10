@@ -1,17 +1,16 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
+import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.grand.ezkorone.R
-import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetry
-import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
-import com.grand.ezkorone.core.extensions.findNavControllerOfProject
-import com.grand.ezkorone.core.extensions.fromJson
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.databinding.FragmentQiblaBinding
 import com.grand.ezkorone.databinding.FragmentTaspehBinding
 import com.grand.ezkorone.domain.taspeh.ItemTaspeh
@@ -27,6 +26,20 @@ class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
     private val viewModel by viewModels<TaspehViewModel>()
 
     private var player: ExoPlayer? = null
+
+    val permissionsStorageRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+                && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
+                viewModel.download(binding?.root ?: return@registerForActivityResult)
+            }
+            else -> {
+                requireContext().showNormalToast(getString(R.string.you_didn_t_accept_permission))
+            }
+        }
+    }
 
     override fun getLayoutId(): Int = R.layout.fragment_taspeh
 
