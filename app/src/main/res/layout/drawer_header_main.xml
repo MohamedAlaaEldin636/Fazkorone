@@ -292,7 +292,11 @@
                 android:layout_gravity="center_horizontal"
 
                 android:background="@drawable/ic_grand_logo"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{v -> viewModel.launchByGrandDialog(v)}"/>
 
         </LinearLayout>
 

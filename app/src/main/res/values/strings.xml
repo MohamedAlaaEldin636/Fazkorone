@@ -1,4 +1,8 @@
 <resources>
+    <string name="design_program">تصميم وبرمجة</string>
+    <string name="call_grand">إتصال</string>
+    <string name="whats">واتساب</string>
+    <string name="call">إتصال</string>
     <string name="camera">كاميرا</string>
     <string name="gallery">المعرض</string>
     <string name="all_fields_required">جميع الحقول مطلوبة</string>

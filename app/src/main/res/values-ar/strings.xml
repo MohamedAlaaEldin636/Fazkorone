@@ -1,4 +1,11 @@
 <resources>
+    <string name="design_program">تصميم وبرمجة</string>
+    <string name="call_grand">إتصال</string>
+    <string name="whats">واتساب</string>
+    <string name="call">إتصال</string>
+    <string name="pause">توقيف</string>
+    <string name="empty_data">البيانات فارغة</string>
+    <string name="salah">الصلاة</string>
     <string name="camera">كاميرا</string>
     <string name="gallery">المعرض</string>
     <string name="all_fields_required">جميع الحقول مطلوبة</string>

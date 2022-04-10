@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/border_grand_call.xml" value="0.27" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/border_grand_whats.xml" value="0.1345" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/border_white_16.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_black_round.xml" value="0.226" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/drawable/dr_button_primary_light.xml" value="0.226" />
@@ -33,6 +35,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/activity_main.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_alarm_time_picker.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_base_ok_cancel.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_grand.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/dialog_fragment_lottie_loader.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/drawer_header_main.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/edit_location_fragment.xml" value="0.26510416666666664" />
@@ -76,6 +79,7 @@
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_who_are_we.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_zekr_in_list.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/item_zekr_in_picker.xml" value="0.26510416666666664" />
+        <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/layout_grand.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/layout/page_zekr_details.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/menu/menu_bottom_nav.xml" value="0.26510416666666664" />
         <entry key="..\:/AS/NA/Grand/Ezkorone/app/src/main/res/menu/menu_empty.xml" value="0.26510416666666664" />

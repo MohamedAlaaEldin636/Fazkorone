@@ -10,6 +10,7 @@ import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.data.local.preferences.PrefsSplash
 import com.grand.ezkorone.databinding.DrawerHeaderMainBinding
+import com.grand.ezkorone.presentation.base.dialogs.GrandDialogFragment
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.main.MainActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -80,6 +81,10 @@ class DrawerHeaderMainViewModel @Inject constructor(
         view.context.launchBrowser(twitterLink.value ?: return)
     }
 
+    fun launchByGrandDialog(view: View) = view.closeDrawerThenActWithActivity {
+        GrandDialogFragment.show(supportFragmentManager)
+    }
+
     private fun View.closeDrawerThenActWithNavController(action: NavController.() -> Unit) {
         val activity = getMainActivityOrNull() ?: return
 
@@ -88,13 +93,13 @@ class DrawerHeaderMainViewModel @Inject constructor(
         activity.findNavControllerOfProject().action()
     }
 
-    /*private fun View.closeDrawerThenActWithActivity(action: MainActivity.() -> Unit) {
+    private fun View.closeDrawerThenActWithActivity(action: MainActivity.() -> Unit) {
         val activity = getMainActivityOrNull() ?: return
 
         activity.closeDrawerLayout()
 
         activity.action()
-    }*/
+    }
 
     private fun View.getMainActivityOrNull(): MainActivity? {
         return DataBindingUtil.findBinding<DrawerHeaderMainBinding>(this)
