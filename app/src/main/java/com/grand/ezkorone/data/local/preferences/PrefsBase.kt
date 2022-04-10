@@ -3,10 +3,7 @@
 package com.grand.ezkorone.data.local.preferences
 
 import android.content.Context
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.grand.ezkorone.core.extensions.fromJsonOrNull
@@ -69,6 +66,18 @@ abstract class PrefsBase(
     protected fun getIntValue(key: String): Flow<Int?> {
         return context.dataStore.data.map { prefs ->
             prefs[intPreferencesKey(key)]
+        }
+    }
+
+    protected suspend fun setLongValue(key: String, value: Long?) {
+        context.dataStore.edit { prefs ->
+            prefs[longPreferencesKey(key)] = value ?: 0
+        }
+    }
+
+    protected fun getLongValue(key: String): Flow<Long?> {
+        return context.dataStore.data.map { prefs ->
+            prefs[longPreferencesKey(key)]
         }
     }
 

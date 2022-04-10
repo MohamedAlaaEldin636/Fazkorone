@@ -7,6 +7,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.lifecycle.Observer
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import androidx.work.hasKeyWithValueOfType
 import com.grand.ezkorone.R
 import com.grand.ezkorone.broadcastReceiver.SalawatAlarmsBroadcastReceiver
 import com.grand.ezkorone.core.customTypes.GlobalError
@@ -37,6 +38,7 @@ class SalawatAlarmsWorker @AssistedInject constructor(
     companion object {
         const val KEY_INPUT_DATA_TRIGGER_TIME_MILLIS = "KEY_INPUT_DATA_TRIGGER_TIME_MILLIS"
         const val KEY_INPUT_DATA_TRIGGER_TAG = "KEY_INPUT_DATA_TRIGGER_TAG"
+        const val KEY_INPUT_DATA_ID_OF_DOWNLOAD_MANAGER = "KEY_INPUT_DATA_ID_OF_DOWNLOAD_MANAGER"
         const val UNIQUE_NAME = "com.grand.ezkorone.workManager.SalawatAlarmsWorker.UNIQUE_NAME"
     }
 
@@ -45,6 +47,11 @@ class SalawatAlarmsWorker @AssistedInject constructor(
 
         val triggerMillis = inputData.getLong(KEY_INPUT_DATA_TRIGGER_TIME_MILLIS, -1)
         val triggerTag = inputData.getString(KEY_INPUT_DATA_TRIGGER_TAG).orEmpty()
+        val idOfDownloadManager = if (inputData.hasKeyWithValueOfType<Long>(KEY_INPUT_DATA_ID_OF_DOWNLOAD_MANAGER)) {
+            inputData.getLong(KEY_INPUT_DATA_ID_OF_DOWNLOAD_MANAGER, 0)
+        }else {
+            null
+        }
 
         var triggerDateTime = triggerMillis.toLocalDateTimeUTCOffset()
         val nowDateTime = LocalDateTime.now()
@@ -69,7 +76,8 @@ class SalawatAlarmsWorker @AssistedInject constructor(
                 SalawatAlarmsBroadcastReceiver.scheduleAlarmManagerAndWorkManager(
                     applicationContext,
                     triggerDateTime,
-                    type
+                    type,
+                    idOfDownloadManager
                 )
             }
         )
@@ -78,7 +86,8 @@ class SalawatAlarmsWorker @AssistedInject constructor(
             SalawatAlarmsBroadcastReceiver.scheduleWorkManagerOnly(
                 applicationContext,
                 triggerDateTime.plusDays(1),
-                type
+                type,
+                idOfDownloadManager
             )
         }
 

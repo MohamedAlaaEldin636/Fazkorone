@@ -58,6 +58,25 @@ class PrefsSalah @Inject constructor(
         MAGHREP -> setMaghrepNotificationSoundUri(uri)
         ESHA -> setEshaNotificationSoundUri(uri)
     }
+    suspend fun getSalahFardTypeNotificationSoundUri(type: SalahFardType): String? = when (type) {
+        FAGR -> getFajrNotificationSoundUri().first()
+        DOHR -> getDohrNotificationSoundUri().first()
+        ASR -> getAsrNotificationSoundUri().first()
+        MAGHREP -> getMaghrepNotificationSoundUri().first()
+        ESHA -> getEshaNotificationSoundUri().first()
+    }
+
+    suspend fun setSalawatNotificationDownloadManagerId(type: SalahFardType, idOfDownloadManager: Long?) =
+        setLongValue(type.name, idOfDownloadManager)
+    fun getSalawatNotificationDownloadManagerId(type: SalahFardType) = getLongValue(type.name)
+
+    suspend fun setSalahFardTypeNotificationDownloadManagerId(
+        type: SalahFardType, idOfSheikh: Int, idOfDownloadManager: Long
+    ) = setLongValue(getKeyOfSalahFardTypeNotificationDownloadManagerId(type, idOfSheikh), idOfDownloadManager)
+    fun getSalahFardTypeNotificationDownloadManagerId(
+        type: SalahFardType, idOfSheikh: Int
+    ) = getLongValue(getKeyOfSalahFardTypeNotificationDownloadManagerId(type, idOfSheikh))
+    private fun getKeyOfSalahFardTypeNotificationDownloadManagerId(type: SalahFardType, idOfSheikh: Int) = "${type.name}_$idOfSheikh"
 
     suspend fun setCanRingFajr(canRing: Boolean?) =
         setBooleanValue(KEY_CAN_RING_FAJR, canRing)

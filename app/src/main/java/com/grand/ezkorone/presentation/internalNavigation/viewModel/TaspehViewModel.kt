@@ -164,9 +164,10 @@ class TaspehViewModel @Inject constructor(
 
     fun share(view: View) {
         val item = currentItem.value ?: return
-        // todo dynamic links of firebase isa.
-        // todo el uri bta3 el sheikh f el notifications for alarms isa.
+        // to-do dynamic links of firebase isa.
+        // to-do el uri bta3 el sheikh f el notifications for alarms isa.
 
+        // OS said so
         view.context.launchShareText(item.audioUrl)
     }
 

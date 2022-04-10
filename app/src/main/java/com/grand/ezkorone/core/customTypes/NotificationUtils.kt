@@ -1,12 +1,10 @@
 package com.grand.ezkorone.core.customTypes
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
@@ -22,9 +20,11 @@ import timber.log.Timber
 object NotificationUtils {
 
     private const val ALARMS_CHANNEL_ID = "ALARMS_CHANNEL_ID"
+    private const val SALAWAT_CHANNEL_ID = "SALAWAT_CHANNEL_ID"
     private const val NOTIFICATIONS_CHANNEL_ID = "NOTIFICATIONS_CHANNEL_ID"
     private const val ALARMS_NOTIFICATION_ID = 47
     private const val NOTIFICATIONS_NOTIFICATION_ID = 48
+    private const val SALAWAT_NOTIFICATION_ID = 49
 
     fun showNotificationToLaunchMainActivityForAlarms(
         appContext: Context,
@@ -43,17 +43,21 @@ object NotificationUtils {
     fun showNotificationToLaunchMainActivityForSalawat(
         appContext: Context,
         name: String,
-        uri: Uri?
+        idOfDownloadManager: Long?
     ) {
+        val uri = idOfDownloadManager?.let {
+            appContext.getSystemService<DownloadManager>()?.getUriForDownloadedFile(it)
+        }
+
         Timber.e("showNotificationToLaunchMainActivityForSalawat uri -> $uri")
 
         showNotificationToLaunchMainActivity(
             appContext,
             appContext.getString(R.string.app_name),
             name,
-            ALARMS_CHANNEL_ID,
-            appContext.getString(R.string.alarms),
-            ALARMS_NOTIFICATION_ID,
+            SALAWAT_CHANNEL_ID,
+            appContext.getString(R.string.salah),
+            SALAWAT_NOTIFICATION_ID,
             uri
         )
     }
@@ -68,7 +72,7 @@ object NotificationUtils {
             title,
             body,
             NOTIFICATIONS_CHANNEL_ID,
-            appContext.getString(R.string.alarms),
+            appContext.getString(R.string.notifications),
             NOTIFICATIONS_NOTIFICATION_ID
         )
     }
@@ -117,7 +121,22 @@ object NotificationUtils {
                 NotificationManager.IMPORTANCE_HIGH
             )
             //channel.description = getString(R.string.notifications_2)
+            // todo make 5 channels for sounds bs et2aked eno shaghal bs el awal isa.
+            val audioAttrs = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .setFlags(AudioAttributes.FLAG_AUDIBILITY_ENFORCED)
+                // todo aslam 7al e3melha zy ay media player app be pause ba2a w kda isa.
+                //.setFlags(AudioAttributes.FLA)
+                .build()
+            // todo to make sound last more use like a music player application on going notification and play that sound isa.
+            //val d: DownloadManager
+            //d.getUriForDownloadedFile()
+            /*applicationContext.grantUriPermission("com.android.systemui", uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION)*/
+            channel.setSound(uri ?: defaultSoundUri, audioAttrs)
             notificationBuilder.setChannelId(channelId)
+            //notificationManager.deleteNotificationChannel(channelId)
             notificationManager.createNotificationChannel(channel)
         }
 

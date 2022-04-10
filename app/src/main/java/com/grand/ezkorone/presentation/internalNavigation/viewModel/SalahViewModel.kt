@@ -21,8 +21,10 @@ import com.grand.ezkorone.domain.salah.toSimpleDate
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
 import com.grand.ezkorone.presentation.internalNavigation.SalahFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.time.*
 import java.time.chrono.HijrahDate
@@ -148,6 +150,10 @@ class SalahViewModel @Inject constructor(
             }
         }else {
             // schedule alarm
+            val idOfDownloadManager = runBlocking {
+                prefsSalah.getSalawatNotificationDownloadManagerId(salahFardType).first()
+            }
+
             var salawatTimes = cacheOfDateAndSalawatTimes[LocalDate.now().toSimpleDate()]!!
             var timeInDay = when (type) {
                 SalahFardType.FAGR -> salawatTimes.fajrTimeInDay
@@ -215,7 +221,8 @@ class SalahViewModel @Inject constructor(
                             SalawatAlarmsBroadcastReceiver.scheduleAlarmManagerAndWorkManager(
                                 view.context.applicationContext,
                                 localDateTime,
-                                type
+                                type,
+                                idOfDownloadManager
                             )
 
                             // Toggle local
@@ -239,7 +246,8 @@ class SalahViewModel @Inject constructor(
             SalawatAlarmsBroadcastReceiver.scheduleAlarmManagerAndWorkManager(
                 view.context.applicationContext,
                 localDateTime,
-                type
+                type,
+                idOfDownloadManager
             )
 
             // Toggle local

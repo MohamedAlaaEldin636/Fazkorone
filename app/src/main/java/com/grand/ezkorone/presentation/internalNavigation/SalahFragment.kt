@@ -3,11 +3,15 @@ package com.grand.ezkorone.presentation.internalNavigation
 import android.app.DownloadManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.View
+import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -25,7 +29,9 @@ import com.grand.ezkorone.presentation.internalNavigation.viewModel.SalahViewMod
 import com.grand.ezkorone.presentation.sheikh.SheikhListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -84,21 +90,45 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
                             ""
                         )
 
-                        Timber.d("SPTAG1 ${findNavControllerOfProject().currentBackStackEntry?.destination?.label}")
-
                         val itemSheikh = it.fromJson<ItemSheikh>(gson)
 
-                        val file = File(requireContext().filesDir, "${viewModel.salahFardType}_${itemSheikh.id}")
+                        val downloadManager = view.context.getSystemService<DownloadManager>()
 
-                        Timber.d("file.exists() ${file.exists()}")
-                        if (!file.exists()) {
-                            downloadAudio(itemSheikh.audioUrl, file)
+                        val idOfDownloadManager = runBlocking {
+                            viewModel.prefsSalah.getSalahFardTypeNotificationDownloadManagerId(viewModel.salahFardType, itemSheikh.id).first()
+                        }
+                        val uri = idOfDownloadManager?.let {
+                            downloadManager?.getUriForDownloadedFile(idOfDownloadManager)
+                        }
+
+                        if (uri == null) {
+                            val request = DownloadManager.Request(Uri.parse(itemSheikh.audioUrl))
+                                .setTitle(view.context.getString(R.string.app_name))
+                                .setDescription(itemSheikh.name)
+                                //.allowScanningByMediaScanner()
+                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, itemSheikh.name)
+
+                            val id = downloadManager?.enqueue(request)
+
+                            requireContext().showSuccessToast(getString(R.string.loading))
+
+                            viewModel.viewModelScope.launch {
+                                viewModel.prefsSalah.setSalawatNotificationDownloadManagerId(
+                                    viewModel.salahFardType, id
+                                )
+                            }
                         }else {
-                            executeOnGlobalLoadingAfterShowingLoading {
+                            viewModel.viewModelScope.launch {
+                                viewModel.prefsSalah.setSalawatNotificationDownloadManagerId(
+                                    viewModel.salahFardType, idOfDownloadManager
+                                )
+                            }
+                            /*executeOnGlobalLoadingAfterShowingLoading {
                                 viewModel.prefsSalah.setSalahFardTypeNotificationSoundUri(
                                     viewModel.salahFardType, Uri.fromFile(file).toString()
                                 )
-                            }
+                            }*/
                         }
                     }
                 }
