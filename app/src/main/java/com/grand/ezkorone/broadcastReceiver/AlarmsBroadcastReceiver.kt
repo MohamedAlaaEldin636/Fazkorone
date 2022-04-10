@@ -16,7 +16,6 @@ import com.grand.ezkorone.core.customTypes.NotificationUtils
 import com.grand.ezkorone.core.extensions.toEpochMilliUTCOffset
 import com.grand.ezkorone.core.extensions.toLocalDateTimeUTCOffset
 import com.grand.ezkorone.presentation.main.MainActivity
-import com.grand.ezkorone.workManager.DrawerAlarmsWorker
 import timber.log.Timber
 import java.time.LocalDateTime
 

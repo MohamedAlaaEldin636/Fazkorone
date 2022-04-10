@@ -30,7 +30,7 @@ class MAToolbarOnDestinationChangedListener(
 	}
 	
 	override fun setTitle(title: CharSequence?) {
-		// todo ignore it isa.
+		// to-do ignore it isa.
 		/*toolbarWeakReference.get()?.let { toolbar ->
 			toolbar.title = title
 		}*/

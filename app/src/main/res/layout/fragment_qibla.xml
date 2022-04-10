@@ -130,7 +130,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <!--todo see https://www.youtube.com/watch?v=n5BDhwWvCW4 isa.-->
+        <!--to-do see https://www.youtube.com/watch?v=n5BDhwWvCW4 isa.-->
         <ImageView
             android:id="@+id/likeCompassImageView"
 

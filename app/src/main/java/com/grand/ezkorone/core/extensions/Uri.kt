@@ -72,7 +72,7 @@ private fun Uri.getMimeType(context: Context): String? {
 
 		if (cursor != null && cursor.moveToFirst()) {
 			// in case require mimeType DocumentsContract.Document.COLUMN_MIME_TYPE
-			// todo check about 30 MB of DocumentsContract.Document.COLUMN_SIZE;
+			// to-do check about 30 MB of DocumentsContract.Document.COLUMN_SIZE;
 			name = cursor.getString(cursor.getColumnIndex(DocumentsContract.Document.COLUMN_DISPLAY_NAME));
 		}
 	}catch (Exception e) {
