@@ -9,21 +9,22 @@ import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.grand.ezkorone.R
-import com.grand.ezkorone.core.extensions.findNavControllerOfProject
-import com.grand.ezkorone.core.extensions.myApp
-import com.grand.ezkorone.core.extensions.openDrawerLayout
+import com.grand.ezkorone.broadcastReceiver.SalawatAlarmsBroadcastReceiver
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.data.azan.repository.RepositoryAzan
 import com.grand.ezkorone.data.local.preferences.PrefsApp
 import com.grand.ezkorone.data.local.preferences.PrefsSalah
 import com.grand.ezkorone.domain.azan.SalawatTimes
 import com.grand.ezkorone.domain.salah.SalahFardType
 import com.grand.ezkorone.domain.salah.SimpleDate
+import com.grand.ezkorone.domain.salah.toSimpleDate
 import com.grand.ezkorone.presentation.internalNavigation.BottomNavFragmentDirections
+import com.grand.ezkorone.presentation.internalNavigation.SalahFragment
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.time.*
 import java.time.chrono.HijrahDate
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -120,14 +121,138 @@ class SalahViewModel @Inject constructor(
     }
 
     fun toggleMuteState(view: View, type: SalahFardType) {
-        // todo default all muted as osama said and from local prefs saved locally isa,
-        //  ALSO on toggle to be not mute immediately launch worker manager and alarm manager
-        //  to set alarms isa, also get mawa3ed el salaha mn el save elle kan f el home isa.
-        /*
-        set alarm manager with periodic on same time and launch work manager once per day from 12 to 3 msln to adjust
-        new time isa, and make work manager with constraint of wifi or data isa,
-        hmmmm m4 mmkn tt3eref in future maybe launch from 10 to 3 ahe el window tb2a akbar 34an el net isa.
-         */
+        val canRing = when (type) {
+            SalahFardType.FAGR -> canRingFajr.value
+            SalahFardType.DOHR -> canRingDohr.value
+            SalahFardType.ASR -> canRingAsr.value
+            SalahFardType.MAGHREP -> canRingMaghrep.value
+            SalahFardType.ESHA -> canRingEsha.value
+        } ?: false
+
+        if (canRing) {
+            // cancel alarm
+            SalawatAlarmsBroadcastReceiver.cancelAlarmManagerAndWorkManager(
+                view.context.applicationContext,
+                type
+            )
+
+            // Toggle local
+            viewModelScope.launch {
+                when (type) {
+                    SalahFardType.FAGR -> prefsSalah.setCanRingFajr(!canRing)
+                    SalahFardType.DOHR -> prefsSalah.setCanRingDohr(!canRing)
+                    SalahFardType.ASR -> prefsSalah.setCanRingAsr(!canRing)
+                    SalahFardType.MAGHREP -> prefsSalah.setCanRingMaghrep(!canRing)
+                    SalahFardType.ESHA -> prefsSalah.setCanRingEsha(!canRing)
+                }
+            }
+        }else {
+            // schedule alarm
+            var salawatTimes = cacheOfDateAndSalawatTimes[LocalDate.now().toSimpleDate()]!!
+            var timeInDay = when (type) {
+                SalahFardType.FAGR -> salawatTimes.fajrTimeInDay
+                SalahFardType.DOHR -> salawatTimes.dohrTimeInDay
+                SalahFardType.ASR -> salawatTimes.asrTimeInDay
+                SalahFardType.MAGHREP -> salawatTimes.maghrepTimeInDay
+                SalahFardType.ESHA -> salawatTimes.eshaTimeInDay
+            }
+            val now = LocalDateTime.now()
+            var localDateTime = LocalDateTime.of(
+                LocalDate.now(),
+                LocalTime.of(timeInDay.hour24, timeInDay.minute)
+            )
+
+            Timber.e("localDateTime < now -> ${localDateTime < now}")
+            if (localDateTime < now) {
+                val tomorrowSalawatTimes = cacheOfDateAndSalawatTimes[LocalDate.now().plusDays(1).toSimpleDate()]
+
+                if (tomorrowSalawatTimes != null) {
+                    salawatTimes = tomorrowSalawatTimes
+
+                    timeInDay = when (type) {
+                        SalahFardType.FAGR -> salawatTimes.fajrTimeInDay
+                        SalahFardType.DOHR -> salawatTimes.dohrTimeInDay
+                        SalahFardType.ASR -> salawatTimes.asrTimeInDay
+                        SalahFardType.MAGHREP -> salawatTimes.maghrepTimeInDay
+                        SalahFardType.ESHA -> salawatTimes.eshaTimeInDay
+                    }
+
+                    localDateTime = LocalDateTime.of(
+                        LocalDate.now().plusDays(1),
+                        LocalTime.of(timeInDay.hour24, timeInDay.minute)
+                    )
+                }else {
+                    val localDate = LocalDate.now().plusDays(1)
+
+                    view.findFragment<SalahFragment>().executeOnGlobalLoadingAndAutoHandleRetryCancellable(
+                        afterShowingLoading = {
+                            repoAzan.getAzanTimesSuspend(localDate)
+                        },
+                        afterHidingLoading = { response ->
+                            if (response == null) {
+                                view.context.showErrorToast(view.context.getString(R.string.something_went_wrong))
+
+                                return@executeOnGlobalLoadingAndAutoHandleRetryCancellable
+                            }
+
+                            cacheOfDateAndSalawatTimes[localDate.toSimpleDate()] = response.timings
+
+                            salawatTimes = response.timings
+
+                            timeInDay = when (type) {
+                                SalahFardType.FAGR -> salawatTimes.fajrTimeInDay
+                                SalahFardType.DOHR -> salawatTimes.dohrTimeInDay
+                                SalahFardType.ASR -> salawatTimes.asrTimeInDay
+                                SalahFardType.MAGHREP -> salawatTimes.maghrepTimeInDay
+                                SalahFardType.ESHA -> salawatTimes.eshaTimeInDay
+                            }
+
+                            localDateTime = LocalDateTime.of(
+                                LocalDate.now().plusDays(1),
+                                LocalTime.of(timeInDay.hour24, timeInDay.minute)
+                            )
+
+                            SalawatAlarmsBroadcastReceiver.scheduleAlarmManagerAndWorkManager(
+                                view.context.applicationContext,
+                                localDateTime,
+                                type
+                            )
+
+                            // Toggle local
+                            viewModelScope.launch {
+                                when (type) {
+                                    SalahFardType.FAGR -> prefsSalah.setCanRingFajr(!canRing)
+                                    SalahFardType.DOHR -> prefsSalah.setCanRingDohr(!canRing)
+                                    SalahFardType.ASR -> prefsSalah.setCanRingAsr(!canRing)
+                                    SalahFardType.MAGHREP -> prefsSalah.setCanRingMaghrep(!canRing)
+                                    SalahFardType.ESHA -> prefsSalah.setCanRingEsha(!canRing)
+                                }
+                            }
+                        },
+                        canCancelDialog = true
+                    )
+
+                    return
+                }
+            }
+
+            SalawatAlarmsBroadcastReceiver.scheduleAlarmManagerAndWorkManager(
+                view.context.applicationContext,
+                localDateTime,
+                type
+            )
+
+            // Toggle local
+            viewModelScope.launch {
+                when (type) {
+                    SalahFardType.FAGR -> prefsSalah.setCanRingFajr(!canRing)
+                    SalahFardType.DOHR -> prefsSalah.setCanRingDohr(!canRing)
+                    SalahFardType.ASR -> prefsSalah.setCanRingAsr(!canRing)
+                    SalahFardType.MAGHREP -> prefsSalah.setCanRingMaghrep(!canRing)
+                    SalahFardType.ESHA -> prefsSalah.setCanRingEsha(!canRing)
+                }
+            }
+        }
     }
 
 }

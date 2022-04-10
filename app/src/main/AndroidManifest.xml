@@ -37,6 +37,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ezkorone">
 
+        <!--
+        If you want to disable android.startup completely.
+        Used to make custom initialization for work manager to support hilt in worker isa.
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_geo_api_key" />
@@ -65,8 +75,13 @@
 
         <receiver android:name=".broadcastReceiver.AlarmsBroadcastReceiver" android:exported="true">
             <intent-filter>
-                <!--<action android:name="com.jsiajsi"/>-->
                 <data android:scheme="my-app" android:path="com.grand.ezkorone.broadcastReceiver"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".broadcastReceiver.SalawatAlarmsBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <data android:scheme="my-app" android:path="com.grand.ezkorone.salawat.broadcastReceiver"/>
             </intent-filter>
         </receiver>
 

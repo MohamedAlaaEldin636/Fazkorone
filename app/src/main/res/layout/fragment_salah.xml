@@ -394,7 +394,7 @@
 
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.DOHR)}"
+                    android:onClick="@{v -> viewModel.toggleMuteState(v, SalahFardType.DOHR)}"
 
                     android:src="@{viewModel.canRingDohr ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
                     tools:src="@drawable/ic_volume_on"
@@ -471,7 +471,7 @@
 
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.ASR)}"
+                    android:onClick="@{v -> viewModel.toggleMuteState(v, SalahFardType.ASR)}"
 
                     android:layout_marginStart="32dp"/>
 
@@ -542,7 +542,7 @@
 
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.MAGHREP)}"
+                    android:onClick="@{v -> viewModel.toggleMuteState(v, SalahFardType.MAGHREP)}"
 
                     android:src="@{viewModel.canRingMaghrep ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
                     tools:src="@drawable/ic_volume_on"
@@ -617,7 +617,7 @@
 
                     android:clickable="true"
                     android:focusable="true"
-                    android:onClick="@{v -> viewModel.toSheikhList(v, SalahFardType.ESHA)}"
+                    android:onClick="@{v -> viewModel.toggleMuteState(v, SalahFardType.ESHA)}"
 
                     android:src="@{viewModel.canRingEsha ? @drawable/ic_volume_on : @drawable/ic_volume_off}"
                     tools:src="@drawable/ic_volume_on"

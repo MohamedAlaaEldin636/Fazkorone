@@ -32,6 +32,8 @@ class AlarmsBroadcastReceiver : BroadcastReceiver() {
                 Timber.e("canScheduleExactAlarms ${alarmManager.canScheduleExactAlarms()}")
             }
 
+            // todo if will handle all of these todos then make same in salawat alarms broadcast receiver as well isa.
+
             // todo handle both reboots and api 31 permission checks isa.
             /*val am: AlarmManager
             am.setAlarmClock()
@@ -70,10 +72,10 @@ class AlarmsBroadcastReceiver : BroadcastReceiver() {
             )
         }
 
-        fun cancelWorkManagerAndAlarmManager(context: Context, tag: String) {
+        fun cancelAlarmManager(context: Context, tag: String) {
             val alarmManager = context.getSystemService<AlarmManager>() ?: return
 
-            WorkManager.getInstance(context).cancelAllWorkByTag(tag)
+            //WorkManager.getInstance(context).cancelAllWorkByTag(tag)
 
             alarmManager.cancel(getOperationPendingIntent(context, tag))
         }

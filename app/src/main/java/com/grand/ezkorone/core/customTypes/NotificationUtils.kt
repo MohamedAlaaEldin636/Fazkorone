@@ -8,11 +8,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import com.grand.ezkorone.R
+import com.grand.ezkorone.domain.salah.SalahFardType
 import com.grand.ezkorone.presentation.main.MainActivity
 
 object NotificationUtils {
@@ -33,6 +35,22 @@ object NotificationUtils {
             ALARMS_CHANNEL_ID,
             appContext.getString(R.string.alarms),
             ALARMS_NOTIFICATION_ID
+        )
+    }
+
+    fun showNotificationToLaunchMainActivityForSalawat(
+        appContext: Context,
+        name: String,
+        uri: Uri? // todo uri not working correctly + name make it right isa.
+    ) {
+        showNotificationToLaunchMainActivity(
+            appContext,
+            appContext.getString(R.string.app_name),
+            name,
+            ALARMS_CHANNEL_ID,
+            appContext.getString(R.string.alarms),
+            ALARMS_NOTIFICATION_ID,
+            uri
         )
     }
 
@@ -58,6 +76,7 @@ object NotificationUtils {
         channelId: String,
         channelName: String,
         notificationId: Int,
+        uri: Uri? = null
     ) {
         val intent = Intent(applicationContext, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -69,7 +88,7 @@ object NotificationUtils {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        //val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setSmallIcon(R.mipmap.ic_app_launcher)
@@ -80,8 +99,8 @@ object NotificationUtils {
             .setBadgeIconType(NotificationCompat.BADGE_ICON_SMALL)
             .setAutoCancel(true)
             .setShowWhen(true)
-            //.setSound(defaultSoundUri)
-            .setDefaults(Notification.DEFAULT_SOUND or Notification.DEFAULT_LIGHTS or Notification.DEFAULT_VIBRATE)
+            .setSound(uri ?: defaultSoundUri)
+            .setDefaults(/*Notification.DEFAULT_SOUND or */Notification.DEFAULT_LIGHTS or Notification.DEFAULT_VIBRATE)
             .setContentIntent(pendingIntent)
 
         val notificationManager = applicationContext.getSystemService<NotificationManager>() ?: return

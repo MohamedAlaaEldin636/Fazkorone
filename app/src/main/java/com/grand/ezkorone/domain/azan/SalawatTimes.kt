@@ -4,6 +4,8 @@ import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.minLengthOrPrefixZeros
+import com.grand.ezkorone.domain.alarms.TimeInDay
+import com.grand.ezkorone.domain.salah.SalahFardType
 
 /**
  * "timings": {
@@ -28,18 +30,33 @@ data class SalawatTimes(
 
     val fajrHour get() = getHour(fajr)
     val fajrMinutes get() = getMinutes(fajr)
+    val fajrTimeInDay get() = TimeInDay(fajrHour, fajrMinutes)
 
     val dohrHour get() = getHour(dohr)
     val dohrMinutes get() = getMinutes(dohr)
+    val dohrTimeInDay get() = TimeInDay(dohrHour, dohrMinutes)
 
     val asrHour get() = getHour(asr)
     val asrMinutes get() = getMinutes(asr)
+    val asrTimeInDay get() = TimeInDay(asrHour, asrMinutes)
 
     val maghrepHour get() = getHour(maghrep)
     val maghrepMinutes get() = getMinutes(maghrep)
+    val maghrepTimeInDay get() = TimeInDay(maghrepHour, maghrepMinutes)
 
     val eshaHour get() = getHour(esha)
     val eshaMinutes get() = getMinutes(esha)
+    val eshaTimeInDay get() = TimeInDay(eshaHour, eshaMinutes)
+
+    fun getTimeInDayOf(salahFardType: SalahFardType): TimeInDay {
+        return when (salahFardType) {
+            SalahFardType.FAGR -> fajrTimeInDay
+            SalahFardType.DOHR -> dohrTimeInDay
+            SalahFardType.ASR -> asrTimeInDay
+            SalahFardType.MAGHREP -> maghrepTimeInDay
+            SalahFardType.ESHA -> eshaTimeInDay
+        }
+    }
 
     fun getFajrSalahTimeFormat(context: Context): String =
         "$fajrHour:$fajrMinutes ${context.getIsAmOrPm(fajrHour)}"

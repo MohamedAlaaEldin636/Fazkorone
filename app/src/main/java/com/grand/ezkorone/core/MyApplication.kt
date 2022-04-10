@@ -3,16 +3,27 @@ package com.grand.ezkorone.core
 import android.app.Application
 import android.content.Context
 import android.widget.Toast
+import androidx.hilt.work.HiltWorkerFactory
 import androidx.multidex.MultiDex
+import androidx.work.Configuration
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 import es.dmoral.toasty.Toasty
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
-class MyApplication : Application() {
+class MyApplication : Application(), Configuration.Provider {
 
     private var toast: Toast? = null
+
+    @Inject
+    lateinit var workerFactory: HiltWorkerFactory
+
+    override fun getWorkManagerConfiguration() =
+        Configuration.Builder()
+            .setWorkerFactory(workerFactory)
+            .build()
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)

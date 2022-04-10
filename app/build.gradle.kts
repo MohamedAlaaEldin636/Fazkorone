@@ -108,6 +108,9 @@ dependencies {
     api(Deps.androidx.navigation.ui_ktx)
     api(Deps.androidx.hilt.navigation_fragment)
 
+    api(Deps.androidx.hilt.work)
+    kapt(Deps.androidx.hilt.compiler)
+
     api(Deps.androidx.paging.runtime)
 
     api(Deps.timber)

@@ -1,24 +1,17 @@
 package com.grand.ezkorone.presentation.drawer.viewModel
 
-import android.app.AlarmManager
 import android.app.Application
 import android.view.View
-import androidx.core.content.getSystemService
-import androidx.fragment.app.findFragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import androidx.work.WorkManager
 import com.grand.ezkorone.R
 import com.grand.ezkorone.broadcastReceiver.AlarmsBroadcastReceiver
 import com.grand.ezkorone.core.extensions.myApp
-import com.grand.ezkorone.core.extensions.showErrorToast
 import com.grand.ezkorone.data.local.preferences.PrefsAlarms
 import com.grand.ezkorone.domain.alarms.TimeInDay
-import com.grand.ezkorone.presentation.drawer.AlarmsFragment
 import com.grand.ezkorone.presentation.drawer.AlarmsFragmentDirections
-import com.grand.ezkorone.workManager.DrawerAlarmsWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -76,7 +69,7 @@ class AlarmsViewModel @Inject constructor(
             )
         }else {
             // Turn OFF so cancel alarm manager work manager and data store as well isa.
-            AlarmsBroadcastReceiver.cancelWorkManagerAndAlarmManager(view.context, tag)
+            AlarmsBroadcastReceiver.cancelAlarmManager(view.context, tag)
 
             viewModelScope.launch {
                 prefsAction()
