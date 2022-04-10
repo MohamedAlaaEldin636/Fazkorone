@@ -77,7 +77,7 @@ class ZekrDetailsViewModel @Inject constructor(
     /** true means fav, false not, null means check in the response this is used instead of reloading again isa. */
     private val forceIsFavorite = MutableLiveData<Boolean>()
 
-    val showIsFavorite = switchMapMultiple2(responseZekrDetail, currentIndex) {
+    val showIsFavorite = switchMapMultiple2(responseZekrDetail, currentIndex, forceIsFavorite) {
         forceIsFavorite.value ?: responseZekrDetail.value?.let {
             it.data[0].isFavorite
         }
