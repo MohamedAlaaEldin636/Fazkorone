@@ -81,7 +81,7 @@
 
         <receiver android:name=".broadcastReceiver.SalawatAlarmsBroadcastReceiver" android:exported="true">
             <intent-filter>
-                <data android:scheme="my-app" android:path="com.grand.ezkorone.salawat.broadcastReceiver"/>
+                <data android:scheme="my-app-s2" android:path="com.grand.ezkorone.salawat.broadcastReceiver"/>
             </intent-filter>
         </receiver>
 

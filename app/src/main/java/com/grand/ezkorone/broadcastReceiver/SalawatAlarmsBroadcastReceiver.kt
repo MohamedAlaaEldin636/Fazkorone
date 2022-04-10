@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.content.getSystemService
 import androidx.work.*
 import com.grand.ezkorone.core.customTypes.NotificationUtils
@@ -23,6 +24,7 @@ import timber.log.Timber
 import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import com.grand.ezkorone.R
 
 @AndroidEntryPoint
 class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
@@ -35,11 +37,13 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
          * and work manager will use same tag again which will override what happened in alarm
          * manager, but ensure initial delay occurs correctly for work manager isa.
          */
-        fun scheduleAlarmManagerAndWorkManager(context: Context, localDateTime2: LocalDateTime, salahFardType: SalahFardType) {
-            // todo del below code later isa.
-            val localDateTime = LocalDateTime.now().plusMinutes(1)
+        fun scheduleAlarmManagerAndWorkManager(context: Context, localDateTime: LocalDateTime, salahFardType: SalahFardType) {
+            // to-do del below code later isa.
+            /*Timber.e("actual date ${localDateTime2.dayOfMonth} / ${localDateTime2.monthValue} / ${localDateTime2.year}")
+            Timber.e("actual time ${localDateTime2.hour} : ${localDateTime2.minute}")
+            val localDateTime = LocalDateTime.now().plusMinutes(1)*/
 
-            Timber.e("date ${localDateTime.monthValue} / ${localDateTime.year}")
+            Timber.e("date ${localDateTime.dayOfMonth} / ${localDateTime.monthValue} / ${localDateTime.year}")
             Timber.e("time ${localDateTime.hour} : ${localDateTime.minute}")
 
             val action = salahFardType.name
@@ -152,10 +156,10 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
         }
 
         private fun getOperationPendingIntent(context: Context, action: String, triggerTimeInMillis: Long? = null): PendingIntent {
-            val intent = Intent(context, AlarmsBroadcastReceiver::class.java)
-            intent.setClass(context, AlarmsBroadcastReceiver::class.java)
+            val intent = Intent(context, SalawatAlarmsBroadcastReceiver::class.java)
+            intent.setClass(context, SalawatAlarmsBroadcastReceiver::class.java)
             intent.action = action
-            intent.data = Uri.Builder().scheme("my-app").authority("com.grand.ezkorone.salawat.broadcastReceiver").build()
+            intent.data = Uri.Builder().scheme("my-app-s2").authority("com.grand.ezkorone.salawat.broadcastReceiver").build()
             intent.putExtra(KEY_TRIGGER_TIME_IN_MILLIS, triggerTimeInMillis)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 
@@ -185,8 +189,10 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
 
         scheduleAlarmManagerOnly(context, triggerDateTime.plusDays(1), name)
 
+        val salahFardType = SalahFardType.valueOf(name)
+
         val uri = runBlocking {
-            when (SalahFardType.valueOf(name)) {
+            when (salahFardType) {
                 SalahFardType.FAGR -> prefsSalah.getFajrNotificationSoundUri()
                 SalahFardType.DOHR -> prefsSalah.getDohrNotificationSoundUri()
                 SalahFardType.ASR -> prefsSalah.getAsrNotificationSoundUri()
@@ -195,9 +201,17 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
             }.first()
         }
 
+        val notificationBody = when (salahFardType) {
+            SalahFardType.FAGR -> context.getString(R.string.fagr)
+            SalahFardType.DOHR -> context.getString(R.string.dohr)
+            SalahFardType.ASR -> context.getString(R.string.asr)
+            SalahFardType.MAGHREP -> context.getString(R.string.maghrep)
+            SalahFardType.ESHA -> context.getString(R.string.esha)
+        }
+
         NotificationUtils.showNotificationToLaunchMainActivityForSalawat(
             context.applicationContext,
-            name,
+            notificationBody,
             if (uri.isNullOrEmpty()) null else Uri.parse(uri)
         )
     }

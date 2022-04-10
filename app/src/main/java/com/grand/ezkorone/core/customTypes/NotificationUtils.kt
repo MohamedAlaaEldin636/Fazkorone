@@ -10,12 +10,14 @@ import android.graphics.BitmapFactory
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.getSystemService
 import com.grand.ezkorone.R
 import com.grand.ezkorone.domain.salah.SalahFardType
 import com.grand.ezkorone.presentation.main.MainActivity
+import timber.log.Timber
 
 object NotificationUtils {
 
@@ -41,8 +43,10 @@ object NotificationUtils {
     fun showNotificationToLaunchMainActivityForSalawat(
         appContext: Context,
         name: String,
-        uri: Uri? // todo uri not working correctly + name make it right isa.
+        uri: Uri?
     ) {
+        Timber.e("showNotificationToLaunchMainActivityForSalawat uri -> $uri")
+
         showNotificationToLaunchMainActivity(
             appContext,
             appContext.getString(R.string.app_name),
