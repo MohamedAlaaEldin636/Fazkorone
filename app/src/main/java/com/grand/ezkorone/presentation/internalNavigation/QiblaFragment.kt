@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.hardware.*
 import android.location.Location
 import android.os.Bundle
+import android.view.Display
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -205,7 +206,13 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         val rotation = FloatArray(9)
         val inclination = FloatArray(9)
-        val success = SensorManager.getRotationMatrix(rotation, inclination, gravity, geomagnetic)
+        *//*SensorManager.getInclination()
+        SensorManager.getOrientation()
+        val d: Display
+        d.rotation
+        SensorManager.remapCoordinateSystem()
+        GeomagneticField()*//*
+        val success = SensorManager.getRotationMatrix(rotation, null*//*inclination*//*, gravity, geomagnetic)
         if (success) {
             val orientation = FloatArray(3)
             SensorManager.getOrientation(rotation, orientation)
@@ -260,6 +267,10 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
     private fun onOrientationChanged(orientation: FloatArray) {
         if (true) {
+            val z = orientation[0]//Math.toDegrees(orientation[0].toDouble()) // 114 ranges from -180 to 180
+            val x = orientation[1]//Math.toDegrees(orientation[1].toDouble())
+            val y = orientation[2]//Math.toDegrees(orientation[2].toDouble())
+            Timber.e("z axis -> $z\nx axis -> $x\ny axis -> $y")
             trial1(orientation[0])
             return
         }
@@ -284,7 +295,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             System.currentTimeMillis()
         )
 
-        //head -= geoField.declination // converts magnetic north into true north
+        head -= geoField.declination // converts magnetic north into true north
 
         if (bearTo < 0) {
             bearTo += 360
@@ -302,6 +313,8 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         if (true) {
             Timber.e("direction $direction")
 
+            Timber.e("z axis -> ${Math.toDegrees(direction.toDouble())}\ndirections -> $direction")
+            //trial1(orientation[0])
             binding?.likeNeedleImageView?.rotation = direction
 
             return

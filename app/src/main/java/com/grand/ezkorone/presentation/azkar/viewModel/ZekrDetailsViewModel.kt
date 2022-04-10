@@ -1,6 +1,7 @@
 package com.grand.ezkorone.presentation.azkar.viewModel
 
 import android.app.DownloadManager
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Environment
 import android.view.View
@@ -14,6 +15,7 @@ import com.grand.ezkorone.core.customTypes.RetryAbleFlow
 import com.grand.ezkorone.core.customTypes.map
 import com.grand.ezkorone.core.customTypes.switchMapMultiple
 import com.grand.ezkorone.core.customTypes.switchMapMultiple2
+import com.grand.ezkorone.core.extensions.checkSelfPermissionGranted
 import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
 import com.grand.ezkorone.core.extensions.launchShareText
 import com.grand.ezkorone.core.extensions.showSuccessToast
@@ -23,6 +25,7 @@ import com.grand.ezkorone.domain.azkar.ResponseZekrDetail
 import com.grand.ezkorone.presentation.azkar.ZekrDetailsFragment
 import com.grand.ezkorone.presentation.azkar.ZekrDetailsFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.util.jar.Manifest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -101,29 +104,41 @@ class ZekrDetailsViewModel @Inject constructor(
     }
 
     fun download(view: View) {
-        // Download el PDF
-        val response = responseZekrDetail.value ?: return
+        val fragment = view.findFragment<ZekrDetailsFragment>()
 
-        val item = if (response.data.size < 2) {
-            response.data[0]
+        val context = fragment.requireContext()
+
+        if (context.checkSelfPermissionGranted(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            && context.checkSelfPermissionGranted(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+            // Download el PDF
+            val response = responseZekrDetail.value ?: return
+
+            val item = if (response.data.size < 2) {
+                response.data[0]
+            }else {
+                response.data[currentIndex.value!!]
+            }
+
+            val name = "${args.toolbarTitle}_${item.id}"
+            val request = DownloadManager.Request(Uri.parse(item.pdfUrl))
+                .setTitle(view.context.getString(R.string.app_name))
+                .setDescription(name)
+                //.allowScanningByMediaScanner()
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name)
+
+            val downloadManager = view.context.getSystemService<DownloadManager>()
+                ?: return
+
+            downloadManager.enqueue(request)
+
+            view.context.showSuccessToast(view.context.getString(R.string.loading))
         }else {
-            response.data[currentIndex.value!!]
+            fragment.permissionsStorageRequest.launch(arrayOf(
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ))
         }
-
-        val name = "${args.toolbarTitle}_${item.id}"
-        val request = DownloadManager.Request(Uri.parse(item.pdfUrl))
-            .setTitle(view.context.getString(R.string.app_name))
-            .setDescription(name)
-            //.allowScanningByMediaScanner()
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name)
-
-        val downloadManager = view.context.getSystemService<DownloadManager>()
-            ?: return
-
-        downloadManager.enqueue(request)
-
-        view.context.showSuccessToast(view.context.getString(R.string.loading))
     }
 
     fun play(view: View) {

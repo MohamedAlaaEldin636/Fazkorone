@@ -1,11 +1,13 @@
 package com.grand.ezkorone.presentation.azkar
 
+import android.Manifest
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.findNavController
@@ -50,6 +52,20 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == ExoPlayer.STATE_READY) {
                 viewModel.showAudioLoading.value = false
+            }
+        }
+    }
+
+    val permissionsStorageRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+                && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
+                viewModel.download(binding?.root ?: return@registerForActivityResult)
+            }
+            else -> {
+                requireContext().showNormalToast(getString(R.string.you_didn_t_accept_permission))
             }
         }
     }
