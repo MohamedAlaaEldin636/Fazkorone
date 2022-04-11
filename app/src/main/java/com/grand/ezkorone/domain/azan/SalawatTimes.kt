@@ -60,18 +60,33 @@ data class SalawatTimes(
 
     fun getFajrSalahTimeFormat(context: Context): String =
         "$fajrHour:$fajrMinutes ${context.getIsAmOrPm(fajrHour)}"
+    fun getFajrSalahTimeFormat12(context: Context): String = TimeInDay(fajrHour, fajrMinutes).let {
+        "${it.hour12}:${it.minute} ${context.getIsAmOrPm(fajrHour)}"
+    }
 
     fun getDohrSalahTimeFormat(context: Context): String =
         "$dohrHour:$dohrMinutes ${context.getIsAmOrPm(dohrHour)}"
+    fun getDohrSalahTimeFormat12(context: Context): String = TimeInDay(dohrHour, dohrMinutes).let {
+        "${it.hour12}:${it.minute} ${context.getIsAmOrPm(dohrHour)}"
+    }
 
     fun getAsrSalahTimeFormat(context: Context): String =
         "$asrHour:$asrMinutes ${context.getIsAmOrPm(asrHour)}"
+    fun getAsrSalahTimeFormat12(context: Context): String = TimeInDay(asrHour, asrMinutes).let {
+        "${it.hour12}:${it.minute} ${context.getIsAmOrPm(asrHour)}"
+    }
 
     fun getMaghrepSalahTimeFormat(context: Context): String =
         "$maghrepHour:$maghrepMinutes ${context.getIsAmOrPm(maghrepHour)}"
+    fun getMaghrepSalahTimeFormat12(context: Context): String = TimeInDay(maghrepHour, maghrepMinutes).let {
+        "${it.hour12}:${it.minute} ${context.getIsAmOrPm(maghrepHour)}"
+    }
 
     fun getEshaSalahTimeFormat(context: Context): String =
         "$eshaHour:$eshaMinutes ${context.getIsAmOrPm(eshaHour)}"
+    fun getEshaSalahTimeFormat12(context: Context): String = TimeInDay(eshaHour, eshaMinutes).let {
+        "${it.hour12}:${it.minute} ${context.getIsAmOrPm(eshaHour)}"
+    }
 
     private fun Context.getIsAmOrPm(hour: Int) = when {
         hour < 12 -> getString(R.string.am)

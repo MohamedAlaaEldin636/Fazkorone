@@ -51,11 +51,11 @@ class SalahViewModel @Inject constructor(
     val eshaTime = MutableLiveData(myApp.getString(R.string.loading))
 
     fun updateSalawatTimes(salawatTimes: SalawatTimes) {
-        fajrTime.value = salawatTimes.getFajrSalahTimeFormat(myApp)
-        dohrTime.value = salawatTimes.getDohrSalahTimeFormat(myApp)
-        asrTime.value = salawatTimes.getAsrSalahTimeFormat(myApp)
-        maghrepTime.value = salawatTimes.getMaghrepSalahTimeFormat(myApp)
-        eshaTime.value = salawatTimes.getEshaSalahTimeFormat(myApp)
+        fajrTime.value = salawatTimes.getFajrSalahTimeFormat12(myApp)
+        dohrTime.value = salawatTimes.getDohrSalahTimeFormat12(myApp)
+        asrTime.value = salawatTimes.getAsrSalahTimeFormat12(myApp)
+        maghrepTime.value = salawatTimes.getMaghrepSalahTimeFormat12(myApp)
+        eshaTime.value = salawatTimes.getEshaSalahTimeFormat12(myApp)
     }
 
     val cacheOfDateAndSalawatTimes = mutableMapOf<SimpleDate, SalawatTimes>()

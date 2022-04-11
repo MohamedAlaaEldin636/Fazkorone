@@ -166,7 +166,17 @@ class ZekrDetailsViewModel @Inject constructor(
     }
 
     fun incrementProgress() {
-        count.value = count.value!!.inc()
+        val maxCount = responseZekrDetail.value?.let {
+            if (it.data.size < 2) {
+                it.data[0].maxCount
+            }else {
+                it.data[currentIndex.value!!].maxCount
+            }
+        } ?: 0
+
+        if (count.value!! < maxCount) {
+            count.value = count.value!!.inc()
+        }
     }
 
 }
