@@ -68,6 +68,7 @@ class HomeViewModel @Inject constructor(
             salawatTimes.today.getNextHourAndMinutesAndRemainingTimeAsHourAndMinutesWithType(
                 currentDateTime.hour,
                 currentDateTime.minute,
+                currentDateTime.second,
                 salawatTimes.tomorrow
             )
         }else {

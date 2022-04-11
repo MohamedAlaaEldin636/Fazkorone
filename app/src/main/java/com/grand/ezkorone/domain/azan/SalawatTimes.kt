@@ -109,29 +109,35 @@ data class SalawatTimes(
          */
 
      */
-    fun getNextHourAndMinutesAndRemainingTimeAsHourAndMinutesWithType(hour: Int, minutes: Int, tomorrowSalawatTimes: SalawatTimes): Calculations {
+    fun getNextHourAndMinutesAndRemainingTimeAsHourAndMinutesWithType(
+        hour: Int,
+        minutes: Int,
+        seconds: Int,
+        tomorrowSalawatTimes: SalawatTimes
+    ): Calculations {
         return when {
             fajrHour > hour || fajrHour == hour && fajrMinutes > minutes -> {
-                Calculations(fajrHour, fajrMinutes, fajrHour - hour, fajrMinutes - minutes, Type.FAJR)
+                Calculations(fajrHour, fajrMinutes, fajrHour - hour, fajrMinutes - minutes, Type.FAJR, seconds)
             }
             dohrHour > hour || dohrHour == hour && dohrMinutes > minutes -> {
-                Calculations(dohrHour, dohrMinutes, dohrHour - hour, dohrMinutes - minutes, Type.DOHR)
+                Calculations(dohrHour, dohrMinutes, dohrHour - hour, dohrMinutes - minutes, Type.DOHR, seconds)
             }
             asrHour > hour || asrHour == hour && asrMinutes > minutes -> {
-                Calculations(asrHour, asrMinutes, asrHour - hour, asrMinutes - minutes, Type.ASR)
+                Calculations(asrHour, asrMinutes, asrHour - hour, asrMinutes - minutes, Type.ASR, seconds)
             }
             maghrepHour > hour || maghrepHour == hour && maghrepMinutes > minutes -> {
-                Calculations(maghrepHour, maghrepMinutes, maghrepHour - hour, maghrepMinutes - minutes, Type.MAGHREP)
+                Calculations(maghrepHour, maghrepMinutes, maghrepHour - hour, maghrepMinutes - minutes, Type.MAGHREP, seconds)
             }
             eshaHour > hour || eshaHour == hour && eshaMinutes > minutes -> {
-                Calculations(eshaHour, eshaMinutes, eshaHour - hour, eshaMinutes - minutes, Type.ESHA)
+                Calculations(eshaHour, eshaMinutes, eshaHour - hour, eshaMinutes - minutes, Type.ESHA, seconds)
             }
             else -> {
                 Calculations(
                     tomorrowSalawatTimes.fajrHour, tomorrowSalawatTimes.fajrMinutes,
                     (24 - hour) + tomorrowSalawatTimes.fajrHour,
                     (0 - minutes) + tomorrowSalawatTimes.eshaMinutes,
-                    Type.FAJR
+                    Type.FAJR,
+                    seconds
                 )
             }
         }
@@ -144,12 +150,16 @@ data class SalawatTimes(
         FAJR, DOHR, ASR, MAGHREP, ESHA
     }
 
+    //infix fun <A, B, C> Pair<A, B>.triple(third: C): Triple<A, B, C> = Triple(first, second, third)
+
     data class Calculations(
         private val nextHour: Int,
         private val nextMinutes: Int,
         private val remainingHour: Int,
         private val remainingMinutes: Int,
         val type: Type,
+        /** seconds of current time so subtract from minutes or hours isa. */
+        private val seconds: Int,
     ) {
 
         fun getNextTime(context: Context): String {
@@ -161,6 +171,10 @@ data class SalawatTimes(
                 remainingHour.dec() to (60 + remainingMinutes)
             }else {
                 remainingHour to remainingMinutes
+            }
+
+            when {
+                seconds == 0 -> Triple(remainingHour, remainingMinutes, seconds)
             }
 
             return "(${remainingHour.minLengthOrPrefixZeros(2)}:${remainingMinutes.minLengthOrPrefixZeros(2)})"
