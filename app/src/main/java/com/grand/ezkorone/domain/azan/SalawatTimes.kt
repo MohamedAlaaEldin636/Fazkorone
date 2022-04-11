@@ -173,11 +173,13 @@ data class SalawatTimes(
                 remainingHour to remainingMinutes
             }
 
-            when {
-                seconds == 0 -> Triple(remainingHour, remainingMinutes, seconds)
+            val (hr, min, sec) = when {
+                seconds == 0 || seconds == 60 -> Triple(remainingHour, remainingMinutes, seconds)
+                remainingMinutes == 0 -> Triple(remainingHour.dec(), 59, 60 - seconds)
+                else -> Triple(remainingHour, remainingMinutes.dec(), 60 - seconds)
             }
 
-            return "(${remainingHour.minLengthOrPrefixZeros(2)}:${remainingMinutes.minLengthOrPrefixZeros(2)})"
+            return "(${hr.minLengthOrPrefixZeros(2)}:${min.minLengthOrPrefixZeros(2)}:${sec.minLengthOrPrefixZeros(2)})"
         }
 
         private fun getTypeName(context: Context) = when (type) {

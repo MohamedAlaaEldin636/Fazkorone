@@ -38,7 +38,7 @@ class HomeFragment : MABaseFragment<FragmentHomeBinding>() {
             override fun run() {
                 viewModel.currentDateTime.postValue(LocalDateTime.now())
             }
-        }, 0, 60 * 1_000)
+        }, 0, 1_000)
     }
 
     override fun initializeBindingVariables() {
