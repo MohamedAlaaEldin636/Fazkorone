@@ -1,14 +1,18 @@
 package com.grand.ezkorone.presentation.location.viewModel
 
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.fragment.app.findFragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -24,6 +28,7 @@ import com.grand.ezkorone.presentation.location.LocationSelectionFragmentArgs
 import com.grand.ezkorone.presentation.location.LocationSelectionFragmentDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -48,6 +53,10 @@ class LocationSelectionViewModel @Inject constructor(
         view.findNavController().navigateUp()
     }
 
+    val resultOfPlaceFragment = MutableLiveData<LatLng>()
+
+    var googleMap: GoogleMap? = null
+
     fun toSearchPlace(view: View) {
         showMapNotSearchResults.value = false
 
@@ -66,15 +75,13 @@ class LocationSelectionViewModel @Inject constructor(
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                val latLng = LatLng(place.latLng?.latitude ?: 0.0, place.latLng?.longitude ?: 0.0)
-
-                fragment.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, fragment.zoom))
+                resultOfPlaceFragment.postValue(place.latLng)
 
                 showMapNotSearchResults.postValue(true)
             }
 
             override fun onError(status: Status) {
-                Timber.e("Places API error with status $status")
+                Timber.e("dosdkodks Places API error with status $status")
 
                 fragment.requireContext().showErrorToast(fragment.getString(R.string.something_went_wrong))
 
@@ -90,7 +97,7 @@ class LocationSelectionViewModel @Inject constructor(
     fun onSelectLocationClick(view: View) {
         val fragment = view.findFragment<LocationSelectionFragment>()
 
-        val googleMap = fragment.googleMap ?: return
+        val googleMap = googleMap ?: return
 
         fragment.activityViewModel.globalLoading.value = true
 

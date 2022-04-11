@@ -10,6 +10,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.distinctUntilChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -25,6 +29,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.extensions.showErrorToast
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -36,9 +42,6 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     private val viewModel by viewModels<LocationSelectionViewModel>()
-
-    var googleMap: GoogleMap? = null
-        private set
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -58,22 +61,12 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     /** Zoom levels https://developers.google.com/maps/documentation/android-sdk/views#zoom */
-    val zoom get() = min(googleMap?.maxZoomLevel ?: 5f, 15f)
+    private val zoom get() = min(viewModel.googleMap?.maxZoomLevel ?: 5f, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (googleMap != null) {
-            binding?.root?.post {
-                viewModel.moveToCurrentLocation(binding?.root ?: return@post)
-            }
-        }
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_location_selection
@@ -83,15 +76,16 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Timber.e("iodwjowejd 2")
-
+        Timber.e("onViewCreated googleMap == null ${viewModel.googleMap == null}")
         // Setup map
         (childFragmentManager.findFragmentById(R.id.mapFragmentContainerView) as? SupportMapFragment)
             ?.getMapAsync(this)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        this.googleMap = googleMap
+        Timber.e("onMapReady viewModel.resultOfPlaceFragment.value ${viewModel.resultOfPlaceFragment.value}")
+
+        viewModel.googleMap = googleMap
 
         if (viewModel.arg.latitude == null || viewModel.arg.longitude == null) {
             checkIfPermissionsGrantedToMoveOrRequestThem()
@@ -102,7 +96,12 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
             viewModel.arg.longitude?.toDouble() ?: 0.0
         )
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoom))
+        googleMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                viewModel.resultOfPlaceFragment.value ?: location,
+                zoom
+            )
+        )
     }
 
     @SuppressLint("MissingPermission")
@@ -122,8 +121,10 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
 
     @RequiresPermission(anyOf = ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"])
     private fun moveToCurrentLocation() {
+        Timber.e("moveToCurrentLocation -> viewModel.myCurrentLocation ${viewModel.myCurrentLocation}")
+
         viewModel.myCurrentLocation?.also { myCurrentLocation ->
-            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(myCurrentLocation, zoom))
+            viewModel.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(myCurrentLocation, zoom))
 
             return
         }
@@ -140,6 +141,8 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
             LocationRequest.PRIORITY_HIGH_ACCURACY,
             cancellationToken
         ).addOnSuccessListener { location: Location? ->
+            Timber.e("OnSuccessListener current location")
+
             if (location == null) {
                 activityViewModel.globalLoading.postValue(false)
 
@@ -152,7 +155,7 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
 
             viewModel.myCurrentLocation = latLng
 
-            googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+            viewModel.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
 
             activityViewModel.globalLoading.postValue(false)
 
