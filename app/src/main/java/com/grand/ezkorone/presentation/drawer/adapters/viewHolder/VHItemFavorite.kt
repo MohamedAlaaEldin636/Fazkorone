@@ -36,7 +36,7 @@ class VHItemFavZekrDetail(parent: ViewGroup, private val adapter: RVItemFavorite
 
             view.executeOnGlobalLoading(
                 afterShowingLoading = {
-                    adapter.repoFavorite.toggleFavoriteForVerticalList(id)
+                    adapter.repoFavorite.toggleFavoriteForHorizontalList(id)
                 },
                 afterHidingLoading = { result ->
                     when (result) {
