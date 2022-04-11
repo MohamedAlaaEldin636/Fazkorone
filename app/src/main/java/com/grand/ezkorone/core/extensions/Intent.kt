@@ -28,6 +28,23 @@ fun Context.launchDialNumber(phoneNumber: String) {
 	}
 }
 
+fun Context.launchWhatsApp(phoneNumber: String) {
+	/*
+	void openWhatsappContact(String number) {
+    Uri uri = Uri.parse("smsto:" + number);
+    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+    i.setPackage("com.whatsapp");
+    startActivity(Intent.createChooser(i, ""));
+}
+	 */
+	val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:${phoneNumber.trim()}"))
+	intent.`package` = "com.whatsapp"
+
+	launchActivitySafely {
+		startActivity(intent.wrapInChooser(getString(R.string.pick_app)))
+	}
+}
+
 fun Context.launchShareText(text: String) {
 	val intent = Intent(Intent.ACTION_SEND).also {
 		it.type = "text/plain"

@@ -127,9 +127,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="@string/call"
                                 android:layout_marginStart="@dimen/dp5h"
                                 android:layout_marginEnd="@dimen/dp5h"
+                                android:text="@string/call"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
                                 android:textColor="#fff" />
 

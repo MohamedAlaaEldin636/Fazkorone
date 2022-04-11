@@ -3,16 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
-    tools:context="app.grand.tafwak.presentation.auth2.logIn.FetchPhoneDialogFragment">
+    tools:context="com.grand.ezkorone.presentation.base.dialogs.GrandDialogFragment">
 
     <data>
 
     </data>
 
-    <com.grand.ezkorone.presentation.base.dialogs.GrandImageDialog
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_margin="16dp"/>
+        tools:layout_gravity="center">
+
+        <include
+            android:id="@+id/grandLayout"
+
+            layout="@layout/layout_grand"/>
+
+    </FrameLayout>
 
 </layout>

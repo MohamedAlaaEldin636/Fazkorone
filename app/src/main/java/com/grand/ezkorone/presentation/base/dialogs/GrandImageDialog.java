@@ -53,10 +53,10 @@ class GrandDialog extends RelativeLayout {
     public GrandDialog(Context context) {
         super(context);
         this.context = context;
+        init();
     }
 
     public void init() {
-
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         final LayoutGrandBinding layoutGrandBinding  = DataBindingUtil.inflate(layoutInflater, R.layout.layout_grand, null, true);
         View grand = layoutGrandBinding.getRoot();

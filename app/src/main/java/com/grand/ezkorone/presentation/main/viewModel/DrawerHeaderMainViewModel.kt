@@ -82,7 +82,7 @@ class DrawerHeaderMainViewModel @Inject constructor(
     }
 
     fun launchByGrandDialog(view: View) = view.closeDrawerThenActWithActivity {
-        GrandDialogFragment.show(supportFragmentManager)
+        GrandDialogFragment.show(this)
     }
 
     private fun View.closeDrawerThenActWithNavController(action: NavController.() -> Unit) {

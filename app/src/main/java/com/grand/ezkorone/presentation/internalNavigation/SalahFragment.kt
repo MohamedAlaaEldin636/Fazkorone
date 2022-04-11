@@ -1,11 +1,14 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
+import android.Manifest
 import android.app.DownloadManager
+import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
@@ -47,6 +50,22 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
 
     @Inject
     protected lateinit var gson: Gson
+
+    private var tempItemSheikh: ItemSheikh? = null
+
+    private val permissionsStorageRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        when {
+            permissions[Manifest.permission.READ_EXTERNAL_STORAGE] == true
+                && permissions[Manifest.permission.WRITE_EXTERNAL_STORAGE] == true -> {
+                performDownload(tempItemSheikh ?: return@registerForActivityResult)
+            }
+            else -> {
+                requireContext().showNormalToast(getString(R.string.you_didn_t_accept_permission))
+            }
+        }
+    }
 
     override fun getLayoutId(): Int = R.layout.fragment_salah
 
@@ -98,25 +117,22 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
                             viewModel.prefsSalah.getSalahFardTypeNotificationDownloadManagerId(viewModel.salahFardType, itemSheikh.id).first()
                         }
                         val uri = idOfDownloadManager?.let {
-                            downloadManager?.getUriForDownloadedFile(idOfDownloadManager)
+                            kotlin.runCatching {
+                                downloadManager?.getUriForDownloadedFile(idOfDownloadManager)
+                            }.getOrNull()
                         }
 
                         if (uri == null) {
-                            val request = DownloadManager.Request(Uri.parse(itemSheikh.audioUrl))
-                                .setTitle(view.context.getString(R.string.app_name))
-                                .setDescription(itemSheikh.name)
-                                //.allowScanningByMediaScanner()
-                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, itemSheikh.name)
+                            if (requireContext().checkSelfPermissionGranted(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                && requireContext().checkSelfPermissionGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                performDownload(itemSheikh)
+                            }else {
+                                tempItemSheikh = itemSheikh
 
-                            val id = downloadManager?.enqueue(request)
-
-                            requireContext().showSuccessToast(getString(R.string.loading))
-
-                            viewModel.viewModelScope.launch {
-                                viewModel.prefsSalah.setSalawatNotificationDownloadManagerId(
-                                    viewModel.salahFardType, id
-                                )
+                                permissionsStorageRequest.launch(arrayOf(
+                                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                ))
                             }
                         }else {
                             viewModel.viewModelScope.launch {
@@ -133,6 +149,28 @@ class SalahFragment : MABaseFragment<FragmentSalahBinding>() {
                     }
                 }
             }
+        }
+    }
+
+    private fun performDownload(itemSheikh: ItemSheikh) {
+        val context = requireContext()
+        val downloadManager = context.getSystemService<DownloadManager>()
+
+        val request = DownloadManager.Request(Uri.parse(itemSheikh.audioUrl))
+            .setTitle(context.getString(R.string.app_name))
+            .setDescription(itemSheikh.name)
+            //.allowScanningByMediaScanner()
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, itemSheikh.name)
+
+        val id = downloadManager?.enqueue(request)
+
+        requireContext().showSuccessToast(getString(R.string.loading))
+
+        viewModel.viewModelScope.launch {
+            viewModel.prefsSalah.setSalawatNotificationDownloadManagerId(
+                viewModel.salahFardType, id
+            )
         }
     }
 
