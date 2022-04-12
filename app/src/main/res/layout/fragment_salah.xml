@@ -103,7 +103,7 @@
                 style="@style/TextTajawalBold16"
 
                 app:drawableEndCompat="@drawable/ic_arrow_down"
-                app:drawableTint="#ffffff"
+                app:drawableTint="#fa0"
                 android:drawablePadding="8dp"
 
                 android:onClick="@{v -> viewModel.editLocation(v)}"
@@ -279,6 +279,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
+                    android:minWidth="70dp"
+                    android:gravity="start"
+
                     style="@style/TextTajawalBold16"
 
                     android:text="@{viewModel.fajrTime}"
@@ -356,6 +359,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
+                    android:minWidth="70dp"
+                    android:gravity="start"
+
                     style="@style/TextTajawalBold16"
 
                     android:text="@{viewModel.dohrTime}"
@@ -432,6 +438,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
+                    android:minWidth="70dp"
+                    android:gravity="start"
+
                     style="@style/TextTajawalBold16"
 
                     android:text="@{viewModel.asrTime}"
@@ -505,6 +514,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+                    android:minWidth="70dp"
+                    android:gravity="start"
 
                     style="@style/TextTajawalBold16"
 
@@ -580,6 +592,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
+                    android:minWidth="70dp"
+                    android:gravity="start"
 
                     style="@style/TextTajawalBold16"
 

@@ -1,4 +1,25 @@
 <resources>
+    <!--
+    الشهر الأول اسمه المحرم
+الشهر الثاني اسمه صفر
+الشهر الثالث اسمه ربيع الأول
+الشهر الرابع اسمه ربيع الثاني (أو ربيع الآخر)
+الشهر الخامس اسمه جمادى الأولى
+الشهر السادس اسمه جمادى الآخرة
+الشهر السابع اسمه رجب
+الشهر الثامن اسمه شعبان
+الشهر التاسع اسمه رمضان
+الشهر العاشر اسمه شوال
+الشهر الحادي عشر اسمه ذو القعدة
+الشهر الثاني عشر اسمه ذو الحجة
+    -->
+    <string name="saturday">السبت</string>
+    <string name="sunday">الأحد</string>
+    <string name="monday">الاثنين</string>
+    <string name="tuesday">الثلاثاء</string>
+    <string name="wednesday">الأربعاء</string>
+    <string name="thursday">الخميس</string>
+    <string name="friday">الجمعة</string>
     <string name="mtrl_timepicker_confirm">حسنا</string>
     <string name="design_program">تصميم وبرمجة</string>
     <string name="call_grand">إتصال</string>

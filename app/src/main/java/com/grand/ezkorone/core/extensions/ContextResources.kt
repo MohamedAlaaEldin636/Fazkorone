@@ -40,3 +40,5 @@ fun Context.inflateLayout(
  * @param index ranges from 0 to 11 where 0 is january and 11 is december
  */
 fun Context.getMonthName(index: Int): String = resources.getStringArray(R.array.year_months)[index]
+
+fun Context.getDayOfWeekName(index: Int): String = resources.getStringArray(R.array.days_of_week)[index]
