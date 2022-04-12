@@ -24,7 +24,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditLocationViewModel @Inject constructor(
-    private val prefsApp: PrefsApp
+    private val prefsApp: PrefsApp,
+    private val gson: Gson,
 ) : ViewModel() {
 
     private val locationData = prefsApp.getLocationData().map { it!! }.asLiveData()
@@ -37,9 +38,11 @@ class EditLocationViewModel @Inject constructor(
 
     var myCurrentLocation: LatLng? = null
 
-    val addresses = prefsApp.getLocationsList().map { list -> list.map { it.address } }
+    val addresses = prefsApp.getLocationsList()
 
-    val adapter = RVItemText()
+    val adapter = RVItemText(gson) { view, locationData ->
+        onSelectLocationClick(view, locationData.latitude, locationData.longitude, locationData.address)
+    }
 
     val showEmptyView = MutableLiveData(false)
 
