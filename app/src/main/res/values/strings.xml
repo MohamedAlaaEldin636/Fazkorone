@@ -1,4 +1,5 @@
 <resources>
+    <string name="mtrl_timepicker_confirm">حسنا</string>
     <string name="design_program">تصميم وبرمجة</string>
     <string name="call_grand">إتصال</string>
     <string name="whats">واتساب</string>
@@ -108,4 +109,5 @@
     <string name="pause">توقيف</string>
     <string name="empty_data">البيانات فارغة</string>
     <string name="salah">الصلاة</string>
+    <string name="sent_successfully">تم الارسال بنجاح</string>
 </resources>

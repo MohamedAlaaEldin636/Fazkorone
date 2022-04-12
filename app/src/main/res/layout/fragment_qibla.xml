@@ -71,11 +71,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <!-- todo https://stackoverflow.com/a/23060896 for north directions isa -->
         <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            android:src="@drawable/ic_bg_qibla_333333"
+            android:src="@drawable/ic_bg_qibla_4"
             android:scaleType="fitXY"
 
             app:layout_constraintTop_toBottomOf="@id/titleTextView"

@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.customTypes.DepthPageTransformer
 import com.grand.ezkorone.core.customTypes.RTLRemotePDFViewPager
 import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.databinding.FragmentZekrDetailsBinding
@@ -113,6 +114,8 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         viewModel.showLoading.value = false
 
         adapter = PDFPagerAdapter(requireContext(), destinationPath)
+
+        remotePDFViewPager?.setPageTransformer(true, DepthPageTransformer())
 
         remotePDFViewPager?.adapter = adapter
 

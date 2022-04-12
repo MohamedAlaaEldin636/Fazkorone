@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
 
     val hijrahDate = currentDateTime.map {
         HijrahDate.from(it).format(
-            DateTimeFormatter.ofPattern("d LLLL yyyy ${myApp.getString(R.string.h)}", Locale("ar"))
+            DateTimeFormatter.ofPattern("d MMMM yyyy ${myApp.getString(R.string.h)}", Locale("ar"))
         )
     }
 

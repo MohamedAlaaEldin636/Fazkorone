@@ -76,6 +76,8 @@ class ContactUsViewModel @Inject constructor(
                 )
             },
             afterHidingLoading = {
+                view.context.showSuccessToast(view.context.getString(R.string.sent_successfully))
+
                 view.post {
                     fragment.findNavController().navigateUp()
                 }
