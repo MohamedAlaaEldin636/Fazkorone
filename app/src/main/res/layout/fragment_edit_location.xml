@@ -56,7 +56,7 @@
                 android:background="#FBFBFB"
 
                 app:startIconDrawable="@drawable/ic_search_2"
-                app:startIconTint="@color/colorPrimaryDark"
+                app:startIconTint="#fa0"
                 app:startIconTintMode="src_atop">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -150,7 +150,11 @@
 
             style="@style/Widget.MaterialComponents.Button"
 
-            android:text="@{viewModel.showLottie ? @string/empty_string : @string/specify_my_location}"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+
+            android:text="@{viewModel.showLottie ? @string/empty_string : @string/auto_selection}"
+            tools:text="@string/auto_selection"
             android:textColor="#17A16E"
             android:textAppearance="@style/TextTajawalMedium14"
 

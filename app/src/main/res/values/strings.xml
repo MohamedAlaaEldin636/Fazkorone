@@ -110,4 +110,5 @@
     <string name="empty_data">البيانات فارغة</string>
     <string name="salah">الصلاة</string>
     <string name="sent_successfully">تم الارسال بنجاح</string>
+    <string name="auto_selection">تحديد تلقائي</string>
 </resources>

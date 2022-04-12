@@ -47,12 +47,25 @@ class PrefsApp @Inject constructor(
         }
 
         val list = getLocationsList().first().toMutableList()
-        if (locationData !in list) {
+        if (!list.specialContains(locationData)) {
             list.add(0, locationData)
             setLocationsList(list.let {
                 if (it.size > 100) it.dropLast(1) else it
             })
         }
+    }
+
+    private fun List<LocationData>.specialContains(locationData: LocationData?): Boolean {
+        if (locationData == null) return false
+
+        for (item in this) {
+            if (item.address == locationData.address ||
+                (item.latitude == locationData.latitude && item.longitude == locationData.longitude)) {
+                return true
+            }
+        }
+
+        return false
     }
 
     private suspend fun setLocationsList(locations: List<LocationData>) =
