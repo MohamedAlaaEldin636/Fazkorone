@@ -23,4 +23,18 @@
         <item>@string/thursday</item>
         <item>@string/friday</item>
     </string-array>
+    <string-array name="year_months_hijrah">
+        <item>@string/moharam</item>
+        <item>@string/safar</item>
+        <item>@string/rabee_awal</item>
+        <item>@string/rabee_akhar</item>
+        <item>@string/gamade_awal</item>
+        <item>@string/gamade_akhar</item>
+        <item>@string/ragab</item>
+        <item>@string/shaban</item>
+        <item>@string/ramadan</item>
+        <item>@string/shawal</item>
+        <item>@string/zo_el_qeda</item>
+        <item>@string/zo_el_hegga</item>
+    </string-array>
 </resources>

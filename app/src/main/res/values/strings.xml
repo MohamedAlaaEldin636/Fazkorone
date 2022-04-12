@@ -1,18 +1,16 @@
 <resources>
-    <!--
-    الشهر الأول اسمه المحرم
-الشهر الثاني اسمه صفر
-الشهر الثالث اسمه ربيع الأول
-الشهر الرابع اسمه ربيع الثاني (أو ربيع الآخر)
-الشهر الخامس اسمه جمادى الأولى
-الشهر السادس اسمه جمادى الآخرة
-الشهر السابع اسمه رجب
-الشهر الثامن اسمه شعبان
-الشهر التاسع اسمه رمضان
-الشهر العاشر اسمه شوال
-الشهر الحادي عشر اسمه ذو القعدة
-الشهر الثاني عشر اسمه ذو الحجة
-    -->
+    <string name="moharam">محرم</string>
+    <string name="safar">صفر</string>
+    <string name="rabee_awal">ربيع أول</string>
+    <string name="rabee_akhar">ربيع آخر</string>
+    <string name="gamade_awal">جماد أول</string>
+    <string name="gamade_akhar">جماد آخر</string>
+    <string name="ragab">رجب</string>
+    <string name="shaban">شعبان</string>
+    <string name="ramadan">رمضان</string>
+    <string name="shawal">شوال</string>
+    <string name="zo_el_qeda">ذو القعدة</string>
+    <string name="zo_el_hegga">ذو الحجة</string>
     <string name="saturday">السبت</string>
     <string name="sunday">الأحد</string>
     <string name="monday">الاثنين</string>

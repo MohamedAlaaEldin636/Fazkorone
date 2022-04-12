@@ -8,10 +8,7 @@ import com.grand.ezkorone.NavBottomNavDirections
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.RetryAbleFlow
 import com.grand.ezkorone.core.customTypes.switchMapMultiple
-import com.grand.ezkorone.core.extensions.findNavControllerOfProject
-import com.grand.ezkorone.core.extensions.getMonthName
-import com.grand.ezkorone.core.extensions.myApp
-import com.grand.ezkorone.core.extensions.openDrawerLayout
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.data.azan.repository.RepositoryAzan
 import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
 import com.grand.ezkorone.data.home.repository.RepositoryHome
@@ -51,6 +48,18 @@ class HomeViewModel @Inject constructor(
     }
 
     val hijrahDate = currentDateTime.map {
+        /*val d = HijrahDate.from(it).format(
+            DateTimeFormatter.ofPattern("d", Locale("ar"))
+        )
+        val yyyy = HijrahDate.from(it).format(
+            DateTimeFormatter.ofPattern("yyyy", Locale("ar"))
+        )
+
+        val monthValue = HijrahDate.from(it).format(
+            DateTimeFormatter.ofPattern("M", Locale("ar"))
+        )?.toInt() ?: 1
+
+        "$d ${myApp.getMonthNameHijrah(monthValue.dec())} $yyyy ${myApp.getString(R.string.h)}"*/
         HijrahDate.from(it).format(
             DateTimeFormatter.ofPattern("d MMMM yyyy ${myApp.getString(R.string.h)}", Locale("ar"))
         )

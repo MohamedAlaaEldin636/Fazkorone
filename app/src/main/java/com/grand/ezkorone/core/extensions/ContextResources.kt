@@ -41,4 +41,6 @@ fun Context.inflateLayout(
  */
 fun Context.getMonthName(index: Int): String = resources.getStringArray(R.array.year_months)[index]
 
+fun Context.getMonthNameHijrah(index: Int): String = resources.getStringArray(R.array.year_months_hijrah)[index]
+
 fun Context.getDayOfWeekName(index: Int): String = resources.getStringArray(R.array.days_of_week)[index]
