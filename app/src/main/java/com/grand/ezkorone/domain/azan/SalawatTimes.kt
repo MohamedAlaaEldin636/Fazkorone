@@ -163,7 +163,7 @@ data class SalawatTimes(
     ) {
 
         fun getNextTime(context: Context): String {
-            return "${getTypeName(context)} : $nextHour:$nextMinutes ${getIsAmOrPm(context)}"
+            return "${getTypeName(context)} : $nextHour:${nextMinutes.minLengthOrPrefixZeros(2)} ${getIsAmOrPm(context)}"
         }
 
         fun getRemainingTime(): String {
