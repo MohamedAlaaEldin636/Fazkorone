@@ -199,6 +199,8 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             Timber.i("sensor orientation ${event.values.toList()}")
 
             onOrientationChanged(event.values)
+
+            calcNorth(event.values[0])
         }
 
         /*val gravity = this.gravity ?: return
@@ -206,22 +208,25 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         val rotation = FloatArray(9)
         val inclination = FloatArray(9)
-        *//*SensorManager.getInclination()
-        SensorManager.getOrientation()
-        val d: Display
-        d.rotation
-        SensorManager.remapCoordinateSystem()
-        GeomagneticField()*//*
-        val success = SensorManager.getRotationMatrix(rotation, null*//*inclination*//*, gravity, geomagnetic)
+        val success = SensorManager.getRotationMatrix(rotation, inclination, gravity, geomagnetic)
         if (success) {
             val orientation = FloatArray(3)
             SensorManager.getOrientation(rotation, orientation)
 
-            //val azimuth = orientation[0]
-            onOrientationChanged(orientation)
+            //val azimuth = orientation[0] // Math.toDegrees kda  ?!
+            //onOrientationChanged(orientation)
+            calcNorth(orientation[0])
         }*/
     }
 
+    private fun calcNorth(azimut: Float) {
+        val degree = -azimut * 360f / (2f * 3.14159f)
+        Timber.w("azimut $azimut")
+        Timber.w("degree $degree")
+        binding?.likeCompassImageView?.rotation = -azimut
+    }
+
+    // todo likeCompassImageView
     private fun trial1(otherDegree: Float) {
         val myCurrentLocation = viewModel.myCurrentLocation ?: return
         val kaabaLocation = viewModel.kaabaLocation ?: return
