@@ -203,7 +203,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             calcNorth(event.values[0])
         }
 
-        /*val gravity = this.gravity ?: return
+        val gravity = this.gravity ?: return
         val geomagnetic = this.geomagnetic ?: return
 
         val rotation = FloatArray(9)
@@ -214,9 +214,12 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             SensorManager.getOrientation(rotation, orientation)
 
             //val azimuth = orientation[0] // Math.toDegrees kda  ?!
+            val azimuth1 = orientation[0]
+            val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat()
+            Timber.e("djosaijdsa $azimuth1 ==== $azimuth2")
             //onOrientationChanged(orientation)
-            calcNorth(orientation[0])
-        }*/
+            //calcNorth(orientation[0])
+        }
     }
 
     private fun calcNorth(azimut: Float) {
@@ -265,10 +268,13 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
     }
 
     private fun calcDegrees(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val lonDelta = lon2 - lon1
+        /*val lonDelta = lon2 - lon1
         val y = sin(lonDelta) * cos(lat2)
         val x = ( cos(lat1) * sin(lat2) ) - ( sin(lat1) * cos(lat2) * cos(lonDelta) )
-        return Math.toDegrees(atan2(y, x))
+        return Math.toDegrees(atan2(y, x))*/
+        val myCurrentLocation = viewModel.myCurrentLocation!!
+        val kaabaLocation = viewModel.kaabaLocation!!
+        return myCurrentLocation.bearingTo(kaabaLocation).toDouble()
     }
 
     private fun onOrientationChanged(orientation: FloatArray) {
@@ -317,9 +323,9 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         // todo
         if (true) {
-            Timber.e("direction $direction")
+            Timber.e("djosaijdsa direction $direction")
 
-            Timber.e("z axis -> ${Math.toDegrees(direction.toDouble())}\ndirections -> $direction")
+            Timber.e("djosaijdsa z axis -> ${Math.toDegrees(direction.toDouble())}\ndirections -> $direction")
             //trial1(orientation[0])
             binding?.likeNeedleImageView?.rotation = direction
 
