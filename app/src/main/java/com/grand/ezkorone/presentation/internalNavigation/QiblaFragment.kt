@@ -246,9 +246,9 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
             val new2 = if (new1 >= 360f) new1.minus(360f) else new1
 
-            val new3 = new2 - 80f // +3.7f
+            val new3 = new2 + 100f // +3.7f
 
-            new3
+            new2
             /*when {
                 new3 >= 360f -> new3.minus(360f)
                 new3 < 0f -> new3.plus(360f)

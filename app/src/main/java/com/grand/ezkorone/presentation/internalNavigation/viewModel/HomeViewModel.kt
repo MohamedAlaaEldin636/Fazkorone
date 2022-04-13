@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
     }
 
     val hijrahDate = currentDateTime.map {
-        /*val d = HijrahDate.from(it).format(
+        val d = HijrahDate.from(it).format(
             DateTimeFormatter.ofPattern("d", Locale("ar"))
         )
         val yyyy = HijrahDate.from(it).format(
@@ -59,10 +59,10 @@ class HomeViewModel @Inject constructor(
             DateTimeFormatter.ofPattern("M", Locale("ar"))
         )?.toInt() ?: 1
 
-        "$d ${myApp.getMonthNameHijrah(monthValue.dec())} $yyyy ${myApp.getString(R.string.h)}"*/
-        HijrahDate.from(it).format(
+        "$d ${myApp.getMonthNameHijrah(monthValue.dec())} $yyyy ${myApp.getString(R.string.h)}"
+        /*HijrahDate.from(it).format(
             DateTimeFormatter.ofPattern("d MMMM yyyy ${myApp.getString(R.string.h)}", Locale("ar"))
-        )
+        )*/
     }
 
     val retryAbleFlowAzanTimes = RetryAbleFlow(azanRepo::getAzanTimesTodayAndTomorrow)
