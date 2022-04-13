@@ -3,10 +3,7 @@ package com.grand.ezkorone.presentation.azkar
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.distinctUntilChanged
@@ -27,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter
 import es.voghdev.pdfviewpager.library.remote.DownloadFile
+import es.voghdev.pdfviewpager.library.subscaleview.SubsamplingScaleImageView
 import timber.log.Timber
 import java.lang.Exception
 
@@ -108,6 +106,57 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
                 remotePDFViewPager = RTLRemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
             }
         }
+    }
+
+    private fun onCLickkkk() {
+        // todo
+        /*
+        View getCurrentView(ViewPager viewPager) {
+        try {
+            final int currentItem = viewPager.getCurrentItem();
+            for (int i = 0; i < viewPager.getChildCount(); i++) {
+                final View child = viewPager.getChildAt(i);
+                final ViewPager.LayoutParams layoutParams = (ViewPager.LayoutParams) child.getLayoutParams();
+
+                Field f = layoutParams.getClass().getDeclaredField("position"); //NoSuchFieldException
+                f.setAccessible(true);
+                int position = (Integer) f.get(layoutParams); //IllegalAccessException
+
+                if (!layoutParams.isDecor && currentItem == position) {
+                    return child;
+                }
+            }
+        } catch (NoSuchFieldException e) {
+            Log.e(TAG, e.toString());
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, e.toString());
+        } catch (IllegalAccessException e) {
+            Log.e(TAG, e.toString());
+        }
+        return null;
+    }
+         */
+
+        /*
+        // Obtain MotionEvent object
+long downTime = SystemClock.uptimeMillis();
+long eventTime = SystemClock.uptimeMillis() + 100;
+float x = 0.0f;
+float y = 0.0f;
+// List of meta states found here:     developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
+int metaState = 0;
+MotionEvent motionEvent = MotionEvent.obtain(
+    downTime,
+    eventTime,
+    MotionEvent.ACTION_UP,
+    x,
+    y,
+    metaState
+);
+
+// Dispatch touch event to view
+view.dispatchTouchEvent(motionEvent);
+         */
     }
 
     override fun onSuccess(url: String?, destinationPath: String?) {

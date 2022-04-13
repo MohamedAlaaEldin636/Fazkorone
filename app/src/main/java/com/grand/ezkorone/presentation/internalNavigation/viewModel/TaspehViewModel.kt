@@ -62,6 +62,9 @@ class TaspehViewModel @Inject constructor(
         it?.name.orEmpty()
     }
 
+    /** current item id ,,,, count */
+    val cacheMap = mutableMapOf<Int, Int>()
+
     fun reset() {
         _count.value = 0
     }
@@ -79,18 +82,22 @@ class TaspehViewModel @Inject constructor(
     fun prevZekr(view: View) {
         view.findFragment<TaspehFragment>().pauseAudio()
 
-        reset()
+        cacheMap[currentIndex.value!!] = count.value!!.toInt()
 
         currentIndex.value = currentIndex.value!!.dec()
+
+        _count.value = cacheMap[currentIndex.value!!] ?: 0
     }
 
     fun nextZekr(view: View) {
         if (currentIndex.value!! < responseTaspeh.value?.list.orEmpty().lastIndex) {
             view.findFragment<TaspehFragment>().pauseAudio()
 
-            reset()
+            cacheMap[currentIndex.value!!] = count.value!!.toInt()
 
             currentIndex.value = currentIndex.value!!.inc()
+
+            _count.value = cacheMap[currentIndex.value!!] ?: 0
         }else {
             view.findFragment<TaspehFragment>().executeOnGlobalLoadingAndAutoHandleRetryCancellable(
                 afterShowingLoading = {

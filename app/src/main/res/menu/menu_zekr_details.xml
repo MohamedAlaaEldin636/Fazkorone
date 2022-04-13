@@ -14,7 +14,7 @@
     <item
         android:id="@+id/action_play"
         android:title="@string/play"
-        android:icon="@drawable/ic_play_in_circle"
+        android:icon="@drawable/ic_big_play_2"
         app:showAsAction="always"/>
 
 </menu>

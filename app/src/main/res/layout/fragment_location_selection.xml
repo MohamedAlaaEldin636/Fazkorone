@@ -167,9 +167,9 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@id/skipMaterialButton"/>
 
-        <!--<com.google.android.material.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/skipMaterialButton"
 
             android:visibility="@{viewModel.skipAble}"
@@ -194,7 +194,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />-->
+            app:layout_constraintBottom_toBottomOf="parent" />
         <!--!viewModel.skipAble-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

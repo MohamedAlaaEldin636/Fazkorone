@@ -72,7 +72,8 @@ class SalahViewModel @Inject constructor(
     val currentDateTime = MutableLiveData(LocalDateTime.now())
 
     val day = currentDateTime.map {
-        myApp.getDayOfWeekName(it.dayOfWeek.value.dec())
+        //myApp.getDayOfWeekName(it.dayOfWeek.value.dec())
+        it.format(DateTimeFormatter.ofPattern("eeee", Locale("ar")))
     }
 
     // 27 / 12 / 2021

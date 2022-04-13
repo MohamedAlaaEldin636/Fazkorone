@@ -134,13 +134,8 @@ class LocationSelectionViewModel @Inject constructor(
         }
     }
 
-    /*fun skip(view: View) {
-        val fragment = view.findFragment<LocationSelectionFragment>()
-
-        val navController = fragment.findNavController()
-
-        // to-do make a special deep link navigation isa.
-        navController.navigateDeepLinkWithOptions(TO-DO(), TO-DO())
-    }*/
+    fun skip(view: View) {
+        onSelectLocationClick(view)
+    }
 
 }

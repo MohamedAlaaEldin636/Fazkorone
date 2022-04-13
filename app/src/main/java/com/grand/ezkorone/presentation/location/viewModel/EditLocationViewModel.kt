@@ -20,6 +20,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -63,6 +64,8 @@ class EditLocationViewModel @Inject constructor(
     }
 
     fun onSelectLocationClick(view: View, latitude: String, longitude: String, possibleAddress: String? = null) {
+        Timber.e("special location -> $latitude ==== $longitude")
+
         val fragment = view.findFragment<EditLocationFragment>()
 
         fragment.activityViewModel.globalLoading.value = true
