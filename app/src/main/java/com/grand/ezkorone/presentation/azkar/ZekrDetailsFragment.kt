@@ -89,6 +89,7 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
             playerSingle?.pause()
             viewModel.showAudioLoading.value = false
             viewModel.showAudioPlayNotPause.value = true
+            currentAudioUrl = ""
         }
 
         handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAblFlowResponseZekrDetails) {
