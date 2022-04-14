@@ -216,7 +216,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         }else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
             Timber.i("sensor orientation ${event.values.toList()}")
 
-            onOrientationChanged(event.values)
+            //onOrientationChanged(event.values)
 
             calcNorth(event.values[0])
         }
@@ -233,10 +233,10 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
             //val azimuth = orientation[0] // Math.toDegrees kda  ?!
             val azimuth1 = orientation[0]
-            val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat()
+            val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat() // Correct 135 brdo todo oooooooooooooooo
             Timber.e("djosaijdsa $azimuth1 ==== $azimuth2")
             //onOrientationChanged(orientation)
-            //calcNorth(orientation[0])
+            //calcNorth(azimuth2) // btr3e4 awi fa mate3melsh change unless 4 degres or 3 kda ya3ne isa.
         }
     }
 
@@ -251,6 +251,15 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         binding?.likeCompassImageView?.rotation = finalDegrees
 
         viewModel.currentDegrees.value = finalDegrees.roundToInt()
+
+        val newDegrees = (finalDegrees.roundToInt() + 128).toFloat()
+
+        binding?.likeNeedleImageView?.rotation = newDegrees
+
+        val showOn = newDegrees in 355f..360f || newDegrees in 0f..5f
+        binding?.indicatorImageView?.setImageResource(
+            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
+        )
     }
 
     // todo likeCompassImageView

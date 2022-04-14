@@ -28,7 +28,7 @@ class QiblaViewModel @Inject constructor(
     val featureIsSupported = MutableLiveData(true)
 
     val currentDegrees = MutableLiveData(0)
-    val currentDegreesText = currentDegrees.map { it.toString() }
+    val currentDegreesText = currentDegrees.map { "$it°" }
     val showAccuracyCalibration = MutableLiveData(false)
 
     fun showNavDrawer(view: View) {

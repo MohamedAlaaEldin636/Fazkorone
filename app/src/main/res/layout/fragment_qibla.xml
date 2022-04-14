@@ -159,7 +159,8 @@
 
                 style="@style/TextTajawalBold14"
                 android:gravity="center"
-                tools:text="160°"
+                tools:text="-160°"
+                android:textDirection="ltr"
                 android:text="@{viewModel.currentDegreesText}"
                 android:textIsSelectable="false"
 
@@ -237,11 +238,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
+            <!-- android:textColor="#17A16E"
+            dr_qibla_title-->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
-                style="@style/TextTajawalBold18"
+                style="@style/TextTajawalRegular14"
                 android:gravity="center"
                 android:text="@string/compass_accuracy_hint"
                 android:padding="16dp"
