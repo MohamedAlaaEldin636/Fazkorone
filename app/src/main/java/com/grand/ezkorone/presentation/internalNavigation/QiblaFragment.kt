@@ -256,7 +256,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         binding?.likeNeedleImageView?.rotation = newDegrees
 
-        val showOn = newDegrees in 355f..360f || newDegrees in 0f..5f
+        val showOn = newDegrees in 350f..360f || newDegrees in 0f..10f
         binding?.indicatorImageView?.setImageResource(
             if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
         )
