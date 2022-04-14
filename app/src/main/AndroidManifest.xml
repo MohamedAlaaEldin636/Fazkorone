@@ -96,6 +96,12 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name="com.grand.ezkorone.services.MediaForegroundService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback" />
+
     </application>
 
 </manifest>

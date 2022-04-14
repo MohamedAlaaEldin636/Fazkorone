@@ -20,11 +20,11 @@ import timber.log.Timber
 object NotificationUtils {
 
     private const val ALARMS_CHANNEL_ID = "ALARMS_CHANNEL_ID"
-    private const val SALAWAT_CHANNEL_ID = "SALAWAT_CHANNEL_ID"
+    const val SALAWAT_CHANNEL_ID = "SALAWAT_CHANNEL_ID"
     private const val NOTIFICATIONS_CHANNEL_ID = "NOTIFICATIONS_CHANNEL_ID"
     private const val ALARMS_NOTIFICATION_ID = 47
     private const val NOTIFICATIONS_NOTIFICATION_ID = 48
-    private const val SALAWAT_NOTIFICATION_ID = 49
+    const val SALAWAT_NOTIFICATION_ID = 49
 
     fun showNotificationToLaunchMainActivityForAlarms(
         appContext: Context,

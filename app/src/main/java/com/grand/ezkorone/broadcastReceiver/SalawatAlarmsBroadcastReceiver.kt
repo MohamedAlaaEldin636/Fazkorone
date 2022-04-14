@@ -25,6 +25,7 @@ import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import com.grand.ezkorone.R
+import com.grand.ezkorone.services.MediaForegroundService
 
 @AndroidEntryPoint
 class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
@@ -68,6 +69,10 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
         }
 
         fun scheduleWorkManagerOnly(context: Context, triggerDateTime: LocalDateTime, salahFardType: SalahFardType, idOfDownloadManager: Long?) {
+            Timber.e("in scheduleWorkManagerOnly -> date ${triggerDateTime.dayOfMonth} / ${triggerDateTime.monthValue} / ${triggerDateTime.year}")
+            Timber.e("in scheduleWorkManagerOnly -> time ${triggerDateTime.hour} : ${triggerDateTime.minute}")
+            Timber.e("in scheduleWorkManagerOnly -> idOfDownloadManager $idOfDownloadManager")
+
             val action = salahFardType.name
 
             val initialDelayAtTime = triggerDateTime.minusDays(1)
@@ -221,10 +226,15 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
 
         Timber.e("showNotificationToLaunchMainActivityForSalawat 0000 idOfDownloadManager -> $idOfDownloadManager")
 
-        NotificationUtils.showNotificationToLaunchMainActivityForSalawat(
+        MediaForegroundService.launch(
+            context.applicationContext,
+            idOfDownloadManager,
+            notificationBody
+        )
+        /*NotificationUtils.showNotificationToLaunchMainActivityForSalawat(
             context.applicationContext,
             notificationBody,
             idOfDownloadManager
-        )
+        )*/
     }
 }
