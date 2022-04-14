@@ -198,14 +198,18 @@ class SalawatAlarmsBroadcastReceiver : BroadcastReceiver() {
 
         val triggerDateTime = triggerTimeInMillis.toLocalDateTimeUTCOffset()
 
-        val idOfDownloadManager = if (intent.hasExtra(KEY_ID_OF_DOWNLOAD_MANAGER)) {
+        val salahFardType = SalahFardType.valueOf(name)
+
+        val temp = runBlocking {
+            prefsSalah.getSalawatNotificationDownloadManagerId(salahFardType).first()
+        }
+
+        val idOfDownloadManager = temp ?: (if (intent.hasExtra(KEY_ID_OF_DOWNLOAD_MANAGER)) {
             intent.getLongExtra(KEY_ID_OF_DOWNLOAD_MANAGER, 0)
         }else {
             null
-        }
+        })
         scheduleAlarmManagerOnly(context, triggerDateTime.plusDays(1), name, idOfDownloadManager)
-
-        val salahFardType = SalahFardType.valueOf(name)
 
         val notificationBody = when (salahFardType) {
             SalahFardType.FAGR -> context.getString(R.string.fagr)

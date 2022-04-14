@@ -130,4 +130,5 @@
     <string name="salah">الصلاة</string>
     <string name="sent_successfully">تم الارسال بنجاح</string>
     <string name="auto_selection">تحديد تلقائي</string>
+    <string name="compass_accuracy_hint">يرجى تدوير هاتفك وجعل 8 فى الهواء من اجل الحصول على توجيهات دقيقة للقبلة</string>
 </resources>

@@ -28,10 +28,7 @@ import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.internalNavigation.viewModel.QiblaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import kotlin.math.atan2
-import kotlin.math.cos
-import kotlin.math.round
-import kotlin.math.sin
+import kotlin.math.*
 
 // todo https://stackoverflow.com/a/44182427
 @AndroidEntryPoint
@@ -185,7 +182,28 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         super.onPause()
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        //SensorManager.SENSOR_STATUS_*
+        //SensorManager.SENSOR_STATUS_ACCURACY_HIGH
+        /*
+        يرجى تدوير هاتفك وجعل 8 فى الهواء من اجل الحصول على توجيهات دقيقة للقبلة
+         */
+        if (sensor?.type == Sensor.TYPE_ORIENTATION) {
+            viewModel.showAccuracyCalibration.value = accuracy == SensorManager.SENSOR_STATUS_ACCURACY_LOW
+                || accuracy == SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM
+
+            val textAccuracy = when (accuracy) {
+                SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> "High"
+                SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> "Medium"
+                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> "Low"
+                else -> "Unknown"
+            }
+
+            Timber.e("AAAAAAAAAA -> accuracy $textAccuracy")
+        }/*else {
+            viewModel.showAccuracyCalibration.value = false
+        }*/
+    }
 
     private var gravity: FloatArray? = null
     private var geomagnetic: FloatArray? = null
@@ -222,11 +240,17 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         }
     }
 
+    /*todo e3mel el 2ebla mn el north w zawed text w 2ole kam degree kda isa.*/
     private fun calcNorth(azimut: Float) {
         val degree = -azimut * 360f / (2f * 3.14159f)
         Timber.w("azimut $azimut")
         Timber.w("degree $degree")
-        binding?.likeCompassImageView?.rotation = -azimut
+
+        val finalDegrees = -azimut
+
+        binding?.likeCompassImageView?.rotation = finalDegrees
+
+        viewModel.currentDegrees.value = finalDegrees.roundToInt()
     }
 
     // todo likeCompassImageView

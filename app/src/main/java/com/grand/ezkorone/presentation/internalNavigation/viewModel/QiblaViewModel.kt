@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.maps.model.LatLng
 import com.grand.ezkorone.core.customTypes.LocationData
+import com.grand.ezkorone.core.customTypes.map
 import com.grand.ezkorone.core.extensions.findNavControllerOfProject
 import com.grand.ezkorone.core.extensions.getAddressFromLatitudeAndLongitude
 import com.grand.ezkorone.core.extensions.openDrawerLayout
@@ -25,6 +26,10 @@ class QiblaViewModel @Inject constructor(
     var kaabaLocation: Location? = null
 
     val featureIsSupported = MutableLiveData(true)
+
+    val currentDegrees = MutableLiveData(0)
+    val currentDegreesText = currentDegrees.map { it.toString() }
+    val showAccuracyCalibration = MutableLiveData(false)
 
     fun showNavDrawer(view: View) {
         view.openDrawerLayout()
