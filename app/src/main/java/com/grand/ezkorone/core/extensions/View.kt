@@ -14,6 +14,7 @@ fun <T> View.executeOnGlobalLoading(afterShowingLoading: suspend () -> T, afterH
     fragment.executeOnGlobalLoading(afterShowingLoading, afterHidingLoading)
 }
 
+// todo see if log out then perform it like handle retry able isa.
 fun <T> MABaseFragment<*>.executeOnGlobalLoading(afterShowingLoading: suspend () -> T, afterHidingLoading: (T) -> Unit) {
     lifecycleScope.launch {
         activityViewModel.globalLoading.value = true
