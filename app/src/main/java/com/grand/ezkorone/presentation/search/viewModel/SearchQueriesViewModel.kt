@@ -1,5 +1,6 @@
 package com.grand.ezkorone.presentation.search.viewModel
 
+import android.text.Editable
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.lifecycle.*
@@ -20,33 +21,19 @@ class SearchQueriesViewModel @Inject constructor(
     searchRepo: RepositorySearch
 ) : ViewModel() {
 
-    private val search = MutableStateFlow("")
+    val query = MutableLiveData("")
+
+    val search = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val data = search.flatMapLatest {
-        if (it.isEmpty()) {
-            flowOf(PagingData.empty())
-        }else {
-            searchRepo.search(it)
-        }
+        searchRepo.search(it)
     }
 
     val adapter = RVSearchQueries()
 
-    fun onSearchTextSubmit() = TextView.OnEditorActionListener { textView, actionId, _ ->
-        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            search.value = textView.text?.toString().orEmpty()
-
-            return@OnEditorActionListener true
-        }
-
-        false
-    }
-
-    fun searchAllData(editText: TextInputEditText) {
-        editText.setText("")
-
-        search.value = ""
+    fun searchAllData() {
+        query.value = ""
     }
 
 }

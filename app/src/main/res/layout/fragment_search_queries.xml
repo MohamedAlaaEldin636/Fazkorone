@@ -35,7 +35,7 @@
             app:startIconTint="#17a16e"
 
             app:endIconMode="clear_text"
-            textInputLayout_setEndIconOnClickListener="@{v -> viewModel.searchAllData(textInputEditText)}"
+            textInputLayout_setEndIconOnClickListener="@{() -> viewModel.searchAllData()}"
 
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
@@ -53,8 +53,7 @@
                 android:background="@drawable/dr_white_round"
 
                 style="@style/TextTajawalMedium12"
-
-                editText_setOnEditorActionListenerBA="@{viewModel.onSearchTextSubmit()}"
+                android:text="@={viewModel.query}"
 
                 android:inputType="text"
                 android:imeOptions="actionSearch|flagNoFullscreen"/>

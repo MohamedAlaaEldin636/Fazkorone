@@ -22,9 +22,9 @@ sealed class ViewHolderFooterLoadState(
 		
 		fun getInstance(loadState: LoadState, parent: ViewGroup, errorRetry: () -> Unit): ViewHolderFooterLoadState {
 			return when (loadState) {
-				is LoadState.NotLoading -> NotLoading(parent)
-				LoadState.Loading -> Loading(parent)
 				is LoadState.Error -> Error(parent, errorRetry)
+				is LoadState.Loading -> Loading(parent)
+				is LoadState.NotLoading -> NotLoading(parent)
 			}
 		}
 		

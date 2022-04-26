@@ -14,6 +14,8 @@ import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.base.adapters.LSAdapterLoadingErrorEmpty
 import com.grand.ezkorone.presentation.search.viewModel.SearchQueriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -21,6 +23,8 @@ import kotlinx.coroutines.launch
 class SearchQueriesFragment : MABaseFragment<FragmentSearchQueriesBinding>() {
 
     private val viewModel by viewModels<SearchQueriesViewModel>()
+
+    private var job: Job? = null
 
     override fun getLayoutId(): Int = R.layout.fragment_search_queries
 
@@ -42,6 +46,15 @@ class SearchQueriesFragment : MABaseFragment<FragmentSearchQueriesBinding>() {
                 viewModel.data.collectLatest {
                     viewModel.adapter.submitData(it)
                 }
+            }
+        }
+
+        viewModel.query.observe(viewLifecycleOwner) {
+            job?.cancel()
+            job = lifecycleScope.launch {
+                delay(100)
+
+                viewModel.search.value = it.orEmpty()
             }
         }
     }
