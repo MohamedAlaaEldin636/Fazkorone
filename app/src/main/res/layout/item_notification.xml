@@ -58,14 +58,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            tools:text="عليك بقراءة سورة الكهف يوم الجمعة"
+            tools:text="عليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعةعليك بقراءة سورة الكهف يوم الجمعة"
             style="@style/TextTajawalMedium13"
 
+            android:layout_marginTop="4dp"
             android:layout_marginStart="16dp"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/imageView"
-            app:layout_constraintBottom_toBottomOf="@id/imageView"
+            app:layout_constraintTop_toBottomOf="@id/dateAndTimeTextView"
             app:layout_constraintStart_toEndOf="@id/imageView"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
