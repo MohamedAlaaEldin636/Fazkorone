@@ -250,9 +250,10 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         binding?.likeCompassImageView?.rotation = finalDegrees
 
+        // -145
         viewModel.currentDegrees.value = finalDegrees.roundToInt()
 
-        val newDegrees = (finalDegrees.roundToInt() + 128).toFloat()
+        val newDegrees = (finalDegrees.roundToInt() + 145).toFloat()
 
         binding?.likeNeedleImageView?.rotation = newDegrees
 
