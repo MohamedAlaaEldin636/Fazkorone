@@ -153,6 +153,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <!--
+            android:text="@{viewModel.currentDegreesText}"
+            -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +164,6 @@
                 android:gravity="center"
                 tools:text="-160°"
                 android:textDirection="ltr"
-                android:text="@{viewModel.currentDegreesText}"
                 android:textIsSelectable="false"
 
                 app:layout_constraintEnd_toStartOf="@id/indicatorImageView"
