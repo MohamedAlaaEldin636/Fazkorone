@@ -61,7 +61,7 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     /** Zoom levels https://developers.google.com/maps/documentation/android-sdk/views#zoom */
-    private val zoom get() = min(viewModel.googleMap?.maxZoomLevel ?: 5f, 15f)
+    val zoom get() = min(viewModel.googleMap?.maxZoomLevel ?: 5f, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

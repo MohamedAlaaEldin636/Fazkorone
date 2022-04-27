@@ -16,8 +16,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.gson.Gson
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationData
@@ -75,9 +77,20 @@ class LocationSelectionViewModel @Inject constructor(
 
         autocompleteSupportFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
+                Timber.e("dosdkodks Places API selected place ${place.latLng}")
+
                 resultOfPlaceFragment.postValue(place.latLng)
 
                 showMapNotSearchResults.postValue(true)
+
+                fragment.binding?.root?.post {
+                    googleMap?.animateCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            place.latLng ?: return@post,
+                            fragment.zoom
+                        )
+                    )
+                }
             }
 
             override fun onError(status: Status) {
