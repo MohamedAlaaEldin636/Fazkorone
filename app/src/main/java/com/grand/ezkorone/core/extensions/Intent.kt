@@ -45,6 +45,12 @@ fun Context.launchWhatsApp(phoneNumber: String) {
 	}
 }
 
+fun Context.launchShareTextAndSayFromApp(title: String, body: String) {
+	launchShareText(
+		"$title\n$body\n${getString(R.string.done_by_app_name)}\n${getAppWebLinkOnGooglePay()}"
+	)
+}
+
 fun Context.launchShareText(text: String) {
 	val intent = Intent(Intent.ACTION_SEND).also {
 		it.type = "text/plain"

@@ -104,7 +104,7 @@ class LocationSelectionViewModel @Inject constructor(
     }
 
     fun moveToCurrentLocation(view: View) {
-        view.findFragment<LocationSelectionFragment>().checkIfPermissionsGrantedToMoveOrRequestThem()
+        view.findFragment<LocationSelectionFragment>().moveToCurrentLocation()
     }
 
     fun onSelectLocationClick(view: View) {
@@ -126,9 +126,9 @@ class LocationSelectionViewModel @Inject constructor(
                 address
             )
 
-            fragment.activityViewModel.globalLoading.value = false
-
             delay(300)
+
+            fragment.activityViewModel.globalLoading.value = false
 
             val navController = fragment.findNavController()
 

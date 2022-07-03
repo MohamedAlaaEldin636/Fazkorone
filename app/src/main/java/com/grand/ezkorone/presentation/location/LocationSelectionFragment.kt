@@ -28,6 +28,7 @@ import com.grand.ezkorone.presentation.location.viewModel.LocationSelectionViewM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 import com.grand.ezkorone.R
+import com.grand.ezkorone.core.customTypes.LocationHandler
 import com.grand.ezkorone.core.extensions.showErrorToast
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ import timber.log.Timber
 
 @AndroidEntryPoint
 class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBinding>(),
-    OnMapReadyCallback {
+    OnMapReadyCallback, LocationHandler.Listener {
 
     companion object {
         const val KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON = "KEY_FRAGMENT_RESULT_LOCATION_DATA_AS_JSON"
@@ -43,30 +44,20 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
 
     private val viewModel by viewModels<LocationSelectionViewModel>()
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-
-    @SuppressLint("MissingPermission")
-    private val permissionLocationRequest = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        when {
-            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-                || permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true -> {
-                moveToCurrentLocation()
-            }
-            else -> {
-                requireContext().showNormalToast(getString(R.string.you_didn_t_accept_permission))
-            }
-        }
-    }
-
     /** Zoom levels https://developers.google.com/maps/documentation/android-sdk/views#zoom */
     val zoom get() = min(viewModel.googleMap?.maxZoomLevel ?: 5f, 15f)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private lateinit var locationHandler: LocationHandler
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    override fun onCreate(savedInstanceState: Bundle?) {
+        locationHandler = LocationHandler(
+            this,
+            lifecycle,
+            requireContext(),
+            this
+        )
+
+        super.onCreate(savedInstanceState)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_location_selection
@@ -83,12 +74,12 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        Timber.e("onMapReady viewModel.resultOfPlaceFragment.value ${viewModel.resultOfPlaceFragment.value}")
-
         viewModel.googleMap = googleMap
 
         if (viewModel.arg.latitude == null || viewModel.arg.longitude == null) {
-            checkIfPermissionsGrantedToMoveOrRequestThem()
+            if (!viewModel.arg.onBoardLocationSelection) {
+                moveToCurrentLocation()
+            }
         }
 
         val location = LatLng(
@@ -104,68 +95,20 @@ class LocationSelectionFragment : MABaseFragment<FragmentLocationSelectionBindin
         )
     }
 
-    @SuppressLint("MissingPermission")
-    fun checkIfPermissionsGrantedToMoveOrRequestThem() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            moveToCurrentLocation()
-        }else {
-            permissionLocationRequest.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                )
+    fun moveToCurrentLocation() {
+        viewModel.myCurrentLocation?.also { myCurrentLocation ->
+            viewModel.googleMap?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(myCurrentLocation, zoom)
             )
-        }
+        } ?: locationHandler.requestCurrentLocation(true)
     }
 
-    @RequiresPermission(anyOf = ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"])
-    private fun moveToCurrentLocation() {
-        Timber.e("moveToCurrentLocation -> viewModel.myCurrentLocation ${viewModel.myCurrentLocation}")
+    override fun onCurrentLocationResultSuccess(location: Location) {
+        val latLng = LatLng(location.latitude, location.longitude)
 
-        viewModel.myCurrentLocation?.also { myCurrentLocation ->
-            viewModel.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(myCurrentLocation, zoom))
+        viewModel.myCurrentLocation = latLng
 
-            return
-        }
-
-        activityViewModel.globalLoading.value = true
-
-        val cancellationToken = object : CancellationToken() {
-            override fun onCanceledRequested(listener: OnTokenCanceledListener): CancellationToken = this
-
-            override fun isCancellationRequested(): Boolean = false
-        }
-
-        fusedLocationClient.getCurrentLocation(
-            LocationRequest.PRIORITY_HIGH_ACCURACY,
-            cancellationToken
-        ).addOnSuccessListener { location: Location? ->
-            Timber.e("OnSuccessListener current location")
-
-            if (location == null) {
-                activityViewModel.globalLoading.postValue(false)
-
-                requireContext().showErrorToast(getString(R.string.check_location_turned_on))
-
-                return@addOnSuccessListener
-            }
-
-            val latLng = LatLng(location.latitude, location.longitude)
-
-            viewModel.myCurrentLocation = latLng
-
-            viewModel.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
-
-            activityViewModel.globalLoading.postValue(false)
-
-            // to-do Might be null in case location settings not turned on, or other reasons check links
-            // please turn on location in settings + use gecoder https://developers.google.com/maps/documentation/geocoding/overview
-            // for address which requires google api key
-            // for searching like hot information search even more
-            // for now leave this as user clicked skip for example.
-            // search requires same google_map api key from Places as it launches new activity
-        }
+        viewModel.googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
     }
 
 }

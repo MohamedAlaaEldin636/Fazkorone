@@ -26,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : MABaseActivity<ActivityMainBinding>() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    val viewModel by viewModels<MainViewModel>()
 
     private val navViewViewModel by viewModels<DrawerHeaderMainViewModel>()
 

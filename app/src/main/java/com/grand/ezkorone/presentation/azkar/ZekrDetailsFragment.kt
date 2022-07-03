@@ -237,7 +237,7 @@ view.dispatchTouchEvent(motionEvent);
                 requireActivity().invalidateOptionsMenu()
             }
             R.id.action_share -> viewModel.responseZekrDetail.value?.also { response ->
-                context?.launchShareText(response.data[0].pdfUrl)
+                context?.launchShareTextAndSayFromApp(args.toolbarTitle, response.data[0].pdfUrl)
             }
         }
 

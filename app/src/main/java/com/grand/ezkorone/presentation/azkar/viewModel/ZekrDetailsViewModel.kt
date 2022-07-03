@@ -17,7 +17,7 @@ import com.grand.ezkorone.core.customTypes.switchMapMultiple
 import com.grand.ezkorone.core.customTypes.switchMapMultiple2
 import com.grand.ezkorone.core.extensions.checkSelfPermissionGranted
 import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
-import com.grand.ezkorone.core.extensions.launchShareText
+import com.grand.ezkorone.core.extensions.launchShareTextAndSayFromApp
 import com.grand.ezkorone.core.extensions.showSuccessToast
 import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
 import com.grand.ezkorone.data.home.repository.RepositoryHome
@@ -162,7 +162,7 @@ class ZekrDetailsViewModel @Inject constructor(
             response.data[currentIndex.value!!]
         }
 
-        view.context.launchShareText(item.pdfUrl)
+        view.context.launchShareTextAndSayFromApp(args.toolbarTitle, item.pdfUrl)
     }
 
     fun incrementProgress() {

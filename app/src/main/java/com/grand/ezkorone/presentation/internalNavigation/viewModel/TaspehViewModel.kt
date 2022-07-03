@@ -187,7 +187,7 @@ class TaspehViewModel @Inject constructor(
         // to-do el uri bta3 el sheikh f el notifications for alarms isa.
 
         // OS said so
-        view.context.launchShareText(item.audioUrl)
+        view.context.launchShareTextAndSayFromApp(item.name, item.audioUrl)
     }
 
     fun changeCurrentItem(fragment: TaspehFragment, itemTaspeh: ItemTaspeh) {

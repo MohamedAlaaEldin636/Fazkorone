@@ -1,4 +1,10 @@
 <resources>
+    <string name="done_by_app_name">تم عن طريق تطبيق فاذكرونى اذكركم</string>
+    <string name="allow_location_permission">السماح بالاذن</string>
+    <string name="this_app_need_allow_location">للحصول على هذه الخاصية يجب الموافقة على الاذن</string>
+    <string name="change_permission_in_settings_of_device">Change permission from device\'s Settings</string>
+    <string name="ok">موافق</string>
+    <string name="no_app_can_handle_this_action">لا يوجد تطبيق يمكنه التعامل مع هذا الاجراء</string>
     <string name="moharam">محرم</string>
     <string name="safar">صفر</string>
     <string name="rabee_awal">ربيع أول</string>
