@@ -82,8 +82,8 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         viewModel.kaabaLocation = Location(location).also {
             it.latitude = 21.422487
             it.longitude = 39.826206
-            //it.bearing = 0.0f todo
-            //it.altitude = 277.0
+            it.bearing = 0.0f
+            it.altitude = 277.0
         }
 
         binding?.root?.also {
@@ -158,12 +158,30 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             gravity = event.values
         }else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
             geomagnetic = event.values
+
+            // todo
+            /*val kk = viewModel.myCurrentLocation?.bearingTo(
+                viewModel.kaabaLocation ?: return
+            )*/
+
+            /*
+             let north = -1 * newHeading.magneticHeading * Double.pi / 180.0
+
+            let direction = (locationBearing ?? 0) * Double.pi / 180.0 + north
+             */
+            //val north =;
+
+            Timber.e("kkkkkkkkk ${geomagnetic!!.toList()}")
         }else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
             Timber.i("sensor orientation ${event.values.toList()}")
 
             //onOrientationChanged(event.values)
 
             calcNorth(event.values[0])
+        }
+
+        if (true) {
+            return
         }
 
         val gravity = this.gravity ?: return
@@ -195,10 +213,10 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         binding?.likeCompassImageView?.rotation = finalDegrees
 
-        // -145
+        // -145 ... -119
         viewModel.currentDegrees.value = finalDegrees.roundToInt()
 
-        val newDegrees = (finalDegrees.roundToInt() + 145).toFloat()
+        val newDegrees = (finalDegrees.roundToInt() + 135).toFloat()
 
         binding?.likeNeedleImageView?.rotation = newDegrees
 

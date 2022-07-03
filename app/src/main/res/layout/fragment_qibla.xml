@@ -154,8 +154,8 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <!--
-            android:text="@{viewModel.currentDegreesText}"
-            -->
+                          android:text="@{viewModel.currentDegreesText}"
+  -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
