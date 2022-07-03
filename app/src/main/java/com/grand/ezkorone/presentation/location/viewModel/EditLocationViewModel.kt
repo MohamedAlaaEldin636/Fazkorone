@@ -48,7 +48,7 @@ class EditLocationViewModel @Inject constructor(
     val showEmptyView = MutableLiveData(false)
 
     fun autoDetectLocation(view: View) {
-        view.findFragment<EditLocationFragment>().checkIfPermissionsGrantedToMoveOrRequestThem()
+        view.findFragment<EditLocationFragment>().setLocationToCurrentLocation()
     }
 
     fun toSearchPlace(view: View) {
