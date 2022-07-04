@@ -143,7 +143,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> "Low"
                 else -> "Unknown"
             }
-            
+
 
             Timber.e("AAAAAAAAAA -> accuracy $textAccuracy")
         }/*else {
