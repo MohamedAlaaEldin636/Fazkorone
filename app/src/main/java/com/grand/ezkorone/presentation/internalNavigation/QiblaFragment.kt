@@ -122,47 +122,13 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
     private var gravity: FloatArray? = null
     private var geomagnetic: FloatArray? = null
-    //private var rotateAnimation: RotateAnimation? = null
-
-    /*var job: Job? = null
-    fun View.performAnimation(
-        newRotation: Float,
-        durationInMillis: Long = 100_000,
-        updateEveryInMillis: Long = 17_000
-    ) {
-        job?.cancel()
-        job = lifecycleScope.launch {
-            var dur = durationInMillis
-            val percent = ((updateEveryInMillis.toDouble() / durationInMillis.toDouble()) * 100.0).toFloat()
-            val amount = ((rotation - newRotation).absoluteValue) * percent
-            while (true) {
-                if (dur <= updateEveryInMillis) {
-                    rotation = newRotation
-                    break
-                }
-                dur -= updateEveryInMillis
-                if (rotation < newRotation) {
-                    rotation += amount
-                }else {
-                    rotation -= amount
-                }
-                delay(updateEveryInMillis)
-            }
-        }
-    }*/
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             gravity = event.values
         }else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
             geomagnetic = event.values
-        }/*else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
-            Timber.i("sensor orientation ${event.values.toList()}")
-
-            //onOrientationChanged(event.values)
-
-            calcNorth(event.values[0])
-        }*/
+        }
 
         val gravity = this.gravity ?: return
         val geomagnetic = this.geomagnetic ?: return
@@ -207,7 +173,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             Timber.e("direction $direction")
 
             val range = direction.toFloat().let {
-                it.minus(4)..it.plus(4)
+                it.minus(5)..it.plus(5)
             }
 
             Timber.e("range ${binding?.likeNeedleImageView?.rotation.orZero()} $range")
@@ -223,7 +189,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
                 binding?.likeCompassImageView?.rotation = direction.toFloat() - 137
 
-                val showOn = direction.toFloat() in 350f..360f || direction.toFloat() in 0f..10f
+                val showOn = direction.toFloat() in 352.5f..360f || direction.toFloat() in 0f..7.5f
                 binding?.indicatorImageView?.setImageResource(
                     if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
                 )
