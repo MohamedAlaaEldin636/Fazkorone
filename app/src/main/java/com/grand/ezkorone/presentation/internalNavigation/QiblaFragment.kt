@@ -1,39 +1,24 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
-import android.R.attr
 import android.hardware.*
 import android.location.Location
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
 import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationHandler
+import com.grand.ezkorone.core.extensions.orZero
 import com.grand.ezkorone.databinding.FragmentQiblaBinding
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.internalNavigation.viewModel.QiblaViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
-import kotlin.math.*
-import kotlin.time.seconds
 
-
-// todo https://stackoverflow.com/a/44182427
 @AndroidEntryPoint
 class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListener, LocationHandler.Listener {
 
     private val viewModel by viewModels<QiblaViewModel>()
-
-    private var currentDegree = 0f
-    private var currentDegreeNeedle = 0f
 
     private var sensorManager: SensorManager? = null
 
@@ -190,7 +175,7 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         if (success) {
             val orientation = FloatArray(3)
             SensorManager.getOrientation(rotation, orientation)
-            SensorManager.getInclination(inclination)
+            //SensorManager.getInclination(inclination)
 
             val azimuthInRadians = orientation[0]
             var azimuthInDegree = Math.toDegrees(azimuthInRadians.toDouble())
@@ -221,213 +206,29 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             }
             Timber.e("direction $direction")
 
-            binding?.likeNeedleImageView?.rotation = direction.toFloat()
-            /*binding?.likeNeedleImageView?.performAnimation(
-                direction.toFloat(),
-            )*/
-            /*binding?.likeNeedleImageView?.apply {
-                clearAnimation()
+            val range = direction.toFloat().let {
+                it.minus(4)..it.plus(4)
+            }
 
-                animate()
-                    .rotation(direction.toFloat())
-                    .setDuration(200)
-                    .setInterpolator(LinearInterpolator())
-                    .start()
-            }*/
+            Timber.e("range ${binding?.likeNeedleImageView?.rotation.orZero()} $range")
+            val firstTime = binding?.likeNeedleImageView?.rotation == binding?.likeCompassImageView?.rotation
+            if (
+                firstTime ||
+                !(binding?.likeNeedleImageView?.rotation.orZero() in range ||
+                binding?.likeNeedleImageView?.rotation.orZero().plus(360) in range)
+            ) {
+                Timber.e("diffff ${binding?.likeNeedleImageView?.rotation.orZero() - direction.toFloat()}")
 
-            /*Timber.e("rotations ${binding?.likeNeedleImageView?.rotation ?: 0f}\n${direction.toFloat()}")
-            rotateAnimation?.cancel()
-            rotateAnimation = RotateAnimation(
-                binding?.likeNeedleImageView?.rotation ?: 0f,
-                direction.toFloat(),
-                Animation.RELATIVE_TO_SELF,
-                0.5f,
-                Animation.RELATIVE_TO_SELF,
-                0.5f
-            )
-            rotateAnimation?.duration = 1000
-            rotateAnimation?.interpolator = LinearInterpolator()
-            rotateAnimation?.fillAfter = true
-            binding?.likeNeedleImageView?.startAnimation(rotateAnimation)*/
+                binding?.likeNeedleImageView?.rotation = direction.toFloat()
 
-            /*
-            binding?.likeCompassImageView?.rotation = finalDegrees
+                binding?.likeCompassImageView?.rotation = direction.toFloat() - 137
 
-        // -145 ... -119
-        viewModel.currentDegrees.value = finalDegrees.roundToInt()
-
-        val newDegrees = (finalDegrees.roundToInt() + 135).toFloat()
-
-        binding?.likeNeedleImageView?.rotation = newDegrees
-
-        val showOn = newDegrees in 350f..360f || newDegrees in 0f..10f
-        binding?.indicatorImageView?.setImageResource(
-            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
-             */
-
-            //val azimuth = orientation[0] // Math.toDegrees kda  ?!
-            //val azimuth1 = orientation[0]
-            //val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat() // Correct 135 brdo todo oooooooooooooooo
-            //Timber.e("djosaijdsa $azimuth1 ==== $azimuth2")
-            //onOrientationChanged(orientation)
-            //calcNorth(azimuth2) // btr3e4 awi fa mate3melsh change unless 4 degres or 3 kda ya3ne isa.
+                val showOn = direction.toFloat() in 350f..360f || direction.toFloat() in 0f..10f
+                binding?.indicatorImageView?.setImageResource(
+                    if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
+                )
+            }
         }
-    }
-
-    /*todo e3mel el 2ebla mn el north w zawed text w 2ole kam degree kda isa.*/
-    private fun calcNorth(azimut: Float) {
-        val degree = -azimut * 360f / (2f * 3.14159f)
-        Timber.w("azimut $azimut")
-        Timber.w("degree $degree")
-
-        val finalDegrees = -azimut
-
-        binding?.likeCompassImageView?.rotation = finalDegrees
-
-        // -145 ... -119
-        viewModel.currentDegrees.value = finalDegrees.roundToInt()
-
-        val newDegrees = (finalDegrees.roundToInt() + 135).toFloat()
-
-        binding?.likeNeedleImageView?.rotation = newDegrees
-
-        val showOn = newDegrees in 350f..360f || newDegrees in 0f..10f
-        binding?.indicatorImageView?.setImageResource(
-            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
-        )
-    }
-
-    // todo likeCompassImageView
-    private fun trial1(otherDegree: Float) {
-        val myCurrentLocation = viewModel.myCurrentLocation ?: return
-        val kaabaLocation = viewModel.kaabaLocation ?: return
-
-        val lat1 = myCurrentLocation.latitude
-        val lon1 = myCurrentLocation.longitude
-        val lat2 = kaabaLocation.latitude
-        val lon2 = kaabaLocation.longitude
-
-        val degrees = calcDegrees(lat1, lon1, lat2, lon2)
-
-        val newDegrees = (otherDegree - degrees.toFloat()).let {
-            val new1 = if (it >= 0f) it else it.plus(360f)
-
-            val new2 = if (new1 >= 360f) new1.minus(360f) else new1
-
-            val new3 = new2 + 100f // +3.7f
-
-            new2
-            /*when {
-                new3 >= 360f -> new3.minus(360f)
-                new3 < 0f -> new3.plus(360f)
-                else -> new3
-            }*/
-        }
-
-        // 180 360 bs kda isa.
-        Timber.v("other Degree -> $otherDegree\ncalc Degree -> $degrees\nnew Degree $newDegrees")
-
-        binding?.likeNeedleImageView?.rotation = newDegrees
-
-        val showOn = newDegrees in 355f..360f || newDegrees in 0f..5f
-        binding?.indicatorImageView?.setImageResource(
-            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
-        )
-    }
-
-    private fun calcDegrees(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        /*val lonDelta = lon2 - lon1
-        val y = sin(lonDelta) * cos(lat2)
-        val x = ( cos(lat1) * sin(lat2) ) - ( sin(lat1) * cos(lat2) * cos(lonDelta) )
-        return Math.toDegrees(atan2(y, x))*/
-        val myCurrentLocation = viewModel.myCurrentLocation!!
-        val kaabaLocation = viewModel.kaabaLocation!!
-        return myCurrentLocation.bearingTo(kaabaLocation).toDouble()
-    }
-
-    private fun onOrientationChanged(orientation: FloatArray) {
-        if (true) {
-            val z = orientation[0]//Math.toDegrees(orientation[0].toDouble()) // 114 ranges from -180 to 180
-            val x = orientation[1]//Math.toDegrees(orientation[1].toDouble())
-            val y = orientation[2]//Math.toDegrees(orientation[2].toDouble())
-            Timber.e("z axis -> $z\nx axis -> $x\ny axis -> $y")
-            trial1(orientation[0])
-            return
-        }
-
-        val myCurrentLocation = viewModel.myCurrentLocation ?: return
-        val kaabaLocation = viewModel.kaabaLocation ?: return
-
-        val degree = round(orientation[0])
-        var head = round(orientation[0])
-
-        var bearTo = myCurrentLocation.bearingTo(kaabaLocation)
-
-        // bearTo = The angle from true north to the destination location from the point we're your
-        // currently standing
-
-        // head = The angle that you've rotated your phone from true north.
-
-        val geoField = GeomagneticField(
-            myCurrentLocation.latitude.toFloat(),
-            myCurrentLocation.longitude.toFloat(),
-            myCurrentLocation.altitude.toFloat(),
-            System.currentTimeMillis()
-        )
-
-        head -= geoField.declination // converts magnetic north into true north
-
-        if (bearTo < 0) {
-            bearTo += 360
-        }
-
-        // This is where we choose to point it
-        var direction = bearTo - head
-
-        // If the direction is smaller than 0, add 360 to get the rotation clockwise.
-        if (direction < 0) {
-            direction += 360;
-        }
-
-        // todo
-        if (true) {
-            Timber.e("djosaijdsa direction $direction")
-
-            Timber.e("djosaijdsa z axis -> ${Math.toDegrees(direction.toDouble())}\ndirections -> $direction")
-            //trial1(orientation[0])
-            binding?.likeNeedleImageView?.rotation = direction
-
-            return
-        }
-
-        val raQibla = RotateAnimation(
-            currentDegreeNeedle, direction,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
-        ).also {
-            it.duration = 210
-            it.fillAfter = true
-        }
-
-        binding?.likeNeedleImageView?.startAnimation(raQibla)
-
-        currentDegreeNeedle = direction
-
-        // create a rotation animation (reverse turn degree degrees)
-        val ra = RotateAnimation(
-            currentDegree, -degree,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-        ).also {
-            it.duration = 210
-            it.fillAfter = true
-        }
-
-        binding?.likeCompassImageView?.startAnimation(ra)
-
-        currentDegree = -degree
-
-        Timber.d("orientation ${orientation.toList()}, direction $direction, degree ${-degree}")
     }
 
 }
