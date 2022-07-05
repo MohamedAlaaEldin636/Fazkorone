@@ -107,4 +107,5 @@
     <string name="azkar_sabah_alarm">منبه اذكار الصباح</string>
     <string name="taspeh_alarm">منبه التسبيح</string>
     <string name="determine_the_time">حدد الوقت</string>
+    <string name="accuracy_colon_low">الدقة : منخفضة</string>
 </resources>

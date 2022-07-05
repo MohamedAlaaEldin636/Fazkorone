@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationHandler
 import com.grand.ezkorone.core.extensions.orZero
@@ -47,6 +48,13 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (viewModel.myCurrentLocation == null || viewModel.kaabaLocation == null) {
             setLocationToCurrentLocation()
+        }
+
+        binding?.dialogImageView?.also { imageView ->
+            Glide.with(imageView)
+                .asGif()
+                .load(R.raw.calibration)
+                .into(imageView)
         }
     }
 
@@ -108,6 +116,8 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         if (sensor?.type == Sensor.TYPE_ACCELEROMETER || sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
             viewModel.showAccuracyCalibration.value = accuracy == SensorManager.SENSOR_STATUS_ACCURACY_LOW
                 || accuracy == SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM
+
+            viewModel.accuracyIsLowNotMedium.value = accuracy == SensorManager.SENSOR_STATUS_ACCURACY_LOW
 
             val textAccuracy = when (accuracy) {
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> "High"

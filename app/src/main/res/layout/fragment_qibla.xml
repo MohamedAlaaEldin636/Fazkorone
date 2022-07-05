@@ -81,6 +81,100 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="#BF000000"
+
+                android:elevation="24dp"
+
+                android:orientation="vertical"
+
+                android:gravity="center"
+
+                tools:visibility="visible"
+                android:visibility="@{viewModel.showAccuracyCalibration &amp;&amp; !viewModel.forceHideShowAccuracyCalibration,default=gone}"
+
+                app:layout_constraintTop_toBottomOf="@id/titleTextView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_margin="32dp"
+
+                    android:layout_gravity="center"
+
+                    android:elevation="24dp"
+
+                    android:background="@drawable/dr_white_round">
+
+                    <ImageView
+                        android:id="@+id/dialogImageView"
+
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+
+                        app:layout_constraintBottom_toTopOf="@id/dialogDescTextView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/dialogDescTextView"
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextTajawalRegular14"
+                        android:gravity="center"
+                        android:text="@string/compass_accuracy_hint"
+                        android:padding="16dp"
+                        android:textIsSelectable="false"
+
+                        app:layout_constraintBottom_toTopOf="@id/dialogButton"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        style="@style/TextTajawalRegular14"
+                        android:gravity="center"
+                        tools:text="@string/accuracy_colon_low"
+                        android:text="@{viewModel.accuracyIsLowNotMedium ? @string/accuracy_colon_low : @string/accuracy_colon_medium}"
+                        android:padding="16dp"
+                        android:textIsSelectable="false"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/dialogButton"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="16dp"
+
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+
+                        android:text="@string/ok"
+
+                        android:onClick="@{() -> viewModel.performForceHideShowAccuracyCalibration()}"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
             <!-- todo https://stackoverflow.com/a/23060896 for north directions isa -->
             <ImageView
                 android:layout_width="0dp"

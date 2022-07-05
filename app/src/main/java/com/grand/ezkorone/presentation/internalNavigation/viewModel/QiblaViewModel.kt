@@ -31,8 +31,15 @@ class QiblaViewModel @Inject constructor(
     val currentDegreesText = currentDegrees.map { "$it°" } /**/
     val showAccuracyCalibration = MutableLiveData(false)
 
+    val forceHideShowAccuracyCalibration = MutableLiveData(false)
+    val accuracyIsLowNotMedium = MutableLiveData(false)
+
     fun showNavDrawer(view: View) {
         view.openDrawerLayout()
+    }
+
+    fun performForceHideShowAccuracyCalibration() {
+        forceHideShowAccuracyCalibration.value = true
     }
 
 }

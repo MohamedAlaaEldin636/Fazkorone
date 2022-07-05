@@ -138,4 +138,6 @@
     <string name="auto_selection">تحديد تلقائي</string>
     <string name="compass_accuracy_hint">يرجى تدوير هاتفك وجعل 8 فى الهواء من اجل الحصول على توجيهات دقيقة للقبلة</string>
     <string name="done">تم</string>
+    <string name="accuracy_colon_low">الدقة : منخفضة</string>
+    <string name="accuracy_colon_medium">الدقة : متوسطة</string>
 </resources>
