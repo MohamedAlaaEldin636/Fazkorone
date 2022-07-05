@@ -35,33 +35,35 @@ class SplashFragment : MABaseFragment<FragmentSplashBinding>() {
     override fun getLayoutId(): Int = R.layout.fragment_splash
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAbleFlow) {
-            Timber.e("iodwjowejd 1")
+        handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAbleFlowRegister) {
+            handleRetryAbleFlowWithMustHaveResultWithNullability(viewModel.retryAbleFlow) {
+                Timber.e("iodwjowejd 1")
 
-            // https://www.youtube.com/watch?v=fSB6_KE95bU&t=746s
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    val initialDataForApp = InitialDataForApp(
-                        it.socialMedia!!,
-                        it.data!!
-                    )
-                    prefsSplash.setInitialDataForApp(initialDataForApp)
+                // https://www.youtube.com/watch?v=fSB6_KE95bU&t=746s
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        val initialDataForApp = InitialDataForApp(
+                            it.socialMedia!!,
+                            it.data!!
+                        )
+                        prefsSplash.setInitialDataForApp(initialDataForApp)
 
-                    delay(1_000)
+                        delay(1_000)
 
-                    when (prefsSplash.getInitialLaunch().first()) {
-                        SplashInitialLaunch.HOME -> {
-                            findNavController().navigate(SplashFragmentDirections.actionDestSplashToDestBottomNav())
-                        }
-                        SplashInitialLaunch.ON_BOARD, null -> {
-                            findNavController().navigateDeepLinkWithOptions(
-                                "fragment-dest",
-                                "com.maproductions.mohamedalaa.shared.location.selection.on.board.location.selection",
-                                true.toString(),
-                                options = defaultNavOptionsBuilder()
-                                    .setPopUpTo(R.id.nav_main, true)
-                                    .build()
-                            )
+                        when (prefsSplash.getInitialLaunch().first()) {
+                            SplashInitialLaunch.HOME -> {
+                                findNavController().navigate(SplashFragmentDirections.actionDestSplashToDestBottomNav())
+                            }
+                            SplashInitialLaunch.ON_BOARD, null -> {
+                                findNavController().navigateDeepLinkWithOptions(
+                                    "fragment-dest",
+                                    "com.maproductions.mohamedalaa.shared.location.selection.on.board.location.selection",
+                                    true.toString(),
+                                    options = defaultNavOptionsBuilder()
+                                        .setPopUpTo(R.id.nav_main, true)
+                                        .build()
+                                )
+                            }
                         }
                     }
                 }

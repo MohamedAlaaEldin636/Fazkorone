@@ -1,35 +1,26 @@
 package com.grand.ezkorone.presentation.internalNavigation
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
+import android.R.attr
 import android.hardware.*
 import android.location.Location
 import android.os.Bundle
-import android.view.Display
 import android.view.View
 import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresPermission
-import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationHandler
-import com.grand.ezkorone.core.extensions.showErrorToast
-import com.grand.ezkorone.core.extensions.showNormalToast
 import com.grand.ezkorone.databinding.FragmentQiblaBinding
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.internalNavigation.viewModel.QiblaViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import kotlin.math.*
+import kotlin.time.seconds
+
 
 // todo https://stackoverflow.com/a/44182427
 @AndroidEntryPoint
@@ -44,7 +35,6 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
     private var accelerometer: Sensor? = null
     private var magnetometer: Sensor? = null
-    private var trialSensor: Sensor? = null
 
     private lateinit var locationHandler: LocationHandler
 
@@ -96,7 +86,6 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
         accelerometer = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         magnetometer = sensorManager?.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-        trialSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_ORIENTATION)
 
         if (accelerometer == null || magnetometer == null) {
             viewModel.featureIsSupported.value = false
@@ -104,36 +93,30 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             return
         }
 
-        sensorManager?.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-        sensorManager?.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME)
-        sensorManager?.registerListener(this, trialSensor, SensorManager.SENSOR_DELAY_GAME)
+        sensorManager?.registerListener(this, accelerometer, delayInMicroseconds)
+        sensorManager?.registerListener(this, magnetometer, delayInMicroseconds)
     }
+
+    private val delayInMicroseconds = SensorManager.SENSOR_DELAY_UI
 
     override fun onResume() {
         super.onResume()
 
         if (viewModel.myCurrentLocation != null && viewModel.kaabaLocation != null) {
-            sensorManager?.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
-            sensorManager?.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_GAME)
-            sensorManager?.registerListener(this, trialSensor, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager?.registerListener(this, accelerometer, delayInMicroseconds)
+            sensorManager?.registerListener(this, magnetometer, delayInMicroseconds)
         }
     }
 
     override fun onPause() {
         sensorManager?.unregisterListener(this, accelerometer)
         sensorManager?.unregisterListener(this, magnetometer)
-        sensorManager?.unregisterListener(this, trialSensor)
 
         super.onPause()
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        //SensorManager.SENSOR_STATUS_*
-        //SensorManager.SENSOR_STATUS_ACCURACY_HIGH
-        /*
-        يرجى تدوير هاتفك وجعل 8 فى الهواء من اجل الحصول على توجيهات دقيقة للقبلة
-         */
-        if (sensor?.type == Sensor.TYPE_ORIENTATION) {
+        if (sensor?.type == Sensor.TYPE_ACCELEROMETER || sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
             viewModel.showAccuracyCalibration.value = accuracy == SensorManager.SENSOR_STATUS_ACCURACY_LOW
                 || accuracy == SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM
 
@@ -144,49 +127,31 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
                 else -> "Unknown"
             }
 
-
             Timber.e("AAAAAAAAAA -> accuracy $textAccuracy")
-        }/*else {
-            viewModel.showAccuracyCalibration.value = false
-        }*/
+        }
     }
 
     private var gravity: FloatArray? = null
     private var geomagnetic: FloatArray? = null
+    private var rotateAnimation: RotateAnimation? = null
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
             gravity = event.values
         }else if (event?.sensor?.type == Sensor.TYPE_MAGNETIC_FIELD) {
             geomagnetic = event.values
-
-            // todo
-            /*val kk = viewModel.myCurrentLocation?.bearingTo(
-                viewModel.kaabaLocation ?: return
-            )*/
-
-            /*
-             let north = -1 * newHeading.magneticHeading * Double.pi / 180.0
-
-            let direction = (locationBearing ?? 0) * Double.pi / 180.0 + north
-             */
-            //val north =;
-
-            Timber.e("kkkkkkkkk ${geomagnetic!!.toList()}")
-        }else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
+        }/*else if (event?.sensor?.type == Sensor.TYPE_ORIENTATION) {
             Timber.i("sensor orientation ${event.values.toList()}")
 
             //onOrientationChanged(event.values)
 
             calcNorth(event.values[0])
-        }
-
-        if (true) {
-            return
-        }
+        }*/
 
         val gravity = this.gravity ?: return
         val geomagnetic = this.geomagnetic ?: return
+        val myLocation = viewModel.myCurrentLocation ?: return
+        val kaabaLocation = viewModel.kaabaLocation ?: return
 
         val rotation = FloatArray(9)
         val inclination = FloatArray(9)
@@ -194,11 +159,82 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
         if (success) {
             val orientation = FloatArray(3)
             SensorManager.getOrientation(rotation, orientation)
+            SensorManager.getInclination(inclination)
+
+            val azimuthInRadians = orientation[0]
+            var azimuthInDegree = Math.toDegrees(azimuthInRadians.toDouble())
+
+            Timber.e("azimuthInDegree $azimuthInDegree\n$azimuthInRadians")
+
+            val geomagneticField = GeomagneticField(
+                myLocation.latitude.toFloat(),
+                myLocation.longitude.toFloat(),
+                myLocation.altitude.toFloat(),
+                System.currentTimeMillis()
+            )
+
+            Timber.e("declination ${geomagneticField.declination}")
+
+            azimuthInDegree -= geomagneticField.declination.toDouble()
+
+            Timber.e("Second azimuthInDegree $azimuthInDegree")
+
+            val bearing = myLocation.bearingTo(kaabaLocation).let {
+                if (it < 0) it + 360 else it
+            }
+
+            Timber.e("bearing $bearing")
+
+            val direction = (bearing - azimuthInDegree).let {
+                if (it < 0) it + 360 else it
+            }
+            Timber.e("direction $direction")
+
+            binding?.likeNeedleImageView?.rotation = direction.toFloat()
+            /*binding?.likeNeedleImageView?.apply {
+                clearAnimation()
+
+                animate()
+                    .rotation(direction.toFloat())
+                    .setDuration(200)
+                    .setInterpolator(LinearInterpolator())
+                    .start()
+            }*/
+
+            /*Timber.e("rotations ${binding?.likeNeedleImageView?.rotation ?: 0f}\n${direction.toFloat()}")
+            rotateAnimation?.cancel()
+            rotateAnimation = RotateAnimation(
+                binding?.likeNeedleImageView?.rotation ?: 0f,
+                direction.toFloat(),
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f
+            )
+            rotateAnimation?.duration = 1000
+            rotateAnimation?.interpolator = LinearInterpolator()
+            rotateAnimation?.fillAfter = true
+            binding?.likeNeedleImageView?.startAnimation(rotateAnimation)*/
+
+            /*
+            binding?.likeCompassImageView?.rotation = finalDegrees
+
+        // -145 ... -119
+        viewModel.currentDegrees.value = finalDegrees.roundToInt()
+
+        val newDegrees = (finalDegrees.roundToInt() + 135).toFloat()
+
+        binding?.likeNeedleImageView?.rotation = newDegrees
+
+        val showOn = newDegrees in 350f..360f || newDegrees in 0f..10f
+        binding?.indicatorImageView?.setImageResource(
+            if (showOn) R.drawable.dr_qibla_on else R.drawable.dr_qibla_off
+             */
 
             //val azimuth = orientation[0] // Math.toDegrees kda  ?!
-            val azimuth1 = orientation[0]
-            val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat() // Correct 135 brdo todo oooooooooooooooo
-            Timber.e("djosaijdsa $azimuth1 ==== $azimuth2")
+            //val azimuth1 = orientation[0]
+            //val azimuth2 = Math.toDegrees(azimuth1.toDouble()).toFloat() // Correct 135 brdo todo oooooooooooooooo
+            //Timber.e("djosaijdsa $azimuth1 ==== $azimuth2")
             //onOrientationChanged(orientation)
             //calcNorth(azimuth2) // btr3e4 awi fa mate3melsh change unless 4 degres or 3 kda ya3ne isa.
         }
