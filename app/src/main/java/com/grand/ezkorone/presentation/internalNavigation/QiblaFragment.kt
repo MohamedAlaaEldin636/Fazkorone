@@ -10,12 +10,16 @@ import android.view.animation.LinearInterpolator
 import android.view.animation.RotateAnimation
 import androidx.core.content.getSystemService
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.LocationHandler
 import com.grand.ezkorone.databinding.FragmentQiblaBinding
 import com.grand.ezkorone.presentation.base.MABaseFragment
 import com.grand.ezkorone.presentation.internalNavigation.viewModel.QiblaViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import kotlin.math.*
@@ -133,7 +137,34 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
 
     private var gravity: FloatArray? = null
     private var geomagnetic: FloatArray? = null
-    private var rotateAnimation: RotateAnimation? = null
+    //private var rotateAnimation: RotateAnimation? = null
+
+    /*var job: Job? = null
+    fun View.performAnimation(
+        newRotation: Float,
+        durationInMillis: Long = 100_000,
+        updateEveryInMillis: Long = 17_000
+    ) {
+        job?.cancel()
+        job = lifecycleScope.launch {
+            var dur = durationInMillis
+            val percent = ((updateEveryInMillis.toDouble() / durationInMillis.toDouble()) * 100.0).toFloat()
+            val amount = ((rotation - newRotation).absoluteValue) * percent
+            while (true) {
+                if (dur <= updateEveryInMillis) {
+                    rotation = newRotation
+                    break
+                }
+                dur -= updateEveryInMillis
+                if (rotation < newRotation) {
+                    rotation += amount
+                }else {
+                    rotation -= amount
+                }
+                delay(updateEveryInMillis)
+            }
+        }
+    }*/
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
@@ -191,6 +222,9 @@ class QiblaFragment : MABaseFragment<FragmentQiblaBinding>(), SensorEventListene
             Timber.e("direction $direction")
 
             binding?.likeNeedleImageView?.rotation = direction.toFloat()
+            /*binding?.likeNeedleImageView?.performAnimation(
+                direction.toFloat(),
+            )*/
             /*binding?.likeNeedleImageView?.apply {
                 clearAnimation()
 
