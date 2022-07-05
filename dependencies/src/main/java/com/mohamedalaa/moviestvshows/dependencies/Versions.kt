@@ -23,8 +23,8 @@ object Versions {
     const val min_sdk = 23
     const val target_sdk = 31
 
-    const val code = 2
-    const val name = "1.0.0"
+    const val code = 3
+    const val name = "1.1.0"
 
     const val jvm_11 = "11"
 
