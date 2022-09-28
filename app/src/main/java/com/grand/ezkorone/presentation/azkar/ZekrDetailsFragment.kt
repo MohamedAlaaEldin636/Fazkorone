@@ -47,10 +47,24 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
 
     private var currentAudioUrl: String? = null
 
+    private val allPlayerListener = object : Player.Listener {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            if (playbackState == ExoPlayer.STATE_ENDED) {
+                playerAll?.pause()
+                playerAll?.seekTo(0L)
+                allPlayerShowPlayNotPause = true
+                activity?.invalidateOptionsMenu()
+            }
+        }
+    }
     private val singlePlayerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == ExoPlayer.STATE_READY) {
                 viewModel.showAudioLoading.value = false
+            }else if (playbackState == ExoPlayer.STATE_ENDED) {
+                viewModel.showAudioPlayNotPause.value = true
+                playerSingle?.pause()
+                playerSingle?.seekTo(0L)
             }
         }
     }
@@ -107,57 +121,6 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
                 remotePDFViewPager = RTLRemotePDFViewPager(requireContext(), it.data!!.data[0].pdfUrl, this)
             }
         }
-    }
-
-    private fun onCLickkkk() {
-        // todo
-        /*
-        View getCurrentView(ViewPager viewPager) {
-        try {
-            final int currentItem = viewPager.getCurrentItem();
-            for (int i = 0; i < viewPager.getChildCount(); i++) {
-                final View child = viewPager.getChildAt(i);
-                final ViewPager.LayoutParams layoutParams = (ViewPager.LayoutParams) child.getLayoutParams();
-
-                Field f = layoutParams.getClass().getDeclaredField("position"); //NoSuchFieldException
-                f.setAccessible(true);
-                int position = (Integer) f.get(layoutParams); //IllegalAccessException
-
-                if (!layoutParams.isDecor && currentItem == position) {
-                    return child;
-                }
-            }
-        } catch (NoSuchFieldException e) {
-            Log.e(TAG, e.toString());
-        } catch (IllegalArgumentException e) {
-            Log.e(TAG, e.toString());
-        } catch (IllegalAccessException e) {
-            Log.e(TAG, e.toString());
-        }
-        return null;
-    }
-         */
-
-        /*
-        // Obtain MotionEvent object
-long downTime = SystemClock.uptimeMillis();
-long eventTime = SystemClock.uptimeMillis() + 100;
-float x = 0.0f;
-float y = 0.0f;
-// List of meta states found here:     developer.android.com/reference/android/view/KeyEvent.html#getMetaState()
-int metaState = 0;
-MotionEvent motionEvent = MotionEvent.obtain(
-    downTime,
-    eventTime,
-    MotionEvent.ACTION_UP,
-    x,
-    y,
-    metaState
-);
-
-// Dispatch touch event to view
-view.dispatchTouchEvent(motionEvent);
-         */
     }
 
     override fun onSuccess(url: String?, destinationPath: String?) {
@@ -292,6 +255,8 @@ view.dispatchTouchEvent(motionEvent);
             playerAll?.also { exoPlayer ->
                 val mediaItem = MediaItem.fromUri(response.data[0].audioUrl)
                 exoPlayer.setMediaItem(mediaItem)
+
+                exoPlayer.addListener(allPlayerListener)
 
                 exoPlayer.playWhenReady = false
                 exoPlayer.prepare()
