@@ -27,6 +27,17 @@ class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
 
     private var player: ExoPlayer? = null
 
+    private val listenerOfPlayer = object : Player.Listener {
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            if (playbackState == ExoPlayer.STATE_ENDED) {
+                player?.pause()
+                player?.seekTo(0L)
+                viewModel.showPlayNotPause.value = true
+                isPlaying = false
+            }
+        }
+    }
+
     val permissionsStorageRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -113,6 +124,7 @@ class TaspehFragment : MABaseFragment<FragmentTaspehBinding>() {
     private fun initializePlayer() {
         player = /*Simple*/ExoPlayer.Builder(requireContext())
             .build()
+        player?.addListener(listenerOfPlayer)
     }
 
     private var currentAudioUrl: String? = null
