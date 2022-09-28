@@ -15,10 +15,7 @@ import com.grand.ezkorone.core.customTypes.RetryAbleFlow
 import com.grand.ezkorone.core.customTypes.map
 import com.grand.ezkorone.core.customTypes.switchMapMultiple
 import com.grand.ezkorone.core.customTypes.switchMapMultiple2
-import com.grand.ezkorone.core.extensions.checkSelfPermissionGranted
-import com.grand.ezkorone.core.extensions.executeOnGlobalLoadingAndAutoHandleRetryCancellable
-import com.grand.ezkorone.core.extensions.launchShareTextAndSayFromApp
-import com.grand.ezkorone.core.extensions.showSuccessToast
+import com.grand.ezkorone.core.extensions.*
 import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
 import com.grand.ezkorone.data.home.repository.RepositoryHome
 import com.grand.ezkorone.domain.azkar.ResponseZekrDetail
@@ -60,6 +57,18 @@ class ZekrDetailsViewModel @Inject constructor(
 
             "${count.value!!}/$maxCount"
         }.orEmpty()
+    }
+
+    val showProgress = switchMapMultiple2(responseZekrDetail, currentIndex, count) {
+        responseZekrDetail.value?.let {
+            val maxCount = if (it.data.size < 2) {
+                it.data[0].maxCount
+            }else {
+                it.data[currentIndex.value!!].maxCount
+            }
+
+            maxCount
+        }.orZero() >= 30
     }
 
     val progressPercentage = switchMapMultiple2(responseZekrDetail, currentIndex, count) {

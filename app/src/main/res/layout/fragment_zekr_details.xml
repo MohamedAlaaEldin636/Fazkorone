@@ -8,11 +8,11 @@
     tools:ignore="ContentDescription" >
 
     <data>
+        <import type="android.view.View"/>
 
         <variable
             name="viewModel"
             type="com.grand.ezkorone.presentation.azkar.viewModel.ZekrDetailsViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +35,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="0dp"
             android:layout_height="0dp"
+
+            android:visibility="@{viewModel.showProgress == Boolean.TRUE ? View.VISIBLE : View.INVISIBLE}"
 
             style="@style/TextTajawalMedium16"
 
@@ -65,6 +67,8 @@
             android:layout_height="wrap_content"
 
             android:layout_margin="8dp"
+
+            android:visibility="@{viewModel.showProgress == Boolean.TRUE ? View.VISIBLE : View.INVISIBLE}"
 
             app:trackThickness="4dp"
             app:trackColor="#046D46"
@@ -139,6 +143,8 @@
             android:padding="16dp"
 
             android:src="@drawable/ic_share"
+
+            android:visibility="invisible"
 
             android:clickable="true"
             android:focusable="true"
