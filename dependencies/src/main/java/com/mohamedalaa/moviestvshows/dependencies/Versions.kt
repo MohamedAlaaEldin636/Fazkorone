@@ -59,7 +59,7 @@ object Versions {
     const val google_location = "18.0.0"
     const val google_places = "2.5.0"
 
-    const val exo_player = "2.17.1"
+    const val exo_player = "2.18.1"
 
     const val androidx_recycler_view = "1.2.1"
 

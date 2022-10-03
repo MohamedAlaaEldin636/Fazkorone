@@ -3,6 +3,7 @@ package com.grand.ezkorone.presentation.azkar
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -10,9 +11,19 @@ import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
-import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
+import com.google.android.exoplayer2.*
+import com.google.android.exoplayer2.audio.AudioAttributes
+import com.google.android.exoplayer2.audio.AudioRendererEventListener
+import com.google.android.exoplayer2.audio.MediaCodecAudioRenderer
+import com.google.android.exoplayer2.mediacodec.MediaCodecInfo
+import com.google.android.exoplayer2.mediacodec.MediaCodecSelector
+import com.google.android.exoplayer2.metadata.MetadataOutput
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.source.dash.DashMediaSource
+import com.google.android.exoplayer2.text.TextOutput
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.android.exoplayer2.util.MimeTypes
+import com.google.android.exoplayer2.video.VideoRendererEventListener
 import com.grand.ezkorone.R
 import com.grand.ezkorone.core.customTypes.DepthPageTransformer
 import com.grand.ezkorone.core.customTypes.RTLRemotePDFViewPager
@@ -99,7 +110,7 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         activityViewModel.titleToolbar.postValue(args.toolbarTitle)
 
         viewModel.currentIndex.distinctUntilChanged().observe(viewLifecycleOwner) {
-            playerSingle?.removeListener(singlePlayerListener)
+            //playerSingle?.removeListener(singlePlayerListener)
             playerSingle?.pause()
             viewModel.showAudioLoading.value = false
             viewModel.showAudioPlayNotPause.value = true
@@ -216,6 +227,8 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
     override fun onStart() {
         super.onStart()
 
+        //requireContext().createMediaPlayerInitializeAndPlay("abc")
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             initializePlayer()
         }
@@ -251,6 +264,8 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         playerSingle = /*Simple*/ExoPlayer.Builder(requireContext())
             .build()
 
+        playerSingle?.addListener(singlePlayerListener)
+
         viewModel.responseZekrDetail.value?.also { response ->
             playerAll?.also { exoPlayer ->
                 val mediaItem = MediaItem.fromUri(response.data[0].audioUrl)
@@ -276,14 +291,13 @@ class ZekrDetailsFragment : MABaseFragment<FragmentZekrDetailsBinding>(), Downlo
         playerSingle?.also { exoPlayer ->
             when {
                 currentAudioUrl == null || currentAudioUrl != audioUrl -> {
-                    exoPlayer.removeListener(singlePlayerListener)
+                    //exoPlayer.removeListener(singlePlayerListener)
 
                     val mediaItem = MediaItem.fromUri(audioUrl)
                     exoPlayer.setMediaItem(mediaItem)
 
                     viewModel.showAudioLoading.value = true
                     viewModel.showAudioPlayNotPause.value = false
-                    exoPlayer.addListener(singlePlayerListener)
 
                     exoPlayer.playWhenReady = true
                     exoPlayer.prepare()
