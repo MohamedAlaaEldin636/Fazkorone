@@ -4,6 +4,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
+import com.grand.ezkorone.core.customTypes.switchMapMultiple
 import com.grand.ezkorone.data.favorite.repository.RepositoryFavorite
 import com.grand.ezkorone.presentation.drawer.adapters.RVItemFavorite
 import dagger.hilt.android.lifecycle.HiltViewModel
